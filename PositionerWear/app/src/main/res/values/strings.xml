@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">PositionerWear</string>
+    <string name="app_test">将进酒 君不见，黄河之水天上来，奔流到海不复回。 君不见，高堂明镜悲白发，朝如青丝暮成雪。 人生得意须尽欢，莫使金樽空对月。 天生我材必有用，千金散尽还复来。 烹羊宰牛且为乐，会须一饮三百杯。 岑夫子，丹丘生，将进酒，杯莫停。 与君歌一曲，请君为我倾耳听。 钟鼓馔玉不足贵，但愿长醉不复醒。 古来圣贤皆寂寞，惟有饮者留其名。 陈王昔时宴平乐，斗酒十千恣欢谑。 主人何为言少钱，径须沽取对君酌。 五花马，千金裘，呼儿将出换美酒，与尔同销万古愁</string>
+    <string name="ice_contact"> Name:#name/n Gender:#gender /n Age:#age /n Birthdate:#birthdate/n Blood type:#bloodtype /n Medical condition:#medical/n Anaphylaxis:#anap/n Drug user:#drug </string>
+
+    <string name="manual_add_contacts">Adding a contact manually</string>
+    <string name="ok">OK</string>
+    <string name="exit">Cancel</string>
+    <string name="sos_hint">Long press the SOS button to send SMS and dial a preset phone number.</string>
+    <string name="smssendtimes1">Send a SOS message 1 times continuously</string>
+    <string name="smssendtimes2">Send a SOS message 2 times continuously</string>
+    <string name="smssendtimes3">Send a SOS message 3 times continuously</string>
+    <string name="smssendtimes4">Send a SOS message 4 times continuously</string>
+    <string name="smssendtimes5">Send a SOS message 5 times continuously</string>
+    <string name="font_size_preview_text">Message sent times</string>
+    <string name="smsalarmcontent">Add SOS message</string>
+    <string name="str_sms_sent_success">SOS message sent successfully!</string>
+    <string name="str_sms_sent_failed">SOS message sending failure!</string>
+    <string name="str_sms_rec_success">SOS message has been successfully delivered to the %1$s.</string>
+    <string name="str_sms_rec_failed">SOS message failed to reach %1$s.</string>
+    <string name="str_set_number">Set family number</string>
+    <string name="str_set_sos_state">Please set SOS on</string>
+    <string name="str_set_sms_content">Please enter the message content!</string>
+    <string name="str_warning_contacts">Limited %1$d contacts!</string>
+    <string name="str_warning_same_contacts">You have added the contacts!</string>
+    <string name="str_delete">Delete</string>
+    <string name="str_user">Username</string>
+    <string name="str_sos_name">SOS function</string>
+    <string name="str_open">On</string>
+    <string name="str_close">Off</string>
+    <string name="str_sms_sent">SOS Message</string>
+    <string name="str_set_num">Add number</string>
+    <string name="str_sms_hint">Click here to edit the contents of distress message</string>
+    <string name="str_manual_user">Name</string>
+    <string name="str_manual_num">Number</string>
+    <string name="str_sos_start_hint">SOS has been opened!</string>
+    <string name="str_sos_stop_hint">SOS has been closed!</string>
+    <string name="str_default_sos_sms_content">SOS!</string>
+    <string name="str_sos_no_contact_hint">No phone book contacts, add first!</string>
+    <string name="str_make_call_fail_hint">Can not call, set the family number first!</string>
+    <string name="str_item_hint">Long press to delete!</string>
+    <string name="title_activity_test">TestActivity</string>
+
+</resources>

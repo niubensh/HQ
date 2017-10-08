@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/item_rl_onclick"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="220px"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:background="@drawable/item_selector"
+    android:padding="5px"
+    android:layout_height="50px">
+
+    <RelativeLayout
+        android:id="@+id/item_rl_0"
+        android:layout_width="30px"
+        android:layout_height="30px"
+        android:gravity="center"
+         android:layout_centerVertical="true"
+        android:background="@drawable/hendcolor1">
+
+        <TextView
+            android:id="@+id/item_textview_letter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="B"
+
+            android:textColor="#FFF"
+            android:textSize="15px" />
+
+
+    </RelativeLayout>
+
+    <TextView
+
+        android:id="@+id/phonenum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+
+
+
+
+    <TextView
+        android:id="@+id/item_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="60px"
+        android:gravity="center"
+        android:textColor="@android:color/darker_gray"
+        android:layout_toRightOf="@+id/item_rl_0"
+        android:layout_marginLeft="20px"
+        android:text="Bill"
+        android:textSize="30px"
+        />
+</RelativeLayout>

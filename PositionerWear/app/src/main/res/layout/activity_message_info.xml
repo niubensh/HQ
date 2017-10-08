@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="240px"
+    android:layout_height="240px"
+    android:background="#000"
+    tools:context="com.wite.positionerwear.MessageInfoActivity">
+
+
+    <RelativeLayout
+        android:layout_width="230px"
+        android:layout_height="230px"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:id="@+id/RL_0"
+            android:layout_width="200px"
+            android:layout_height="40px"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="10px"
+                android:text="Message"
+                android:textColor="#ff00cef8"
+                android:textSize="20px" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="2px"
+                android:text="02:10"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20px"
+
+                />
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+                <RelativeLayout
+                    android:layout_width="200px"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/RL_0"
+                    android:layout_centerHorizontal="true"
+                    >
+
+
+
+
+
+                    <RelativeLayout
+                        android:id="@+id/RL_2"
+                        android:layout_width="200px"
+                        android:layout_height="60px"
+                    >
+
+
+                        <RelativeLayout
+                            android:id="@+id/RL_1"
+                            android:layout_width="200px"
+                            android:layout_height="35px"
+                            android:layout_centerHorizontal="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/item_bg">
+
+                            <TextView
+                                android:id="@+id/textviewtime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:paddingRight="5px"
+                                android:text="13:10"
+                                android:textColor="#FFF"
+                                android:textSize="15px" />
+
+                            <TextView
+                                android:id="@+id/textviewdate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingRight="5px"
+                                android:text="2017-04-06"
+                                android:textColor="#FFF"
+                                android:textSize="10px"
+                                android:layout_below="@+id/textviewtime"
+                                android:layout_alignParentEnd="true" />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/item_rl_0"
+                            android:layout_width="45px"
+                            android:layout_height="45px"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="10px"
+
+                            android:layout_marginLeft="25px"
+                            android:background="@drawable/hendcolor4"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/item_textview_letter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="B"
+                                android:textColor="#FFF"
+                                android:textSize="15px" />
+
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/RL_3"
+                        android:layout_width="230px"
+                        android:layout_height="110px"
+                        android:layout_marginTop="5px"
+                        android:background="@drawable/item_bg"
+
+                        android:layout_below="@id/RL_2"
+
+                        >
+                        <TextView
+
+                            android:id="@+id/textmessage"
+                            android:layout_width="230px"
+                            android:layout_height="110px"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                             android:padding="5px"
+                            android:ellipsize="end"
+                            android:textColor="#FFF"
+                            android:textSize="20px"
+                            android:gravity="center"
+                            android:scrollbars="vertical"
+                            android:maxLines="12"
+                            android:maxWidth="150px"
+
+                            android:text="123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789" />
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

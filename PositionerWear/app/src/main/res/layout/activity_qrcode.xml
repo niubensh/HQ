@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="240px"
+    android:layout_height="240px"
+    android:background="#000"
+    tools:context="com.wite.positionerwear.IceInfoActivity">
+
+
+    <RelativeLayout
+        android:layout_width="230px"
+        android:layout_height="230px"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <RelativeLayout
+            android:id="@+id/RL_0"
+            android:layout_width="200px"
+            android:layout_height="40px"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="10px"
+                android:text="Ice"
+                android:textColor="#ff00cef8"
+                android:textSize="20px" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="2px"
+                android:text="02:10"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20px"
+
+                />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="200px"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/RL_0"
+            android:layout_centerHorizontal="true"
+
+            >
+
+
+            <RelativeLayout
+                android:layout_width="140px"
+                android:layout_height="140px"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20px"
+                android:background="@drawable/tocodeback">
+
+                <ImageView
+                    android:id="@+id/two_code"
+                    android:layout_width="120px"
+
+                    android:layout_height="120px"
+                    android:layout_centerInParent="true" />
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5px"
+                android:text="scan QR code"
+                android:textColor="@android:color/holo_blue_bright"
+                android:textSize="20px" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

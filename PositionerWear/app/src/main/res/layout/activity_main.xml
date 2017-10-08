@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="240px"
+    android:layout_height="240px"
+    android:background="@drawable/bg"
+    tools:context="com.wite.positionerwear.MainActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/RL_0"
+        android:layout_width="240px"
+        android:layout_height="240px"
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:id="@+id/RL_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="00:00"
+                android:textColor="#ffffffff"
+
+                android:textSize="70px" />
+
+
+            <TextView
+                android:id="@+id/tv_am"
+
+                android:layout_width="27px"
+                android:layout_height="15px"
+                android:layout_marginTop="5px"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/time"
+                android:textColor="#fff"
+                android:text="AM"
+                android:textSize="15px"
+
+                />
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/LL_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/RL_1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10px">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017-8-18"
+                android:textColor="#ffffffff"
+                android:textSize="25px" />
+
+            <TextView
+                android:id="@+id/month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15px"
+                android:text="Mon"
+                android:textColor="#ffffffff"
+                android:textSize="25px"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/LL_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/LL_0"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20px"
+            android:orientation="horizontal"
+            android:padding="10px"
+
+            >
+
+            <RelativeLayout
+                android:id="@+id/mochat"
+
+                android:layout_width="70px"
+
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/mochat" />
+
+
+                <TextView
+                    android:id="@+id/textview_mochat"
+                    android:layout_width="25px"
+                    android:layout_height="25px"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/soild_shape"
+                    android:gravity="center"
+                    android:text="36"
+                    android:textColor="#FFF" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="70px"
+                android:id="@+id/message"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+
+
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/message" />
+
+                <TextView
+                    android:id="@+id/textview_message"
+                    android:layout_width="25px"
+                    android:layout_height="25px"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/soild_shape"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="#FFF" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="70px"
+                android:id="@+id/missedcall"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/missedcall" />
+
+                <TextView
+                    android:id="@+id/textview_misscall"
+
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/soild_shape"
+                    android:gravity="center"
+                    android:text="7"
+                    android:textColor="#FFF" />
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

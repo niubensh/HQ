@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="240px"
+    android:layout_height="240px"
+    android:padding="10px"
+    android:background="#000"
+    tools:context=".ClockAlarmActivity">
+
+
+
+    <RelativeLayout
+        android:layout_width="230px"
+        android:layout_height="230px"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:id="@+id/RL_0"
+            android:layout_width="230px"
+            android:layout_height="40px"
+            android:layout_centerHorizontal="true"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="10px"
+                android:layout_centerHorizontal="true"
+                android:textColor="#ff00cef8"
+                android:layout_centerVertical="true"
+                android:textSize="20px"
+                android:text="Alarm clock" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="2px"
+                android:layout_alignParentRight="true"
+                android:textSize="20px"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/darker_gray"
+                android:text="02:10"
+
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_centerHorizontal="true"
+            android:layout_width="240px"
+            android:layout_height="200px"
+            android:layout_below="@+id/RL_0"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="-30px"
+            >
+            <ImageView
+                android:id="@+id/iamgeview_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/alarmclock">
+            </ImageView>
+
+            <RelativeLayout
+                android:id="@+id/RL_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5px"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true">
+
+                <TextView
+                    android:id="@+id/alarm_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="00:00"
+                    android:textColor="#ffffffff"
+                    android:textSize="25px" />
+
+
+                <TextView
+                    android:id="@+id/tv_am"
+
+                    android:layout_width="27px"
+                    android:layout_height="15px"
+                    android:layout_marginTop="0px"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/alarm_time"
+                    android:textColor="#fff"
+                    android:text="AM"
+                    android:textSize="10px"
+
+                    />
+
+
+
+
+                <TextView
+                    android:id="@+id/message"
+                    android:layout_below="@id/alarm_time"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Breakfast time"
+                    android:textColor="#ffffffff"
+                    android:textSize="15px"
+                    />
+
+            </RelativeLayout>
+
+
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

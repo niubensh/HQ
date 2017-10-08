@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="240px"
+    android:layout_height="240px"
+    android:padding="10px"
+    android:background="#000"
+    tools:context="com.wite.positionerwear.IceActivity">
+
+
+
+    <RelativeLayout
+        android:layout_width="230px"
+        android:layout_centerInParent="true"
+        android:layout_height="230px">
+
+        <RelativeLayout
+            android:id="@+id/RL_0"
+            android:layout_width="230px"
+            android:layout_height="40px"
+            android:layout_centerHorizontal="true"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="10px"
+                android:textColor="#ff00cef8"
+                android:layout_centerVertical="true"
+                android:textSize="20px"
+                android:text="Ice" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="2px"
+                android:layout_alignParentRight="true"
+                android:textSize="20px"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/darker_gray"
+                android:text="02:10"
+
+                />
+
+
+        </RelativeLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_centerHorizontal="true"
+            android:scrollbars="vertical"
+            android:id="@+id/recyclerview"
+            android:layout_width="240px"
+            android:layout_height="200px"
+            android:layout_below="@+id/RL_0"
+            >
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
