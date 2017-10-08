@@ -671,8 +671,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                         //设置时间的位置
-                        //     setsystem.setDate(year,mon-1,day);
-                        //       setsystem.setTime(hour,minute);
+                        setsystem.setDate(year, mon - 1, day);
+                        setsystem.setTime(hour, minute);
 
 
                         Log.e(TAG, "设备登录时间 " + year + "!" + mon + "!" + day + "//////" + hour + "" + minute);
