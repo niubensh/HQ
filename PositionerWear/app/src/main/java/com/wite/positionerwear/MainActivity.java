@@ -640,8 +640,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int minute = Integer.valueOf(BP00_login.trim().substring(14, 16));
                         Log.e(TAG, "现在时间 " + minute);
                         //设置时间的位置
-                    setsystem.setDate(year, mon - 1, day);
-                       setsystem.setTime(hour, minute);
+//                    setsystem.setDate(year, mon - 1, day);
+//                       setsystem.setTime(hour, minute);
                         Log.e(TAG, "设备登录时间 " + year + "!" + mon + "!" + day + "//////" + hour + "" + minute);
                     }
 
@@ -811,8 +811,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent intentphone = new Intent();
                     intentphone.setAction("com.wite.positionerwear.phonebook");
                     mContext.sendBroadcast(intentphone);
-                    Log.e(TAG, "发送了广播"+intentphone.getAction() );
-
+                    Log.e(TAG, "发送了广播" + intentphone.getAction());
 
 
                     Log.e(TAG, "指令名称:BP14***LocationService====" + LocationService.BP14);
@@ -847,7 +846,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
 
 
-
                 case LocationService.BP15:
                     Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP15***LocationService====" + LocationService.BP15, Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "指令名称:BP15***LocationService====" + LocationService.BP15);
@@ -872,6 +870,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case LocationService.BP17:
                     Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP17***LocationService====" + LocationService.BP17, Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "指令名称:BP17***LocationService====" + LocationService.BP17);
+
+
 
 
                     break;
@@ -1369,10 +1369,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String test = "IWBPGL,353456789012345,080835,6654111|133xxxxxxxx|D3590D54|0,6654112|133xxxxxxxx|D3590D54|0,6654113|133xxxxxxxx|D3590D54|0,6654114|133xxxxxxxx|D3590D54|0,6654115|133xxxxxxxx|D3590D54|0,6654116|133xxxxxxxx|D3590D54|0,6654117|133xxxxxxxx|D3590D54|0,6654118|133xxxxxxxx|D3590D54|0,6654119|133xxxxxxxx|D3590D54|0,6654120|133xxxxxxxx|D3590D54|0#";
 
 //切换成数据库更好
-                    // String[] BPGL = intent.getStringExtra(LocationService.BPGL).substring(0, intent.getStringExtra(LocationService.BPGL).length() - 1).split(",");
-                    // String[] newBPGL = intent.getStringExtra(LocationService.BPGL).substring(29, intent.getStringExtra(LocationService.BPGL).length() - 1).split(",");
-                    String[] BPGL = test.substring(0, test.length() - 1).split(",");
-                    String[] newBPGL = test.substring(29, test.length() - 1).split(",");
+                    String[] BPGL = intent.getStringExtra(LocationService.BPGL).substring(0, intent.getStringExtra(LocationService.BPGL).length() - 1).split(",");
+                    String[] newBPGL = intent.getStringExtra(LocationService.BPGL).substring(30, intent.getStringExtra(LocationService.BPGL).length() - 1).split(",");
+//                    String[] BPGL = test.substring(0, test.length() - 1).split(",");
+//                    String[] newBPGL = test.substring(29, test.length() - 1).split(",");
 
 //                    SharedPreferences guardian=mContext.getSharedPreferences("Guardian",MODE_PRIVATE);
 //
@@ -1383,7 +1383,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         GuardianString = newBPGL[i].split("[|]");
                         Guavalues = new ContentValues();
                         Guavalues.put("id", GuardianString[0]);
-                        Guavalues.put("phone", GuardianString[1]);
+                        Log.e(TAG, "1145284 是不是这个 "+ GuardianString[0]);
+                        if( GuardianString[1]!=null){
+                            Guavalues.put("phone",GuardianString[1]);
+                        }else{
+                            Guavalues.put("phone","");
+                            Log.e(TAG, "服务器没有下发监护人电话号" );
+                        }
+
+
                         Guavalues.put("name", UnicodeUtil.UNstringToUnicode(GuardianString[2].toString()));
                         mGuaDBHelper.insert(Guavalues);
                     }
