@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-
+    android:sharedUserId="android.uid.system"
     package="com.wite.positionerwear">
 
 
@@ -101,6 +101,16 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+
+          <!--注册phone广播接受者 刷新UI-->
+    <!--    <receiver android:name=".phoneReceiver>
+            <intent-filter >
+                <action android:name="com.wite.positionerwear.phonebook"/>
+            </intent-filter>
+        </receiver>-->
+
+
 
         <service android:name=".service.BackgroundService" />
 

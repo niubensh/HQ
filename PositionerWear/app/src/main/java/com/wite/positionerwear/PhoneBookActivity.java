@@ -1,7 +1,10 @@
 package com.wite.positionerwear;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,8 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thinkrace.orderlibrary.OrderUtil;
-import com.wite.positionerwear.model.PhoneUser;
 import com.wite.positionerwear.DBHelper.DBHelper;
+import com.wite.positionerwear.model.PhoneUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -95,6 +98,13 @@ public class PhoneBookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_book);
+
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.wite.positionerwear.phonebook");
+        registerReceiver(phoneReceiver, filter);
+
+
 
         tv_time = (TextView) findViewById(R.id.tv_time);
 
@@ -312,4 +322,34 @@ public class PhoneBookActivity extends AppCompatActivity {
 
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(phoneReceiver);
+
+    }
+
+//    public class PhoneReceiver extends BroadcastReceiver {
+//        public void onReceive(Context context, Intent intent) {
+//
+//            Toast.makeText(context, "接收到了广播", Toast.LENGTH_SHORT).show();
+//            Log.e(TAG, "接收到了广播------------------" );
+//                    mAdapter.notifyDataSetChanged();
+//            mRecyclerView.setAdapter(mAdapter);
+//
+//        }
+//    }
+
+    private BroadcastReceiver phoneReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            lists.clear();
+            lists.addAll(initData());
+            mAdapter.notifyDataSetChanged();
+        }
+    };
+
+
+
 }

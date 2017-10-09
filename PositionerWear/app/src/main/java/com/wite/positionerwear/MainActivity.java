@@ -72,9 +72,7 @@ import java.util.TimeZone;
 //2017年9月15日 09:54:44
 //富强、民主、文明、和谐、自由、平等、公正、法治、爱国、敬业、诚信、友善
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private final int REQUEST_CONTACT = 1;
-    private static String SMS_SEND_ACTIOIN = "SMS_SEND_ACTIOIN";
-    private static String SMS_DELIVERED_ACTION = "SMS_DELIVERED_ACTION";
+
     //接收下发的联系人
     List<PhoneUser> phoneuser = new ArrayList<>();
     private static final String TAG = "TAG";
@@ -628,30 +626,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         Log.e(TAG, "现在时间 " + BP00_login.trim());
 
-
-//                        //需要加入系统权限
-//
-//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");//小写的mm表示的是分钟
-//                        Date date = new Date();
-//                        try {
-//                            date = sdf.parse(BP00_login);
-//                            Log.e(TAG, "-------- " + date.toString());
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//
-//                        Calendar c = Calendar.getInstance();
-//                        c.setTime(date);
-//                        int year = c.get(Calendar.YEAR);
-//                        int mon  = c.get(Calendar.MONTH);
-//                        int day  = c.get(Calendar.DATE);
-//                        int hour = c.get(Calendar.HOUR);//小时
-//                      int minute = c.get(Calendar.MINUTE);//分
-                        //              setsystem.setDate(year, mon, day);
-                        //               setsystem.setTime(hour, minute);
-
-
                         int year = Integer.valueOf(BP00_login.trim().substring(0, 4));
                         Log.e(TAG, "现在时间 " + year);
 
@@ -661,20 +635,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         int day = Integer.valueOf(BP00_login.trim().substring(8, 10));
                         Log.e(TAG, "现在时间 " + day);
-
                         int hour = Integer.valueOf(BP00_login.trim().substring(11, 13));
                         Log.e(TAG, "现在时间 " + hour);
-
                         int minute = Integer.valueOf(BP00_login.trim().substring(14, 16));
-
                         Log.e(TAG, "现在时间 " + minute);
-
-
                         //设置时间的位置
-//                        setsystem.setDate(year, mon - 1, day);
-//                        setsystem.setTime(hour, minute);
-
-
+                    setsystem.setDate(year, mon - 1, day);
+                       setsystem.setTime(hour, minute);
                         Log.e(TAG, "设备登录时间 " + year + "!" + mon + "!" + day + "//////" + hour + "" + minute);
                     }
 
@@ -835,90 +802,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //接收联系人下发
                 case LocationService.BP14:
+                    //为什么要把简单的事情 搞得很复杂
                     dbHelper = new DBHelper(MainActivity.this, "phone", 1);
                     dbHelper.celer();
 
+
+                    //发送广播刷新UI
+                    Intent intentphone = new Intent();
+                    intentphone.setAction("com.wite.positionerwear.phonebook");
+                    mContext.sendBroadcast(intentphone);
+                    Log.e(TAG, "发送了广播"+intentphone.getAction() );
+
+
+
                     Log.e(TAG, "指令名称:BP14***LocationService====" + LocationService.BP14);
                     String[] BP14 = intent.getStringExtra(LocationService.BP14).split(",");
-
+                    String[] newBP14 = intent.getStringExtra(LocationService.BP14).substring(30, intent.getStringExtra(LocationService.BP14).length() - 1).split(",");
+                    Log.e(TAG, "修改过后的指令==========" + intent.getStringExtra(LocationService.BP14).substring(30, intent.getStringExtra(LocationService.BP14).length()));
+                    Log.e(TAG, "下发的电话号码的长度是" + newBP14.length);
                     StringBuffer sb = new StringBuffer();
-                    for (int i = 3; i < BP14.length; i++) {
-                        if (BP14[i] == null || BP14[i] == "" || BP14[i].equals("#") || BP14[i].isEmpty() == true || BP14[i] == "#") {
-
-                            if (BP14[3] == null || BP14[3] == "") {
+                    for (int i = 0; i < newBP14.length; i++) {
+                        if (newBP14[i] == null || newBP14[i] == "" || newBP14[i].equals("#") || newBP14[i].isEmpty() == true || newBP14[i] == "#") {
+                            if (newBP14[i] == null || newBP14[i] == "") {
                                 dbHelper.celer();
                                 orderUtil.send("IWAP14", BP14[2]);
-
                             }
-
                         } else {
-                            Log.e(TAG, "onReceive: i=" + i);
                             mPhoneUser = new PhoneUser();
-                            String[] test = BP14[i].split("\\|");
+                            String[] test = newBP14[i].split("\\|");
                             mPhoneUser.setName(UnicodeUtil.UNstringToUnicode(test[0].toString()));
                             mPhoneUser.setPhonenum(test[1]);
-
-                            /* Log.e(TAG, "onReceive: 清空数据库"); dbHelper.celer();*/
-                            List<PhoneUser> list = new ArrayList<>(); /*调用query()获取Cursor*/
-                            Cursor c = dbHelper.query();
-                            while (c.moveToNext()) {
-                                PhoneUser p = new PhoneUser();
-                                p.set_id(c.getInt(c.getColumnIndex("_id")));
-                                p.setName(c.getString(c.getColumnIndex("name")));
-                                p.setPhonenum(c.getString(c.getColumnIndex("phonenum")));
-                                p.setIntime(c.getString(c.getColumnIndex("inttime")));
-                                p.setLetter(c.getString(c.getColumnIndex("letter")));
-                                list.add(p);
-                            }
-                            List<PhoneUser> list_phoneuser = list;
-                            Log.e(TAG, "onReceive: -------姓名：" + mPhoneUser.getName() + "电话号码：---------------" + mPhoneUser.getPhonenum() + "集合总共有" + list_phoneuser.size());
-
-                            if (list_phoneuser.size() > 0) {
-                                for (int z = 0; z < list_phoneuser.size(); z++) {
-                                    //  for (PhoneUser phone : list_phoneuser) {
-                                    PhoneUser phone = list_phoneuser.get(z);
-                                    if (phone.getPhonenum().equals(mPhoneUser.getPhonenum()) && phone.getName().equals(mPhoneUser.getName())) {
-                                        Log.e(TAG, "试图加入相同名字和相同手机号的联系人 " + phone.getName() + phone.getPhonenum());
-                                        break;
-                                    } else {
-                                        //修改了条件
-                                        ContentValues values = new ContentValues();
-                                        values.put("name", phone.getName());
-                                        values.put("Phonenum", phone.getPhonenum());
-                                        dbHelper.insert(values);
-                                    /*回复指令*/
-                                    }
-
-                                    // sb.append(BP14[z]);
-                                    //  sb.append(",");
-
-                                }
-                            } else {
-
-                                //修改！！！！！！！
-
-                                //   Log.e(TAG, "ELSE又加了一次");
-                                //  ContentValues values = new ContentValues();
-                                //   istrue = true;
-                                // values.put("name", mPhoneUser.getName());
-                                // values.put("Phonenum", mPhoneUser.getPhonenum());
-                                // dbHelper.insert(values);
-                            }
-
+                            ContentValues values = new ContentValues();
+                            values.put("name", mPhoneUser.getName());
+                            values.put("Phonenum", mPhoneUser.getPhonenum());
+                            dbHelper.insert(values);
                         }
-
                     }
-
-
                     if (sb.toString().length() > 0) {
                         orderUtil.send("IWAP14", BP14[2] + "," + BP14[3]);
-
                     } else {
                         orderUtil.send("IWAP14", BP14[2]);
                     }
-
                     //   Log.e(TAG, "回去拼接指令 IWAP14"+BP14[2]+","+ sb.toString().substring(0, sb.length() - 1)+"#" );
                     break;
+
+
 
                 case LocationService.BP15:
                     Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP15***LocationService====" + LocationService.BP15, Toast.LENGTH_SHORT).show();
