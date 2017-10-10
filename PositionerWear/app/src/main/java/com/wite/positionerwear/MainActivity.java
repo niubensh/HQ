@@ -151,10 +151,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 
+
         Intent i = new Intent(MainActivity.this, BackgroundService.class);
         startService(i);
-
-
         mContext = MainActivity.this;
         //wifi帮助类
         mWifiUtil = new WifiUtil(this);
@@ -164,49 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //    testzz();
         startGps();
         iscall = true;
-
-        //桌面角标！
-        messagetext = (TextView) findViewById(R.id.textview_message);
-
-
-        MessageDBHelper mMessagecount = new MessageDBHelper(MainActivity.this);
-
-
-        int messagecount = mMessagecount.queryforisread();
-        if (messagecount > 0) {
-            messagetext.setText(messagecount);
-        } else {
-            messagetext.setVisibility(View.GONE);
-        }
-
-        mochattext = (TextView) findViewById(R.id.textview_mochat);
-
-        VoiceDBHelper mVoicecount = new VoiceDBHelper(MainActivity.this);
-
-
-        int voicecount = mVoicecount.queryforisread();
-        if (voicecount > 0) {
-            mochattext.setText(voicecount);
-        } else {
-            mochattext.setVisibility(View.GONE);
-        }
-        misscalltext = (TextView) findViewById(R.id.textview_misscall);
-        int misscall = readMissCall();
-        if (misscall > 0) {
-            misscalltext.setText(misscall + "");
-        } else {
-            misscalltext.setVisibility(View.GONE);
-        }
-        ////////////////-------------------------------测试
-        if (misscall > 0 || voicecount > 0 || messagecount > 0) {
-            Toast.makeText(mContext, "有未读消息", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(mContext, "没有未读消息", Toast.LENGTH_SHORT).show();
-
-            startActivity(new Intent(this, Main2Activity.class));
-
-        }
-
+       //-----------
 
         if (level == 100) {
             betterlevel = level + "";
@@ -447,7 +404,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         filter.addAction(LocationService.BPVU);
         filter.addAction(LocationService.BPNS);
         filter.addAction(LocationService.BPWS);
-
         filter.addAction(LocationService.BPCD);
 
 
@@ -514,6 +470,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_month = (TextView) findViewById(R.id.month);
         tv_am = (TextView) findViewById(R.id.tv_am);
     }
+
+  //判断是否有未读消息
+    @Override
+    protected void onResume() {
+        super.onResume();
+//桌面角标！
+        messagetext = (TextView) findViewById(R.id.textview_message);
+        MessageDBHelper mMessagecount = new MessageDBHelper(MainActivity.this);
+        int messagecount = mMessagecount.queryforisread();
+        if (messagecount > 0) {
+            messagetext.setText(messagecount);
+        } else {
+            messagetext.setVisibility(View.GONE);
+        }
+
+        mochattext = (TextView) findViewById(R.id.textview_mochat);
+
+        VoiceDBHelper mVoicecount = new VoiceDBHelper(MainActivity.this);
+
+
+        int voicecount = mVoicecount.queryforisread();
+        if (voicecount > 0) {
+            mochattext.setText(voicecount);
+        } else {
+            mochattext.setVisibility(View.GONE);
+        }
+        misscalltext = (TextView) findViewById(R.id.textview_misscall);
+        int misscall = readMissCall();
+        if (misscall > 0) {
+            misscalltext.setText(misscall + "");
+        } else {
+            misscalltext.setVisibility(View.GONE);
+        }
+        ////////////////-------------------------------测试
+        if (misscall > 0 || voicecount > 0 || messagecount > 0) {
+            Toast.makeText(mContext, "有未读消息", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, "没有未读消息", Toast.LENGTH_SHORT).show();
+
+            startActivity(new Intent(this, Main2Activity.class));
+
+        }
+
+
+       }
+
 
 
     @Override
@@ -640,8 +642,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int minute = Integer.valueOf(BP00_login.trim().substring(14, 16));
                         Log.e(TAG, "现在时间 " + minute);
                         //设置时间的位置
-//                    setsystem.setDate(year, mon - 1, day);
-//                       setsystem.setTime(hour, minute);
+                     setsystem.setDate(year, mon - 1, day);
+                     setsystem.setTime(hour, minute);
                         Log.e(TAG, "设备登录时间 " + year + "!" + mon + "!" + day + "//////" + hour + "" + minute);
                     }
 
@@ -811,7 +813,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent intentphone = new Intent();
                     intentphone.setAction("com.wite.positionerwear.phonebook");
                     mContext.sendBroadcast(intentphone);
-                    Log.e(TAG, "发送了广播" + intentphone.getAction());
+                    Log.e(TAG, "发送了广播 用于更新电话本" + intentphone.getAction());
 
 
                     Log.e(TAG, "指令名称:BP14***LocationService====" + LocationService.BP14);
@@ -870,10 +872,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case LocationService.BP17:
                     Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP17***LocationService====" + LocationService.BP17, Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "指令名称:BP17***LocationService====" + LocationService.BP17);
-
-
-
-
                     break;
                 //重启设备
                 case LocationService.BP18:
@@ -1496,6 +1494,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mVoiceDBHelper.insert(voice);
 
 
+                    //发送广播有新的语音
+                    Intent addmochat = new Intent();
+                    addmochat.setAction("com.wite.positionerwear.addmochat");
+                    mContext.sendBroadcast(addmochat);
+
+
+
                     break;
 
 
@@ -1560,9 +1565,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         mContentValues.put("messageintime", intime.format(inDate));
                         //设置读取状态
                         mContentValues.put("isreade", 0);
-
-
                         messageDBHelper.insert(mContentValues);
+
+                        //发送广播有新的message
+                        Intent addmessage = new Intent();
+                        addmessage.setAction("com.wite.positionerwear.addmessage");
+                        mContext.sendBroadcast(addmessage);
+
+
 
                         orderUtil.send("IWAPCD", BPCD[1] + "," + BPCD[3] + "," + BPCD[4] + ",1");
 
@@ -1881,6 +1891,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+APDF***LocationService====" + LocationService.APDF, Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "指令名称:APDF***LocationService====" + LocationService.APDF);
                     break;
+
+                //
                 case LocationService.AP96:
                     Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP96***LocationService====" + LocationService.AP96, Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "指令名称:AP96***LocationService====" + LocationService.AP96);

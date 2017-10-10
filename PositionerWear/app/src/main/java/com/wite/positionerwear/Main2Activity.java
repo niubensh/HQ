@@ -144,6 +144,12 @@ public class Main2Activity extends AppCompatActivity {
         //获取信号质量
         TelephonyManager telephoneManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
+        if (telephoneManager.getSimSerialNumber() == null || telephoneManager.getSimSerialNumber().equals("")) {
+
+            Toast.makeText(this, "对不起请插入SIM卡", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "对不起请插入SIM卡");
+        }
+
         PhoneStateListener phoneStateListener = new PhoneStateListener() {
             //   onSignalStrengthsChanged
 
@@ -156,6 +162,7 @@ public class Main2Activity extends AppCompatActivity {
                 if (strength != null) {
                     phonestate.setBackground(null);
                 }
+
 
                 if (strength >= 10) {
                     phonestate.setImageResource(R.drawable.signal5);
@@ -172,20 +179,6 @@ public class Main2Activity extends AppCompatActivity {
                 }
 
 
-//                if (type == TelephonyManager.NETWORK_TYPE_UMTS || type == TelephonyManager.NETWORK_TYPE_HSDPA) {
-//                    sb.append("联通3g").append("信号强度:").append(strength);
-//                } else if (type == TelephonyManager.NETWORK_TYPE_GPRS || type == TelephonyManager.NETWORK_TYPE_EDGE) {
-//                    sb.append("移动或者联通2g").append("信号强度:").append(strength);
-//                } else if (type == TelephonyManager.NETWORK_TYPE_CDMA) {
-//                    sb.append("电信2g").append("信号强度:").append(strength);
-//                } else if (type == TelephonyManager.NETWORK_TYPE_EVDO_0 || type == TelephonyManager.NETWORK_TYPE_EVDO_A) {
-//                    sb.append("电信3g").append("信号强度:").append(strength);
-//                } else {
-//                    sb.append("非以上信号").append("信号强度:").append(strength);
-//                }
-//
-
-
             }
         };
 
@@ -196,6 +189,12 @@ public class Main2Activity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         //电池电量广播
         filter.addAction(Intent.ACTION_BATTERY_CHANGED);
+
+        filter.addAction("com.wite.positionerwear.addmochat");
+
+        filter.addAction("com.wite.positionerwear.addmessage");
+
+        filter.addAction("com.wite.positionerwear.addmissdcall");
 
 
         registerReceiver(myReceiver, filter);
@@ -215,29 +214,48 @@ public class Main2Activity extends AppCompatActivity {
     private BroadcastReceiver myReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             if (intent.getAction() == Intent.ACTION_BATTERY_CHANGED) {
                 final int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN); /* boolean isCharging = false;*/
                 boolean mCharged = (status == BatteryManager.BATTERY_STATUS_FULL);
                 boolean isCharging = (mCharged || status == BatteryManager.BATTERY_STATUS_CHARGING);
                 int level = (int) (100f * intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0) / intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100));
 
+                int test = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
+                if (test == BatteryManager.BATTERY_STATUS_CHARGING) {
+                    Log.e(TAG, "----------------正在充电中-----------------------");
+                    Toast.makeText(context, "正在充电", Toast.LENGTH_SHORT).show();
 
-                if (level == 100) {
-                    battery.setImageResource(R.drawable.electricity5);
-                } else if (level < 100 && level > 80) {
-                    battery.setImageResource(R.drawable.electricity4);
-                } else if (level < 80 && level > 60) {
-                    battery.setImageResource(R.drawable.electricity3);
-                } else if (level < 60 && level > 40) {
-                    battery.setImageResource(R.drawable.electricity2);
-                } else if (level < 40 && level > 20) {
-                    battery.setImageResource(R.drawable.electricity1);
-                } else if (level < 20 && level > 0) {
-                    battery.setImageResource(R.drawable.electricity0);
+                } else {
+                    Log.e(TAG, "----------------没有检测 显示当前电量-----------------------");
+                    if (level == 100) {
+                        battery.setImageResource(R.drawable.electricity5);
+                    } else if (level < 100 && level > 80) {
+                        battery.setImageResource(R.drawable.electricity4);
+                    } else if (level < 80 && level > 60) {
+                        battery.setImageResource(R.drawable.electricity3);
+                    } else if (level < 60 && level > 40) {
+                        battery.setImageResource(R.drawable.electricity2);
+                    } else if (level < 40 && level > 20) {
+                        battery.setImageResource(R.drawable.electricity1);
+                    } else if (level < 20 && level > 0) {
+                        battery.setImageResource(R.drawable.electricity0);
+                    }
+
+
                 }
 
 
             }
+
+
+            //如果有新消息 返回主页面
+            if (intent.getAction() == "com.wite.positionerwear.addmochat" || intent.getAction() == "com.wite.positionerwear.addmessage" || intent.getAction() == "com.wite.positionerwear.addmissdcall") {
+
+                startActivity(new Intent(Main2Activity.this, MainActivity.class));
+
+            }
+
 
         }
     };
@@ -268,7 +286,6 @@ public class Main2Activity extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
 
 
-
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 event.startTracking();
                 if (event.getRepeatCount() == 0) {
@@ -288,6 +305,12 @@ public class Main2Activity extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
 
             startActivity(new Intent(this, MenuActivity.class));
+
+
+        }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //不允许返回主界面
+            return true;
 
 
         }
