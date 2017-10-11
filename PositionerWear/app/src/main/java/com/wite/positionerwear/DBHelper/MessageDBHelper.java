@@ -36,7 +36,7 @@ public class MessageDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         this.db = db;
-        Log.e(TAG, "onCreate: 创建数据库" );
+        Log.d(TAG, "onCreate: 创建数据库" );
         db.execSQL(CREATE_TBL);
     }
 
@@ -46,14 +46,14 @@ public class MessageDBHelper extends SQLiteOpenHelper {
 //        super.onOpen(db);
 //       // db.execSQL("drop TABLE  message");
 //
-//      //  Log.e(TAG, "onCreate: 创建数据库" );
+//      //  Log.d(TAG, "onCreate: 创建数据库" );
 //    //    db.execSQL(CREATE_TBL);
 //    }
 
     //回调函数，当你构造DBHelper的传递的Version与之前的Version调用此函数
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.e(TAG, "onUpgrade: update Database" );
+        Log.d(TAG, "onUpgrade: update Database" );
     }
     //插入方法
     public void insert(ContentValues values){
@@ -62,14 +62,14 @@ public class MessageDBHelper extends SQLiteOpenHelper {
         //插入数据库中
         db.insert(TABLE_NAME, null, values);
         db.close();
-        Log.e(TAG, "insert: 插入数据库 表名："+TABLE_NAME );
+        Log.d(TAG, "insert: 插入数据库 表名："+TABLE_NAME );
     }
     //查询方法
     public Cursor query(){
         SQLiteDatabase db = getReadableDatabase();
         //获取Cursor
         Cursor c = db.query(TABLE_NAME, null, null, null, null, null, null, null);
-        Log.e(TAG, "query: 查询全部数据"+TABLE_NAME );
+        Log.d(TAG, "query: 查询全部数据"+TABLE_NAME );
         return c;
     }
 
@@ -79,7 +79,7 @@ public class MessageDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         //获取Cursor
         Cursor c = db.query(TABLE_NAME, null,"id=?", argment, null, null, null, null);
-        Log.e(TAG, "query: 查询全部数据" + TABLE_NAME);
+        Log.d(TAG, "query: 查询全部数据" + TABLE_NAME);
         return c;
     }
 
@@ -105,12 +105,12 @@ public class MessageDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE_NAME, "_id=?", new String[]{String.valueOf(id)});
 
-        Log.e(TAG, "delete: 很据id删除数据"+id );
+        Log.d(TAG, "delete: 很据id删除数据"+id );
     }
     public void celer(){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM "+TABLE_NAME);
-        Log.e(TAG, "celer: 清空数据" );
+        Log.d(TAG, "celer: 清空数据" );
     }
 
 
@@ -120,7 +120,7 @@ public class MessageDBHelper extends SQLiteOpenHelper {
     public void update(ContentValues values, String whereClause, String[]whereArgs){
         SQLiteDatabase db = getWritableDatabase();
         db.update(TABLE_NAME, values, whereClause, whereArgs);
-        Log.e(TAG, "update:  更新表"+values);
+        Log.d(TAG, "update:  更新表"+values);
     }
 
 
@@ -129,7 +129,7 @@ public class MessageDBHelper extends SQLiteOpenHelper {
     public void close(){
         if(db != null){
             db.close();
-            Log.e(TAG, "close: 关闭数据库" );
+            Log.d(TAG, "close: 关闭数据库" );
         }
     }
 

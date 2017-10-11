@@ -63,11 +63,11 @@ public class RecordingActivity extends AppCompatActivity {
         mAudioRecoderUtils.setOnAudioStatusUpdateListener(new AudioRecoderUtils.OnAudioStatusUpdateListener() {
                 @Override
                 public void onUpdate(double db, long time) {
-                    Log.e(TAG, "录音中"+db+"时间"+time );
+                    Log.d(TAG, "录音中"+db+"时间"+time );
                 }
                 @Override
                 public void onStop(String filePath) {
-                    Log.e(TAG, "停止 文件保存位置"+filePath  );
+                    Log.d(TAG, "停止 文件保存位置"+filePath  );
                     redingpath=filePath;
                 }
             });
@@ -100,7 +100,7 @@ public class RecordingActivity extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             image.setVisibility(View.GONE);
             mAudioRecoderUtils.stopRecord();
-            Log.e(TAG, "onClick: 停止录音" );
+            Log.d(TAG, "onClick: 停止录音" );
             send.setVisibility(View.VISIBLE);
             final AnimationDrawable animsend = (AnimationDrawable) send.getBackground();
             animsend.start();
@@ -118,7 +118,7 @@ public class RecordingActivity extends AppCompatActivity {
             map.put("Long",String.valueOf(stopttime-starttime));
             map.put("Type","1");
             map.put("Target","");
-            Log.e(TAG, "IMEI"+imei+"录音时长" +String.valueOf(stopttime-starttime)+"Type==1");
+            Log.d(TAG, "IMEI"+imei+"录音时长" +String.valueOf(stopttime-starttime)+"Type==1");
                 new Thread(){
                     @Override
                     public void run() {
@@ -126,19 +126,19 @@ public class RecordingActivity extends AppCompatActivity {
                         FileUploaderUtil.upload("http://iwapi.gpscar.cn/api/Files/PostFile", new File(redingpath), map, new FileUploaderUtil.FileUploadListener() {
                             @Override
                             public void onProgress(long pro, double precent) {
-                                Log.e(TAG,  precent+"" );
+                                Log.d(TAG,  precent+"" );
 
                             }
 
                             @Override
                             public void onFinish(int code, String res, Map<String, List<String>> headers) {
-                                Log.e(TAG,  "res="+res+"code="+code);
-                                Log.e(TAG, "onFinish: 发送完成" );
+                                Log.d(TAG,  "res="+res+"code="+code);
+                                Log.d(TAG, "onFinish: 发送完成" );
                                 finish();
                                 istrue=true;
                             }
                         });
-                        Log.e(TAG, "host:http://iwapi.gpscar.cn/api/Files/PostFile "+new File(redingpath).getPath().toString() );
+                        Log.d(TAG, "host:http://iwapi.gpscar.cn/api/Files/PostFile "+new File(redingpath).getPath().toString() );
 
                     }
                 }.start();

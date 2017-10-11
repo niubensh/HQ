@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myListener = new MyPhoneStateListener();
         telephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         telephonyMgr.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
-        Log.e(TAG, "GSMx信号是多少 " + Gsm);
+        Log.d(TAG, "GSMx信号是多少 " + Gsm);
 
 
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -192,12 +192,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         telephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         //nox 有iemi号
         imei = telephonyMgr.getDeviceId();
-        Log.e(TAG, "++++++++++++++++++++++++onCreate:  设备IMEI号码" + imei);
-        Log.e(TAG, "onCreate: Unicode----------------" + UnicodeUtil.UNstringToUnicode("5f204e09"));
+        Log.d(TAG, "++++++++++++++++++++++++onCreate:  设备IMEI号码" + imei);
+        Log.d(TAG, "onCreate: Unicode----------------" + UnicodeUtil.UNstringToUnicode("5f204e09"));
         sn = telephonyMgr.getSimSerialNumber();
-        Log.e(TAG, "++++++++++++++++++++++++onCreate:  设备SN号码" + sn);
+        Log.d(TAG, "++++++++++++++++++++++++onCreate:  设备SN号码" + sn);
         if (mNetWorkUtils.isNetworkConnected(this) || mNetWorkUtils.isWifiConnected(this)) {
-            Log.e(TAG, "开始GPS");
+            Log.d(TAG, "开始GPS");
             Toast.makeText(mContext, "网络连接正常", Toast.LENGTH_SHORT).show();
         } else {
 
@@ -415,22 +415,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void sendOrderSuccess(String s) {
-                Log.e(TAG, "order发送指令成功: " + s);
+                Log.d(TAG, "order发送指令成功: " + s);
 
             }
 
             @Override
             public void sendOrderFail(String s) {
 
-                Log.e(TAG, "order发送指令失败: " + s);
+                Log.d(TAG, "order发送指令失败: " + s);
 
 
                 if (mNetWorkUtils.isMobileConnected(MainActivity.this) || mNetWorkUtils.isWifiConnected(MainActivity.this)) {
 
 
                     orderUtil.loginPkg(imei);
-                    Log.e(TAG, "sendOrderFail:  再发一遍 好吧  谁怕谁啊 ");
-                    Log.e(TAG, "开始GPS");
+                    Log.d(TAG, "sendOrderFail:  再发一遍 好吧  谁怕谁啊 ");
+                    Log.d(TAG, "开始GPS");
 
 
                 }
@@ -440,7 +440,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void receiverOrder(String s) {
-                Log.e(TAG, "order接收指令: " + s);
+                Log.d(TAG, "order接收指令: " + s);
             }
         });
 
@@ -540,44 +540,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //网络状态
                 case ConnectivityManager.CONNECTIVITY_ACTION:
 
-                    Log.e(TAG, "监听到广播" + Context.CONNECTIVITY_SERVICE);
+                    Log.d(TAG, "监听到广播" + Context.CONNECTIVITY_SERVICE);
                     ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
                     NetworkInfo wifiNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
                     if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
-                        Log.e(TAG, "网络不正常");
+                        Log.d(TAG, "网络不正常");
                     } else {
 
                         //      Toast.makeText(context, "网络正常", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "网络正常进入TRY");
+                        Log.d(TAG, "网络正常进入TRY");
                         try {
-                            Log.e(TAG, "开始发送登陆指令");
+                            Log.d(TAG, "开始发送登陆指令");
                             orderUtil.loginPkg(imei);
 
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
-                            Log.e(TAG, "TRY出现错误 捕获到" + e.toString());
+                            Log.d(TAG, "TRY出现错误 捕获到" + e.toString());
                             e.printStackTrace();
                         }
                     }
                     break;
-
                 /**
                  *
                  * */
                 /** 电池电量 */
                 case Intent.ACTION_BATTERY_CHANGED:
-
                     final int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN); /* boolean isCharging = false;*/
                     boolean mCharged = (status == BatteryManager.BATTERY_STATUS_FULL);
                     boolean isCharging = (mCharged || status == BatteryManager.BATTERY_STATUS_CHARGING);
                     level = (int) (100f * intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0) / intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100));
                     if (level < 15) issend = false;
                     else issend = true;
-
                     switch (level) {
-
                         case 75:
                             orderUtil.lowPowerAlarm(level + "");
                             break;
@@ -591,111 +587,101 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             orderUtil.lowPowerAlarm(level + "");
                             break;
                         default:
-                            //   Log.e(TAG, "onReceive: 当前电量" + level);
+                            //   Log.d(TAG, "onReceive: 当前电量" + level);
                             break;
                     }
                     break;
-
-
                 /* ---
                  * 下行协议
                  *
                  * */
                 //登陆回执
                 case LocationService.BP00:
-                    Log.e(TAG, "指令名称++登陆回复包:BP00 ---LocationService====" + LocationService.BP00);
+                    Log.d(TAG, "指令名称++登陆回复包:BP00 ---LocationService====" + LocationService.BP00);
                     String testBP00 = intent.getStringExtra(LocationService.BP00);
                     if (testBP00 == null || testBP00 == "") {
-                        Log.e(TAG, "onReceive: 如果没有拿到登陆数据");
+                        Log.d(TAG, "onReceive: 如果没有拿到登陆数据");
                         orderUtil.baseStationTiming(mStationInfo.getMCC() + "", mStationInfo.getMNC() + "", mStationInfo.getLAC() + "", mStationInfo.getCID() + "");
-                        Log.e(TAG, "-------MMC= " + mStationInfo.getMCC() + "MNC" + mStationInfo.getMNC() + "LAC=" + mStationInfo.getLAC() + "CID" + mStationInfo.getCID());
-
+                        Log.d(TAG, "-------MMC= " + mStationInfo.getMCC() + "MNC" + mStationInfo.getMNC() + "LAC=" + mStationInfo.getLAC() + "CID" + mStationInfo.getCID());
                     } else {
-                        Log.e(TAG, "我全都知道了");
+                        Log.d(TAG, "我全都知道了");
                         String[] BP00 = testBP00.split(",");
-                        Log.e(TAG, "登陆 回执" + BP00[1]);
+                        Log.d(TAG, "登陆 回执" + BP00[1]);
                         String bp00str = BP00[1];
                         String bp00_string;
                         if (bp00str.substring((bp00str.length() - 1), bp00str.length()).equals("#")) {
                             bp00_string = bp00str.substring(0, bp00str.length() - 1);
-                            Log.e(TAG, "onReceive: 我的屁股有个#######");
+                            Log.d(TAG, "onReceive: 我的屁股有个#######");
                         } else bp00_string = bp00str;
                         TimeConverterUtil mTimeConverterUtil = new TimeConverterUtil();
-
-                        Log.e(TAG, "++++++++++++++++++: " + bp00_string);
-
+                        Log.d(TAG, "++++++++++++++++++: " + bp00_string);
                         String BP00_login = mTimeConverterUtil.converTime(bp00_string, TimeZone.getDefault());
                         //   String BP00_login = mTimeConverterUtil.utc2Local(bp00_string, "yyyy-MM-ddHH:mm:ss:");
-
-                        Log.e(TAG, "现在时间 " + BP00_login.trim());
-
+                        Log.d(TAG, "现在时间 " + BP00_login.trim());
                         int year = Integer.valueOf(BP00_login.trim().substring(0, 4));
-                        Log.e(TAG, "现在时间 " + year);
-
-
+                        Log.d(TAG, "现在时间 " + year);
                         int mon = Integer.valueOf(BP00_login.trim().substring(5, 7));
-                        Log.e(TAG, "现在时间 " + mon);
-
+                        Log.d(TAG, "现在时间 " + mon);
                         int day = Integer.valueOf(BP00_login.trim().substring(8, 10));
-                        Log.e(TAG, "现在时间 " + day);
+                        Log.d(TAG, "现在时间 " + day);
                         int hour = Integer.valueOf(BP00_login.trim().substring(11, 13));
-                        Log.e(TAG, "现在时间 " + hour);
+                        Log.d(TAG, "现在时间 " + hour);
                         int minute = Integer.valueOf(BP00_login.trim().substring(14, 16));
-                        Log.e(TAG, "现在时间 " + minute);
+                        Log.d(TAG, "现在时间 " + minute);
                         //设置时间的位置
                         setsystem.setDate(year, mon - 1, day);
                         setsystem.setTime(hour, minute);
-                        Log.e(TAG, "设备登录时间 " + year + "!" + mon + "!" + day + "//////" + hour + "" + minute);
+                        Log.d(TAG, "设备登录时间 " + year + "!" + mon + "!" + day + "//////" + hour + "" + minute);
                     }
 
 
                     break;
 
                 case LocationService.BPLN:
-                    Log.e(TAG, "指令名称:BPLN ---LocationService====" + LocationService.BPLN);
+                    Log.d(TAG, "指令名称:BPLN ---LocationService====" + LocationService.BPLN);
                     break;
                 case LocationService.BPLO:
-                    Log.e(TAG, "指令名称:BPLO ---LocationService====" + LocationService.BPLO);
+                    Log.d(TAG, "指令名称:BPLO ---LocationService====" + LocationService.BPLO);
                     break;
                 case LocationService.BPCM:
-                    Log.e(TAG, "指令名称:BPCM ---LocationService====" + LocationService.BPCM);
+                    Log.d(TAG, "指令名称:BPCM ---LocationService====" + LocationService.BPCM);
                     break;
                 case LocationService.BP02:
-                    Log.e(TAG, "指令名称:BP02 ---LocationService====" + LocationService.BP02);
+                    Log.d(TAG, "指令名称:BP02 ---LocationService====" + LocationService.BP02);
                     break;
                 case LocationService.BPFD:
-                    Log.e(TAG, "指令名称:BPFD ---LocationService====" + LocationService.BPFD);
+                    Log.d(TAG, "指令名称:BPFD ---LocationService====" + LocationService.BPFD);
                     break;
                 case LocationService.BP10:
-                    Log.e(TAG, "指令名称:BP10 ---LocationService====" + LocationService.BP10);
+                    Log.d(TAG, "指令名称:BP10 ---LocationService====" + LocationService.BP10);
                     break;
                 case LocationService.BP03:
-                    Log.e(TAG, "指令名称:BP03 ---LocationService====" + LocationService.BP03);
+                    Log.d(TAG, "指令名称:BP03 ---LocationService====" + LocationService.BP03);
                     break;
                 case LocationService.BP04:
 
-                    Log.e(TAG, "指令名称:BP04 ---LocationService====" + LocationService.BP04);
+                    Log.d(TAG, "指令名称:BP04 ---LocationService====" + LocationService.BP04);
                     break;
                 case LocationService.BP05:
-                    Log.e(TAG, "指令名称:BP05 ---LocationService====" + LocationService.BP05);
+                    Log.d(TAG, "指令名称:BP05 ---LocationService====" + LocationService.BP05);
                     break;
                 case LocationService.BP06:
-                    Log.e(TAG, "指令名称:BP06 ---LocationService====" + LocationService.BP06);
+                    Log.d(TAG, "指令名称:BP06 ---LocationService====" + LocationService.BP06);
                     break;
                 case LocationService.BP39:
-                    Log.e(TAG, "指令名称:BP39 ---LocationService====" + LocationService.BP39);
+                    Log.d(TAG, "指令名称:BP39 ---LocationService====" + LocationService.BP39);
                     break;
                 case LocationService.BP49:
-                    Log.e(TAG, "指令名称:BP49 ---LocationService====" + LocationService.BP49);
+                    Log.d(TAG, "指令名称:BP49 ---LocationService====" + LocationService.BP49);
                     break;
 
                 //基站校时
                 case LocationService.BP53:
-                    Log.e(TAG, "指令名称:BP53 ---LocationService====" + LocationService.BP53);
+                    Log.d(TAG, "指令名称:BP53 ---LocationService====" + LocationService.BP53);
                     String[] BP53 = intent.getStringExtra("BP53").split("，");
 
 
-                    Log.e(TAG, "基站校时" + BP53);
+                    Log.d(TAG, "基站校时" + BP53);
                     Date sysdate = new Date(BP53[1]);
                     setsystem.setDate(sysdate.getYear(), sysdate.getMonth(), sysdate.getDay());
                     setsystem.setTime(sysdate.getDay(), sysdate.getMinutes());
@@ -703,39 +689,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
                 case LocationService.BP54:
-                    Log.e(TAG, "指令名称:BP54 ---LocationService====" + LocationService.BP54);
+                    Log.d(TAG, "指令名称:BP54 ---LocationService====" + LocationService.BP54);
                     break;
                 case LocationService.BP70:
-                    Log.e(TAG, "指令名称:BP70 ---LocationService====" + LocationService.BP70);
+                    Log.d(TAG, "指令名称:BP70 ---LocationService====" + LocationService.BP70);
                     break;
                 case LocationService.BP86:
-                    Log.e(TAG, "指令名称:BP86 ---LocationService====" + LocationService.BP86);
+                    Log.d(TAG, "指令名称:BP86 ---LocationService====" + LocationService.BP86);
                     break;
                 case LocationService.BPTM:
-                    Log.e(TAG, "指令名称:BPTM ---LocationService====" + LocationService.BPTM);
+                    Log.d(TAG, "指令名称:BPTM ---LocationService====" + LocationService.BPTM);
                     break;
 
                 case LocationService.BPHT:
-                    Log.e(TAG, "指令名称:BPHT ---LocationService====" + LocationService.BPHT);
+                    Log.d(TAG, "指令名称:BPHT ---LocationService====" + LocationService.BPHT);
                     break;
                 case LocationService.BPTQ:
-                    Log.e(TAG, "指令名称:BPTQ ---LocationService====" + LocationService.BPTQ);
+                    Log.d(TAG, "指令名称:BPTQ ---LocationService====" + LocationService.BPTQ);
                     break;
                 case LocationService.BP87:
-                    Log.e(TAG, "指令名称:BP87 ---LocationService====" + LocationService.BP87);
+                    Log.d(TAG, "指令名称:BP87 ---LocationService====" + LocationService.BP87);
                     break;
                 case LocationService.BP91:
-                    Log.e(TAG, "指令名称:BP91 ---LocationService====" + LocationService.BP91);
+                    Log.d(TAG, "指令名称:BP91 ---LocationService====" + LocationService.BP91);
                     break;
                 case LocationService.BP01:
-                    Log.e(TAG, "指令名称:BP01 ---LocationService====" + LocationService.BP01);
+                    Log.d(TAG, "指令名称:BP01 ---LocationService====" + LocationService.BP01);
                     break;
                 case LocationService.BP11:
-                    Log.e(TAG, "指令名称:BP11 ---LocationService====" + LocationService.BP11);
+                    Log.d(TAG, "指令名称:BP11 ---LocationService====" + LocationService.BP11);
                     break;
                 /**接受sos号码并存储得到 sos号  getsos()*/
                 case LocationService.BP12:
-                    Log.e(TAG, "指令名称:BP12 ---LocationService====" + LocationService.BP12);
+                    Log.d(TAG, "指令名称:BP12 ---LocationService====" + LocationService.BP12);
                     String[] BP12 = intent.getStringExtra(LocationService.BP12).substring(0, intent.getStringExtra(LocationService.BP12).length() - 1).split(",");
                     if (BP12.length > 3) {
                         String[] newBP12 = new String[]{BP12[3], BP12[4], BP12[5]};
@@ -746,12 +732,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             item.setNumber(newBP12[i]);
                             mSosdbHelper.addItem(item);
                             //
-                            Log.e(TAG, "存放紧急联系人" + item.getName());
+                            Log.d(TAG, "存放紧急联系人" + item.getName());
                         }
 
                         ArrayList<com.wite.positionerwear.service.Item> lists = mSosdbHelper.getItemList();
                         for (com.wite.positionerwear.service.Item ite : lists) {
-                            Log.e(TAG, "紧急联系人" + ite.getName() + ite.getNumber());
+                            Log.d(TAG, "紧急联系人" + ite.getName() + ite.getNumber());
                         }
                         orderUtil.send("IWAP12", BP12[2] + "," + lists.get(0).getNumber() + "," + lists.get(1).getNumber() + "," + lists.get(2).getNumber() + "#");
 
@@ -763,7 +749,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
                 case LocationService.BP13:
-                    Log.e(TAG, "指令名称:BP13 ---LocationService====" + LocationService.BP13);
+                    Log.d(TAG, "指令名称:BP13 ---LocationService====" + LocationService.BP13);
                     break;
 
                 //接收联系人下发
@@ -777,14 +763,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent intentphone = new Intent();
                     intentphone.setAction("com.wite.positionerwear.phonebook");
                     mContext.sendBroadcast(intentphone);
-                    Log.e(TAG, "发送了广播 用于更新电话本" + intentphone.getAction());
+                    Log.d(TAG, "发送了广播 用于更新电话本" + intentphone.getAction());
 
 
-                    Log.e(TAG, "指令名称:BP14 ---LocationService====" + LocationService.BP14);
+                    Log.d(TAG, "指令名称:BP14 ---LocationService====" + LocationService.BP14);
                     String[] BP14 = intent.getStringExtra(LocationService.BP14).split(",");
                     String[] newBP14 = intent.getStringExtra(LocationService.BP14).substring(30, intent.getStringExtra(LocationService.BP14).length() - 1).split(",");
-                    Log.e(TAG, "修改过后的指令==========" + intent.getStringExtra(LocationService.BP14).substring(30, intent.getStringExtra(LocationService.BP14).length()));
-                    Log.e(TAG, "下发的电话号码的长度是" + newBP14.length);
+                    Log.d(TAG, "修改过后的指令==========" + intent.getStringExtra(LocationService.BP14).substring(30, intent.getStringExtra(LocationService.BP14).length()));
+                    Log.d(TAG, "下发的电话号码的长度是" + newBP14.length);
                     StringBuffer sb = new StringBuffer();
                     for (int i = 0; i < newBP14.length; i++) {
                         if (newBP14[i] == null || newBP14[i] == "" || newBP14[i].equals("#") || newBP14[i].isEmpty() == true || newBP14[i] == "#") {
@@ -808,18 +794,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else {
                         orderUtil.send("IWAP14", BP14[2]);
                     }
-                    //   Log.e(TAG, "回去拼接指令 IWAP14"+BP14[2]+","+ sb.toString().substring(0, sb.length() - 1)+"#" );
+                    //   Log.d(TAG, "回去拼接指令 IWAP14"+BP14[2]+","+ sb.toString().substring(0, sb.length() - 1)+"#" );
                     break;
 
 
                 case LocationService.BP15:
-                    Log.e(TAG, "指令名称:BP15 ---LocationService====" + LocationService.BP15);
+                    Log.d(TAG, "指令名称:BP15 ---LocationService====" + LocationService.BP15);
                     break;
 
               /*立即定位*/
                 //  333
                 case LocationService.BP16:
-                    Log.e(TAG, "指令名称:BP16 ---LocationService====" + LocationService.BP16);
+                    Log.d(TAG, "指令名称:BP16 ---LocationService====" + LocationService.BP16);
                     String[] BP16 = intent.getStringExtra(LocationService.BP16).split(",");
                     lbs = "460,0,9520,3671";
                     if (mStationInfo != null) {
@@ -827,17 +813,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     orderUtil.sendLocationOrder("IWAP01", nowTime, "A", latitude_str + "N", longitude_str + "E", "000.1", GreenwichTime, "323.87" + "", Gsm + "009" + betterlevel + "00102", lbs);
                     orderUtil.sendGPRSIntervalOrder("IWBP15", imei, "080835", "300");
-                    Log.e(TAG, "上行定位信息 " + "IWAP01" + nowTime + "A" + latitude_str + "N" + longitude_str + "E" + speed_str + GreenwichTime + bearing + "" + Gsm + "009" + betterlevel + "00102" + lbs);
+                    Log.d(TAG, "上行定位信息 " + "IWAP01" + nowTime + "A" + latitude_str + "N" + longitude_str + "E" + speed_str + GreenwichTime + bearing + "" + Gsm + "009" + betterlevel + "00102" + lbs);
                     orderUtil.send("IWAP16", BP16[1]);
-                    Log.e(TAG, "回复立即定位指令 ：" + "IWAP16" + BP16[1]);
+                    Log.d(TAG, "回复立即定位指令 ：" + "IWAP16" + BP16[1]);
                     break;
 
                 case LocationService.BP17:
-                    Log.e(TAG, "指令名称:BP17 ---LocationService====" + LocationService.BP17);
+                    Log.d(TAG, "指令名称:BP17 ---LocationService====" + LocationService.BP17);
                     break;
                 //重启设备
                 case LocationService.BP18:
-                    Log.e(TAG, "指令名称:BP18 ---LocationService====" + LocationService.BP18);
+                    Log.d(TAG, "指令名称:BP18 ---LocationService====" + LocationService.BP18);
                     String[] BP18 = intent.getStringExtra(LocationService.BP18).substring(0, intent.getStringExtra(LocationService.BP18).length() - 1).split(",");
                     PowerManager pManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
                     pManager.reboot("");
@@ -845,44 +831,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
 
                 case LocationService.BP19:
-                    Log.e(TAG, "指令名称:BP19 ---LocationService====" + LocationService.BP19);
+                    Log.d(TAG, "指令名称:BP19 ---LocationService====" + LocationService.BP19);
                     break;
                 case LocationService.BP20:
-                    Log.e(TAG, "指令名称:BP20 ---LocationService====" + LocationService.BP20);
+                    Log.d(TAG, "指令名称:BP20 ---LocationService====" + LocationService.BP20);
                     break;
                 case LocationService.BP21:
-                    Log.e(TAG, "指令名称:BP21 ---LocationService====" + LocationService.BP21);
+                    Log.d(TAG, "指令名称:BP21 ---LocationService====" + LocationService.BP21);
                     break;
                 case LocationService.BP22:
-                    Log.e(TAG, "指令名称:BP22 ---LocationService====" + LocationService.BP22);
+                    Log.d(TAG, "指令名称:BP22 ---LocationService====" + LocationService.BP22);
                     break;
                 case LocationService.BP23:
-                    Log.e(TAG, "指令名称:BP23 ---LocationService====" + LocationService.BP23);
+                    Log.d(TAG, "指令名称:BP23 ---LocationService====" + LocationService.BP23);
                     break;
                 //353919025680130
                 case LocationService.BP24:
-                    Log.e(TAG, "指令名称:BP24 ---LocationService====" + LocationService.BP24);
+                    Log.d(TAG, "指令名称:BP24 ---LocationService====" + LocationService.BP24);
                     break;
                 //设置闹钟
                 case LocationService.BP25:
-                    Log.e(TAG, "指令名称:BP25 ---LocationService====" + LocationService.BP25);
-                    Log.e(TAG, intent.getStringExtra(LocationService.BP25));
+                    Log.d(TAG, "指令名称:BP25 ---LocationService====" + LocationService.BP25);
+                    Log.d(TAG, intent.getStringExtra(LocationService.BP25));
                     String[] BP25 = intent.getStringExtra(LocationService.BP25).split(",");
                     if (0 == Integer.valueOf(BP25[4]) || BP25[4].equals("0")) {
                         if (Integer.valueOf(BP25[3]) == 1) {
-                            Log.e(TAG, "onReceive: 闹钟总开关开启");
-                            Log.e(TAG, "闹钟总数" + Integer.valueOf(BP25[4]));
+                            Log.d(TAG, "onReceive: 闹钟总开关开启");
+                            Log.d(TAG, "闹钟总数" + Integer.valueOf(BP25[4]));
                             String bp25 = intent.getStringExtra(LocationService.BP25);
 
                             String newbp25 = bp25.substring(34, bp25.length() - 1);
-                            Log.e(TAG, "newbp25是+++++ " + newbp25);
+                            Log.d(TAG, "newbp25是+++++ " + newbp25);
                             String[] alarm = newbp25.split("@");
-                            Log.e(TAG, "alarm的长度: " + alarm.length);
+                            Log.d(TAG, "alarm的长度: " + alarm.length);
                             for (int j = 0; j < alarm.length; j++) {
                                 String[] alarmagement = alarm[j].split(",");
-                                Log.e(TAG, "alarmagement------------ " + alarmagement[0]);
-                                Log.e(TAG, "星期------------ " + alarmagement[1]);
-                                Log.e(TAG, "开关------------ " + alarmagement[2]);
+                                Log.d(TAG, "alarmagement------------ " + alarmagement[0]);
+                                Log.d(TAG, "星期------------ " + alarmagement[1]);
+                                Log.d(TAG, "开关------------ " + alarmagement[2]);
                                 String[] dateas;
 
                                 if (alarmagement[1].length() == 1) {
@@ -894,24 +880,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 for (int d = 0; d < dateas.length; d++) {
                                     if (dateas[d].equals("") == false) {
-                                        Log.e(TAG, "设置的日期是" + dateas[d] + "|");
+                                        Log.d(TAG, "设置的日期是" + dateas[d] + "|");
 
                                         int hour = Integer.parseInt(alarmagement[0].substring(0, 2));
                                         int minute = Integer.parseInt(alarmagement[0].substring(2, alarmagement[0].length()));
-                                        Log.e(TAG, "时：" + hour);
-                                        Log.e(TAG, "分：" + minute);
+                                        Log.d(TAG, "时：" + hour);
+                                        Log.d(TAG, "分：" + minute);
                                         AlarmManagerUtil.setAlarm(MainActivity.this, 1, hour, minute, j, Integer.valueOf(dateas[d]), "你在干什么", 2);
-                                        Log.e(TAG, "onReceive: 闹钟id" + j);
-                                        Log.e(TAG, "设置闹钟" + hour + minute + j + dateas[d]);
+                                        Log.d(TAG, "onReceive: 闹钟id" + j);
+                                        Log.d(TAG, "设置闹钟" + hour + minute + j + dateas[d]);
                                     } else {
-                                        Log.e(TAG, "有一个空值" + dateas[d]);
+                                        Log.d(TAG, "有一个空值" + dateas[d]);
                                     }
                                 }
 
 
                             }
                         } else {
-                            Log.e(TAG, "onReceive: --------------------------------------闹钟总开关关闭");
+                            Log.d(TAG, "onReceive: --------------------------------------闹钟总开关关闭");
                         }
                     }
 
@@ -919,27 +905,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
                 case LocationService.BP26:
-                    Log.e(TAG, "指令名称:BP26 ---LocationService====" + LocationService.BP26);
+                    Log.d(TAG, "指令名称:BP26 ---LocationService====" + LocationService.BP26);
                     break;
 
                 //新语音提醒
                 case LocationService.BP27:
-                    Log.e(TAG, "指令名称:BP27 ---LocationService====" + LocationService.BP27);
+                    Log.d(TAG, "指令名称:BP27 ---LocationService====" + LocationService.BP27);
                     String[] BP27 = intent.getStringExtra(LocationService.BP27).split(",");
-                    Log.e(TAG, "onReceive: ");
+                    Log.d(TAG, "onReceive: ");
                     break;
                 case LocationService.BP28:
-                    Log.e(TAG, "指令名称:BP28 ---LocationService====" + LocationService.BP28);
+                    Log.d(TAG, "指令名称:BP28 ---LocationService====" + LocationService.BP28);
                     break;
                 case LocationService.BP29:
-                    Log.e(TAG, "指令名称:BP29 ---LocationService====" + LocationService.BP29);
+                    Log.d(TAG, "指令名称:BP29 ---LocationService====" + LocationService.BP29);
                     break;
                 case LocationService.BP30:
-                    Log.e(TAG, "指令名称:BP30 ---LocationService====" + LocationService.BP30);
+                    Log.d(TAG, "指令名称:BP30 ---LocationService====" + LocationService.BP30);
                     break;
                 //远程关机
                 case LocationService.BP31:
-                    Log.e(TAG, "指令名称:BP31 ---LocationService====" + LocationService.BP31);
+                    Log.d(TAG, "指令名称:BP31 ---LocationService====" + LocationService.BP31);
                     Intent BP31intent = new Intent("android.intent.action.REBOOT");
                     BP31intent.putExtra("nowait", 1);
                     BP31intent.putExtra("interval", 1);
@@ -951,7 +937,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //拨打电话
                 case LocationService.BP32:
-                    Log.e(TAG, "指令名称:BP32 ---LocationService====" + LocationService.BP32);
+                    Log.d(TAG, "指令名称:BP32 ---LocationService====" + LocationService.BP32);
                     String[] BP32 = intent.getStringExtra(LocationService.BP32).substring(0, intent.getStringExtra(LocationService.BP32).length() - 1).split(",");
                     Intent bp32 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + BP32[3]));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -970,50 +956,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
                 case LocationService.BP33:
-                    Log.e(TAG, "指令名称:BP33 ---LocationService====" + LocationService.BP33);
+                    Log.d(TAG, "指令名称:BP33 ---LocationService====" + LocationService.BP33);
                     break;
                 case LocationService.BP34:
-                    Log.e(TAG, "指令名称:BP34 ---LocationService====" + LocationService.BP34);
+                    Log.d(TAG, "指令名称:BP34 ---LocationService====" + LocationService.BP34);
                     break;
                 case LocationService.BP35:
-                    Log.e(TAG, "指令名称:BP35 ---LocationService====" + LocationService.BP35);
+                    Log.d(TAG, "指令名称:BP35 ---LocationService====" + LocationService.BP35);
                     break;
                 case LocationService.BP36:
-                    Log.e(TAG, "指令名称:BP36 ---LocationService====" + LocationService.BP36);
+                    Log.d(TAG, "指令名称:BP36 ---LocationService====" + LocationService.BP36);
                     break;
                 case LocationService.BP37:
-                    Log.e(TAG, "指令名称:BP37 ---LocationService====" + LocationService.BP37);
+                    Log.d(TAG, "指令名称:BP37 ---LocationService====" + LocationService.BP37);
                     break;
                 case LocationService.BP38:
-                    Log.e(TAG, "指令名称:BP38 ---LocationService====" + LocationService.BP38);
+                    Log.d(TAG, "指令名称:BP38 ---LocationService====" + LocationService.BP38);
                     break;
 
                 //message 文字下发
                 case LocationService.BP40:
-                    Log.e(TAG, "指令名称:BP40 ---LocationService====" + LocationService.BP40);
+                    Log.d(TAG, "指令名称:BP40 ---LocationService====" + LocationService.BP40);
 
                     //String[] BP40=intent.getStringExtra(LocationService.BP40).substring()
 
 
                     break;
                 case LocationService.BP41:
-                    Log.e(TAG, "指令名称:BP41 ---LocationService====" + LocationService.BP41);
+                    Log.d(TAG, "指令名称:BP41 ---LocationService====" + LocationService.BP41);
                     break;
                 case LocationService.BP43:
-                    Log.e(TAG, "指令名称:BP43 ---LocationService====" + LocationService.BP43);
+                    Log.d(TAG, "指令名称:BP43 ---LocationService====" + LocationService.BP43);
                     break;
                 case LocationService.BP44:
-                    Log.e(TAG, "指令名称:BP44 ---LocationService====" + LocationService.BP44);
+                    Log.d(TAG, "指令名称:BP44 ---LocationService====" + LocationService.BP44);
                     break;
                 //静音开关
                 case LocationService.BP45:
-                    Log.e(TAG, "指令名称:BP45 ---LocationService====" + LocationService.BP45);
+                    Log.d(TAG, "指令名称:BP45 ---LocationService====" + LocationService.BP45);
 
                     String[] BP45 = intent.getStringExtra(LocationService.BP45).substring(0, intent.getStringExtra(LocationService.BP45).length() - 1).split(",");
 
                     if (Integer.valueOf(BP45[3]) == 1) {
 
-                        Log.e(TAG, "1 标识开 0标识关  当前状态" + BP45[3]);
+                        Log.d(TAG, "1 标识开 0标识关  当前状态" + BP45[3]);
 
                         setsystem.toMute(audio);
 
@@ -1024,23 +1010,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
                 case LocationService.BP46:
-                    Log.e(TAG, "指令名称:BP46 ---LocationService====" + LocationService.BP46);
+                    Log.d(TAG, "指令名称:BP46 ---LocationService====" + LocationService.BP46);
 
 
                 case LocationService.BP47:
-                    Log.e(TAG, "指令名称:BP47 ---LocationService====" + LocationService.BP47);
+                    Log.d(TAG, "指令名称:BP47 ---LocationService====" + LocationService.BP47);
                     break;
                 case LocationService.BP48:
-                    Log.e(TAG, "指令名称:BP48 ---LocationService====" + LocationService.BP48);
+                    Log.d(TAG, "指令名称:BP48 ---LocationService====" + LocationService.BP48);
                     break;
                 case LocationService.BP50:
-                    Log.e(TAG, "指令名称:BP50 ---LocationService====" + LocationService.BP50);
+                    Log.d(TAG, "指令名称:BP50 ---LocationService====" + LocationService.BP50);
                     break;
 
 
                 //删除联系人
                 case LocationService.BP52:
-                    Log.e(TAG, "指令名称:BP52 ---LocationService====" + LocationService.BP52);
+                    Log.d(TAG, "指令名称:BP52 ---LocationService====" + LocationService.BP52);
                     String[] BP52 = intent.getStringExtra(LocationService.BP52).split(",");
                     dbHelper = new DBHelper(MainActivity.this, "phone", 1);
                     List<PhoneUser> list = new ArrayList<>(); /*调用query()获取Cursor*/
@@ -1057,7 +1043,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     List<PhoneUser> list_phoneuser = list;
                     for (PhoneUser phone : list_phoneuser) {
 
-                        Log.e(TAG, "Main+++++++++++++++++LocationService.BP52:数据库的数据 --- --- --- --- --- ---" + phone.getName() + phone.getPhonenum());
+                        Log.d(TAG, "Main+++++++++++++++++LocationService.BP52:数据库的数据 --- --- --- --- --- ---" + phone.getName() + phone.getPhonenum());
 
                     }
 
@@ -1070,11 +1056,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     for (PhoneUser phone : list_phoneuser)
                         if (phone.getPhonenum() == newstring || phone.getPhonenum().equals(newstring)) {
                             dbHelper.delete(phone.get_id());
-                            Log.e(TAG, "onReceive: 删除了" + phone.get_id());
-                            Log.e(TAG, "已经被删除的_id" + phone.get_id() + "名字" + phone.getName() + "     手机号码" + phone.getPhonenum() + "          头像" + phone.getLetter() + "       时间" + phone.getIntime());
+                            Log.d(TAG, "onReceive: 删除了" + phone.get_id());
+                            Log.d(TAG, "已经被删除的_id" + phone.get_id() + "名字" + phone.getName() + "     手机号码" + phone.getPhonenum() + "          头像" + phone.getLetter() + "       时间" + phone.getIntime());
                         } else {
-                            Log.e(TAG, "没有被删除的_id" + phone.get_id() + "名字" + phone.getName() + "     手机号码" + phone.getPhonenum() + "          头像" + phone.getLetter() + "       时间" + phone.getIntime());
-                            Log.e(TAG, "onReceive: 没有找到");
+                            Log.d(TAG, "没有被删除的_id" + phone.get_id() + "名字" + phone.getName() + "     手机号码" + phone.getPhonenum() + "          头像" + phone.getLetter() + "       时间" + phone.getIntime());
+                            Log.d(TAG, "onReceive: 没有找到");
                         }
                     orderUtil.send("IWAP52", BP52[2] + "," + "1");
 
@@ -1082,78 +1068,78 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 case LocationService.BP55:
-                    Log.e(TAG, "指令名称:BP55 ---LocationService====" + LocationService.BP55);
+                    Log.d(TAG, "指令名称:BP55 ---LocationService====" + LocationService.BP55);
                     break;
 
                 case LocationService.BP56:
-                    Log.e(TAG, "指令名称:BP56 ---LocationService====" + LocationService.BP56);
+                    Log.d(TAG, "指令名称:BP56 ---LocationService====" + LocationService.BP56);
                     break;
                 case LocationService.BP57:
-                    Log.e(TAG, "指令名称:BP57 ---LocationService====" + LocationService.BP57);
+                    Log.d(TAG, "指令名称:BP57 ---LocationService====" + LocationService.BP57);
                     break;
                 case LocationService.BP58:
-                    Log.e(TAG, "指令名称:BP58 ---LocationService====" + LocationService.BP58);
+                    Log.d(TAG, "指令名称:BP58 ---LocationService====" + LocationService.BP58);
                     break;
                 case LocationService.BP59:
-                    Log.e(TAG, "指令名称:BP59 ---LocationService====" + LocationService.BP59);
+                    Log.d(TAG, "指令名称:BP59 ---LocationService====" + LocationService.BP59);
                     break;
                 case LocationService.BP60:
-                    Log.e(TAG, "指令名称:BP60 ---LocationService====" + LocationService.BP60);
+                    Log.d(TAG, "指令名称:BP60 ---LocationService====" + LocationService.BP60);
                     break;
                 case LocationService.BP61:
-                    Log.e(TAG, "指令名称:BP61 ---LocationService====" + LocationService.BP61);
+                    Log.d(TAG, "指令名称:BP61 ---LocationService====" + LocationService.BP61);
                     break;
                 case LocationService.BP62:
-                    Log.e(TAG, "指令名称:BP62 ---LocationService====" + LocationService.BP62);
+                    Log.d(TAG, "指令名称:BP62 ---LocationService====" + LocationService.BP62);
                     break;
                 case LocationService.BP64:
-                    Log.e(TAG, "指令名称:BP64 ---LocationService====" + LocationService.BP64);
+                    Log.d(TAG, "指令名称:BP64 ---LocationService====" + LocationService.BP64);
                     break;
                 case LocationService.BP65:
-                    Log.e(TAG, "指令名称:BP65 ---LocationService====" + LocationService.BP65);
+                    Log.d(TAG, "指令名称:BP65 ---LocationService====" + LocationService.BP65);
                     break;
                 case LocationService.BP66:
-                    Log.e(TAG, "指令名称:BP66 ---LocationService====" + LocationService.BP66);
+                    Log.d(TAG, "指令名称:BP66 ---LocationService====" + LocationService.BP66);
                     break;
                 case LocationService.BP67:
-                    Log.e(TAG, "指令名称:BP67 ---LocationService====" + LocationService.BP67);
+                    Log.d(TAG, "指令名称:BP67 ---LocationService====" + LocationService.BP67);
                     break;
                 case LocationService.BP68:
-                    Log.e(TAG, "指令名称:BP68 ---LocationService====" + LocationService.BP68);
+                    Log.d(TAG, "指令名称:BP68 ---LocationService====" + LocationService.BP68);
                     break;
                 case LocationService.BP69:
-                    Log.e(TAG, "指令名称:BP69 ---LocationService====" + LocationService.BP69);
+                    Log.d(TAG, "指令名称:BP69 ---LocationService====" + LocationService.BP69);
                     break;
                 case LocationService.BP71:
-                    Log.e(TAG, "指令名称:BP71 ---LocationService====" + LocationService.BP71);
+                    Log.d(TAG, "指令名称:BP71 ---LocationService====" + LocationService.BP71);
                     break;
                 case LocationService.BP72:
-                    Log.e(TAG, "指令名称:BP72 ---LocationService====" + LocationService.BP72);
+                    Log.d(TAG, "指令名称:BP72 ---LocationService====" + LocationService.BP72);
                     break;
 
                 //设置带名称的闹钟
 
                 case LocationService.BP75:
-                    Log.e(TAG, "指令名称:BP25 ---LocationService====" + LocationService.BP75);
-                    Log.e(TAG, intent.getStringExtra(LocationService.BP75));
+                    Log.d(TAG, "指令名称:BP25 ---LocationService====" + LocationService.BP75);
+                    Log.d(TAG, intent.getStringExtra(LocationService.BP75));
                     String[] BP75 = intent.getStringExtra(LocationService.BP75).split(",");
                     if (0 == Integer.valueOf(BP75[4]) || BP75[4].equals("0")) {
                         if (Integer.valueOf(BP75[3]) == 1) {
-                            Log.e(TAG, "onReceive: 闹钟总开关开启");
-                            Log.e(TAG, "闹钟总数" + Integer.valueOf(BP75[4]));
+                            Log.d(TAG, "onReceive: 闹钟总开关开启");
+                            Log.d(TAG, "闹钟总数" + Integer.valueOf(BP75[4]));
                             String bp25 = intent.getStringExtra(LocationService.BP25);
 
                             String newbp25 = bp25.substring(34, bp25.length() - 1);
-                            Log.e(TAG, "newbp25是+++++ " + newbp25);
+                            Log.d(TAG, "newbp25是+++++ " + newbp25);
                             String[] alarm = newbp25.split("@");
-                            Log.e(TAG, "alarm的长度: " + alarm.length);
+                            Log.d(TAG, "alarm的长度: " + alarm.length);
                             for (int j = 0; j < alarm.length; j++) {
                                 String[] alarmagement = alarm[j].split(",");
 
-                                Log.e(TAG, "名称------------ " + alarmagement[0]);
-                                Log.e(TAG, "alarmagement------------ " + alarmagement[1]);
-                                Log.e(TAG, "星期------------ " + alarmagement[2]);
-                                Log.e(TAG, "开关------------ " + alarmagement[3]);
+                                Log.d(TAG, "名称------------ " + alarmagement[0]);
+                                Log.d(TAG, "alarmagement------------ " + alarmagement[1]);
+                                Log.d(TAG, "星期------------ " + alarmagement[2]);
+                                Log.d(TAG, "开关------------ " + alarmagement[3]);
                                 String[] dateas;
                                 if (alarmagement[2].length() == 1) {
                                     dateas = new String[]{alarmagement[2]};
@@ -1164,24 +1150,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 for (int d = 0; d < dateas.length; d++) {
                                     if (dateas[d].equals("") == false) {
-                                        Log.e(TAG, "设置的日期是" + dateas[d] + "|");
+                                        Log.d(TAG, "设置的日期是" + dateas[d] + "|");
 
                                         int hour = Integer.parseInt(alarmagement[1].substring(0, 2));
                                         int minute = Integer.parseInt(alarmagement[1].substring(2, alarmagement[1].length()));
-                                        Log.e(TAG, "时：" + hour);
-                                        Log.e(TAG, "分：" + minute);
+                                        Log.d(TAG, "时：" + hour);
+                                        Log.d(TAG, "分：" + minute);
                                         AlarmManagerUtil.setAlarm(MainActivity.this, 1, hour, minute, j, Integer.valueOf(dateas[d]), UnicodeUtil.UNstringToUnicode(alarmagement[0].toString()), 2);
-                                        Log.e(TAG, "onReceive: 闹钟id" + j);
-                                        Log.e(TAG, "设置闹钟" + hour + minute + j + dateas[d]);
+                                        Log.d(TAG, "onReceive: 闹钟id" + j);
+                                        Log.d(TAG, "设置闹钟" + hour + minute + j + dateas[d]);
                                     } else {
-                                        Log.e(TAG, "有一个空值" + dateas[d]);
+                                        Log.d(TAG, "有一个空值" + dateas[d]);
                                     }
                                 }
 
 
                             }
                         } else {
-                            Log.e(TAG, "onReceive: --------------------------------------闹钟总开关关闭");
+                            Log.d(TAG, "onReceive: --------------------------------------闹钟总开关关闭");
                         }
                     }
 
@@ -1191,73 +1177,73 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 case LocationService.BP77:
-                    Log.e(TAG, "指令名称:BP77 ---LocationService====" + LocationService.BP77);
+                    Log.d(TAG, "指令名称:BP77 ---LocationService====" + LocationService.BP77);
                     break;
                 case LocationService.BP78:
-                    Log.e(TAG, "指令名称:BP78 ---LocationService====" + LocationService.BP78);
+                    Log.d(TAG, "指令名称:BP78 ---LocationService====" + LocationService.BP78);
                     break;
                 case LocationService.BP79:
-                    Log.e(TAG, "指令名称:BP79 ---LocationService====" + LocationService.BP79);
+                    Log.d(TAG, "指令名称:BP79 ---LocationService====" + LocationService.BP79);
                     break;
                 case LocationService.BPVL:
-                    Log.e(TAG, "指令名称:BPVL ---LocationService====" + LocationService.BPVL);
+                    Log.d(TAG, "指令名称:BPVL ---LocationService====" + LocationService.BPVL);
                     break;
                 case LocationService.BP80:
-                    Log.e(TAG, "指令名称:BP80 ---LocationService====" + LocationService.BP80);
+                    Log.d(TAG, "指令名称:BP80 ---LocationService====" + LocationService.BP80);
                     break;
                 case LocationService.BP81:
-                    Log.e(TAG, "指令名称:BP81 ---LocationService====" + LocationService.BP81);
+                    Log.d(TAG, "指令名称:BP81 ---LocationService====" + LocationService.BP81);
                     break;
                 case LocationService.BP82:
-                    Log.e(TAG, "指令名称:BP82 ---LocationService====" + LocationService.BP82);
+                    Log.d(TAG, "指令名称:BP82 ---LocationService====" + LocationService.BP82);
                     break;
                 case LocationService.BPXL:
-                    Log.e(TAG, "指令名称:BPXL ---LocationService====" + LocationService.BPXL);
+                    Log.d(TAG, "指令名称:BPXL ---LocationService====" + LocationService.BPXL);
                     break;
                 case LocationService.BPXY:
-                    Log.e(TAG, "指令名称:BPXY ---LocationService====" + LocationService.BPXY);
+                    Log.d(TAG, "指令名称:BPXY ---LocationService====" + LocationService.BPXY);
                     break;
                 case LocationService.BPJZ:
-                    Log.e(TAG, "指令名称:BPJZ ---LocationService====" + LocationService.BPJZ);
+                    Log.d(TAG, "指令名称:BPJZ ---LocationService====" + LocationService.BPJZ);
                     break;
                 case LocationService.BP83:
-                    Log.e(TAG, "指令名称:BP83 ---LocationService====" + LocationService.BP83);
+                    Log.d(TAG, "指令名称:BP83 ---LocationService====" + LocationService.BP83);
                     break;
                 case LocationService.BP84:
-                    Log.e(TAG, "指令名称:BP84 ---LocationService====" + LocationService.BP84);
+                    Log.d(TAG, "指令名称:BP84 ---LocationService====" + LocationService.BP84);
                     break;
                 case LocationService.BP85:
-                    Log.e(TAG, "指令名称:BP85 ---LocationService====" + LocationService.BP85);
+                    Log.d(TAG, "指令名称:BP85 ---LocationService====" + LocationService.BP85);
                     break;
                 case LocationService.BP88:
-                    Log.e(TAG, "指令名称:BP88 ---LocationService====" + LocationService.BP88);
+                    Log.d(TAG, "指令名称:BP88 ---LocationService====" + LocationService.BP88);
                     break;
                 case LocationService.BP89:
-                    Log.e(TAG, "指令名称:BP89 ---LocationService====" + LocationService.BP89);
+                    Log.d(TAG, "指令名称:BP89 ---LocationService====" + LocationService.BP89);
                     break;
                 case LocationService.BP90:
-                    Log.e(TAG, "指令名称:BP90 ---LocationService====" + LocationService.BP90);
+                    Log.d(TAG, "指令名称:BP90 ---LocationService====" + LocationService.BP90);
                     break;
                 case LocationService.BP92:
-                    Log.e(TAG, "指令名称:BP92 ---LocationService====" + LocationService.BP92);
+                    Log.d(TAG, "指令名称:BP92 ---LocationService====" + LocationService.BP92);
                     break;
                 case LocationService.BP93:
-                    Log.e(TAG, "指令名称:BP93 ---LocationService====" + LocationService.BP93);
+                    Log.d(TAG, "指令名称:BP93 ---LocationService====" + LocationService.BP93);
                     break;
                 case LocationService.BP94:
-                    Log.e(TAG, "指令名称:BP94 ---LocationService====" + LocationService.BP94);
+                    Log.d(TAG, "指令名称:BP94 ---LocationService====" + LocationService.BP94);
                     break;
                 case LocationService.BPDF:
-                    Log.e(TAG, "指令名称:BPDF ---LocationService====" + LocationService.BPDF);
+                    Log.d(TAG, "指令名称:BPDF ---LocationService====" + LocationService.BPDF);
                     break;
                 case LocationService.BP96:
-                    Log.e(TAG, "指令名称:BP96 ---LocationService====" + LocationService.BP96);
+                    Log.d(TAG, "指令名称:BP96 ---LocationService====" + LocationService.BP96);
                     break;
                 case LocationService.BP97:
-                    Log.e(TAG, "指令名称:BP97 ---LocationService====" + LocationService.BP97);
+                    Log.d(TAG, "指令名称:BP97 ---LocationService====" + LocationService.BP97);
                     break;
                 case LocationService.BPWL:
-                    Log.e(TAG, "指令名称:BPWL ---LocationService====" + LocationService.BPWL);
+                    Log.d(TAG, "指令名称:BPWL ---LocationService====" + LocationService.BPWL);
                     break;
 
                 //下行监护人列表
@@ -1282,12 +1268,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         GuardianString = newBPGL[i].split("[|]");
                         Guavalues = new ContentValues();
                         Guavalues.put("id", GuardianString[0]);
-                        Log.e(TAG, "1145284 是不是这个 " + GuardianString[0]);
+                        Log.d(TAG, "1145284 是不是这个 " + GuardianString[0]);
                         if (GuardianString[1] != null) {
                             Guavalues.put("phone", GuardianString[1]);
                         } else {
                             Guavalues.put("phone", "");
-                            Log.e(TAG, "服务器没有下发监护人电话号");
+                            Log.d(TAG, "服务器没有下发监护人电话号");
                         }
 
 
@@ -1310,7 +1296,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                     for (GuardianModel ss : Gualist) {
-                        Log.e(TAG, "监护人" + ss.getId() + ss.getGuardianName() + ss.getGuardianPhone());
+                        Log.d(TAG, "监护人" + ss.getId() + ss.getGuardianName() + ss.getGuardianPhone());
                     }
 
 
@@ -1318,16 +1304,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 case LocationService.BPGF:
-                    Log.e(TAG, "指令名称:BPWL ---LocationService====" + LocationService.BPWL);
+                    Log.d(TAG, "指令名称:BPWL ---LocationService====" + LocationService.BPWL);
                     break;
                 case LocationService.BP98:
-                    Log.e(TAG, "指令名称:BPWL ---LocationService====" + LocationService.BPWL);
+                    Log.d(TAG, "指令名称:BPWL ---LocationService====" + LocationService.BPWL);
                     break;
 
                 //手表使用者下发
                 case LocationService.BPPF:
 
-                    Log.e(TAG, "onReceive: 接受到用户信息");
+                    Log.d(TAG, "onReceive: 接受到用户信息");
                     String[] BPPF = intent.getStringExtra(LocationService.BPPF).substring(0, intent.getStringExtra(LocationService.BPPF).length() - 1).split(",");
                     String[] userinfo = BPPF[3].split("\\|");
                     UserModel mUserModel = new UserModel();
@@ -1375,9 +1361,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     File voicefile = null;
                     if (mFileUtil.createFile(filepath, fileName)) {
                         voicefile = new File(filepath + File.separator + fileName);
-                        Log.e(TAG, "文件创建成功！");
+                        Log.d(TAG, "文件创建成功！");
                     } else {
-                        Log.e(TAG, "文件创建失败！！！！！");
+                        Log.d(TAG, "文件创建失败！！！！！");
                     }
                     HttpClientUtils mHttpClientUtils = new HttpClientUtils(urlPath, outPath, fileName);
                     mHttpClientUtils.downloadFile();
@@ -1425,7 +1411,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                     String wwwifi = wifiString.toString().substring(0, wifiString.toString().length() - 1);
-                    Log.e(TAG, "WIFI是什么" + wwwifi);
+                    Log.d(TAG, "WIFI是什么" + wwwifi);
                     StringBuffer mStringBuffer = new StringBuffer();
                     mStringBuffer.append(BPNS[2]);
                     mStringBuffer.append(",");
@@ -1455,7 +1441,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         ContentValues mContentValues = new ContentValues();
                         mContentValues.put("id", BPCD[1]);
                         mContentValues.put("name", UnicodeUtil.UNstringToUnicode(BPCD[2]));
-                        Log.e(TAG, "当BPCD【4】等于3的时候代表发送文字信息" + UnicodeUtil.UNstringToUnicode(BPCD[2]) + "内容" + UnicodeUtil.UNstringToUnicode(BPCD[5]));
+                        Log.d(TAG, "当BPCD【4】等于3的时候代表发送文字信息" + UnicodeUtil.UNstringToUnicode(BPCD[2]) + "内容" + UnicodeUtil.UNstringToUnicode(BPCD[5]));
                         mContentValues.put("textMessage", UnicodeUtil.UNstringToUnicode(BPCD[5]));
                         Date inDate = new Date();
                         //注意时间格式
@@ -1483,252 +1469,252 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                  *
                  * */
                 case LocationService.AP11:
-                    Log.e(TAG, "指令名称:AP11 ---LocationService====" + LocationService.AP11);
+                    Log.d(TAG, "指令名称:AP11 ---LocationService====" + LocationService.AP11);
                     break;
                 case LocationService.AP12:
-                    Log.e(TAG, "指令名称:AP12 ---LocationService====" + LocationService.AP12);
+                    Log.d(TAG, "指令名称:AP12 ---LocationService====" + LocationService.AP12);
                     break;
                 case LocationService.AP13:
-                    Log.e(TAG, "指令名称:AP13 ---LocationService====" + LocationService.AP13);
+                    Log.d(TAG, "指令名称:AP13 ---LocationService====" + LocationService.AP13);
                     break;
                 case LocationService.AP14:
-                    Log.e(TAG, "指令名称:AP14 ---LocationService====" + LocationService.AP14);
+                    Log.d(TAG, "指令名称:AP14 ---LocationService====" + LocationService.AP14);
                     break;
                 case LocationService.AP15:
-                    Log.e(TAG, "指令名称:AP15 ---LocationService====" + LocationService.AP15);
+                    Log.d(TAG, "指令名称:AP15 ---LocationService====" + LocationService.AP15);
                     break;
                 case LocationService.AP16:
-                    Log.e(TAG, "指令名称:AP16 ---LocationService====" + LocationService.AP16);
+                    Log.d(TAG, "指令名称:AP16 ---LocationService====" + LocationService.AP16);
                     break;
                 case LocationService.AP17:
-                    Log.e(TAG, "指令名称:AP17 ---LocationService====" + LocationService.AP17);
+                    Log.d(TAG, "指令名称:AP17 ---LocationService====" + LocationService.AP17);
                     break;
                 case LocationService.AP18:
-                    Log.e(TAG, "指令名称:AP18 ---LocationService====" + LocationService.AP18);
+                    Log.d(TAG, "指令名称:AP18 ---LocationService====" + LocationService.AP18);
                     break;
                 case LocationService.AP19:
-                    Log.e(TAG, "指令名称:AP19 ---LocationService====" + LocationService.AP19);
+                    Log.d(TAG, "指令名称:AP19 ---LocationService====" + LocationService.AP19);
                     break;
                 case LocationService.AP20:
-                    Log.e(TAG, "指令名称:AP20 ---LocationService====" + LocationService.AP20);
+                    Log.d(TAG, "指令名称:AP20 ---LocationService====" + LocationService.AP20);
                     break;
                 case LocationService.AP21:
-                    Log.e(TAG, "指令名称:AP21 ---LocationService====" + LocationService.AP21);
+                    Log.d(TAG, "指令名称:AP21 ---LocationService====" + LocationService.AP21);
                     break;
                 case LocationService.AP22:
-                    Log.e(TAG, "指令名称:AP22 ---LocationService====" + LocationService.AP22);
+                    Log.d(TAG, "指令名称:AP22 ---LocationService====" + LocationService.AP22);
                     break;
                 case LocationService.AP23:
-                    Log.e(TAG, "指令名称:AP23 ---LocationService====" + LocationService.AP23);
+                    Log.d(TAG, "指令名称:AP23 ---LocationService====" + LocationService.AP23);
                     break;
                 case LocationService.AP24:
-                    Log.e(TAG, "指令名称:AP24 ---LocationService====" + LocationService.AP24);
+                    Log.d(TAG, "指令名称:AP24 ---LocationService====" + LocationService.AP24);
                     break;
                 case LocationService.AP25:
-                    Log.e(TAG, "指令名称:AP25 ---LocationService====" + LocationService.AP25);
+                    Log.d(TAG, "指令名称:AP25 ---LocationService====" + LocationService.AP25);
                     break;
                 case LocationService.AP26:
-                    Log.e(TAG, "指令名称:AP26 ---LocationService====" + LocationService.AP26);
+                    Log.d(TAG, "指令名称:AP26 ---LocationService====" + LocationService.AP26);
                     break;
                 case LocationService.AP27:
-                    Log.e(TAG, "指令名称:AP27 ---LocationService====" + LocationService.AP27);
+                    Log.d(TAG, "指令名称:AP27 ---LocationService====" + LocationService.AP27);
                     break;
                 case LocationService.AP28:
-                    Log.e(TAG, "指令名称:AP28 ---LocationService====" + LocationService.AP28);
+                    Log.d(TAG, "指令名称:AP28 ---LocationService====" + LocationService.AP28);
                     break;
                 case LocationService.AP29:
-                    Log.e(TAG, "指令名称:AP29 ---LocationService====" + LocationService.AP29);
+                    Log.d(TAG, "指令名称:AP29 ---LocationService====" + LocationService.AP29);
                     break;
                 case LocationService.AP30:
-                    Log.e(TAG, "指令名称:AP30 ---LocationService====" + LocationService.AP30);
+                    Log.d(TAG, "指令名称:AP30 ---LocationService====" + LocationService.AP30);
                     break;
                 case LocationService.AP31:
-                    Log.e(TAG, "指令名称:AP31 ---LocationService====" + LocationService.AP31);
+                    Log.d(TAG, "指令名称:AP31 ---LocationService====" + LocationService.AP31);
                     break;
                 case LocationService.AP32:
-                    Log.e(TAG, "指令名称:AP32 ---LocationService====" + LocationService.AP32);
+                    Log.d(TAG, "指令名称:AP32 ---LocationService====" + LocationService.AP32);
                     break;
                 case LocationService.AP33:
-                    Log.e(TAG, "指令名称:AP33 ---LocationService====" + LocationService.AP33);
+                    Log.d(TAG, "指令名称:AP33 ---LocationService====" + LocationService.AP33);
                     break;
                 case LocationService.AP34:
-                    Log.e(TAG, "指令名称:AP34 ---LocationService====" + LocationService.AP34);
+                    Log.d(TAG, "指令名称:AP34 ---LocationService====" + LocationService.AP34);
                     break;
                 case LocationService.AP35:
-                    Log.e(TAG, "指令名称:AP35 ---LocationService====" + LocationService.AP35);
+                    Log.d(TAG, "指令名称:AP35 ---LocationService====" + LocationService.AP35);
                     break;
                 case LocationService.AP36:
-                    Log.e(TAG, "指令名称:AP36 ---LocationService====" + LocationService.AP36);
+                    Log.d(TAG, "指令名称:AP36 ---LocationService====" + LocationService.AP36);
                     break;
                 case LocationService.AP37:
-                    Log.e(TAG, "指令名称:AP37 ---LocationService====" + LocationService.AP37);
+                    Log.d(TAG, "指令名称:AP37 ---LocationService====" + LocationService.AP37);
                     break;
                 case LocationService.AP38:
-                    Log.e(TAG, "指令名称:AP38 ---LocationService====" + LocationService.AP38);
+                    Log.d(TAG, "指令名称:AP38 ---LocationService====" + LocationService.AP38);
                     break;
                 case LocationService.AP40:
-                    Log.e(TAG, "指令名称:AP40 ---LocationService====" + LocationService.AP40);
+                    Log.d(TAG, "指令名称:AP40 ---LocationService====" + LocationService.AP40);
                     break;
                 case LocationService.AP41:
-                    Log.e(TAG, "指令名称:AP41 ---LocationService====" + LocationService.AP41);
+                    Log.d(TAG, "指令名称:AP41 ---LocationService====" + LocationService.AP41);
                     break;
                 case LocationService.AP43:
-                    Log.e(TAG, "指令名称:AP43 ---LocationService====" + LocationService.AP43);
+                    Log.d(TAG, "指令名称:AP43 ---LocationService====" + LocationService.AP43);
                     break;
                 case LocationService.AP44:
-                    Log.e(TAG, "指令名称:AP44 ---LocationService====" + LocationService.AP44);
+                    Log.d(TAG, "指令名称:AP44 ---LocationService====" + LocationService.AP44);
                     break;
                 case LocationService.AP45:
-                    Log.e(TAG, "指令名称:AP45 ---LocationService====" + LocationService.AP45);
+                    Log.d(TAG, "指令名称:AP45 ---LocationService====" + LocationService.AP45);
                     break;
                 case LocationService.AP46:
-                    Log.e(TAG, "指令名称:AP46 ---LocationService====" + LocationService.AP46);
+                    Log.d(TAG, "指令名称:AP46 ---LocationService====" + LocationService.AP46);
                     break;
                 case LocationService.AP47:
-                    Log.e(TAG, "指令名称:AP47 ---LocationService====" + LocationService.AP47);
+                    Log.d(TAG, "指令名称:AP47 ---LocationService====" + LocationService.AP47);
                     break;
                 case LocationService.AP48:
-                    Log.e(TAG, "指令名称:AP48 ---LocationService====" + LocationService.AP48);
+                    Log.d(TAG, "指令名称:AP48 ---LocationService====" + LocationService.AP48);
                     break;
                 case LocationService.AP50:
-                    Log.e(TAG, "指令名称:AP50 ---LocationService====" + LocationService.AP50);
+                    Log.d(TAG, "指令名称:AP50 ---LocationService====" + LocationService.AP50);
                     break;
 
                 case LocationService.AP51:
-                    Log.e(TAG, "指令名称:AP51 ---LocationService====" + LocationService.AP51);
+                    Log.d(TAG, "指令名称:AP51 ---LocationService====" + LocationService.AP51);
                     break;
 
                 case LocationService.AP52:
-                    Log.e(TAG, "指令名称:AP52 ---LocationService====" + LocationService.AP52);
+                    Log.d(TAG, "指令名称:AP52 ---LocationService====" + LocationService.AP52);
                     break;
                 case LocationService.AP55:
-                    Log.e(TAG, "指令名称:AP55 ---LocationService====" + LocationService.AP55);
+                    Log.d(TAG, "指令名称:AP55 ---LocationService====" + LocationService.AP55);
                     break;
                 case LocationService.AP56:
-                    Log.e(TAG, "指令名称:AP56 ---LocationService====" + LocationService.AP56);
+                    Log.d(TAG, "指令名称:AP56 ---LocationService====" + LocationService.AP56);
                     break;
                 case LocationService.AP57:
-                    Log.e(TAG, "指令名称:AP57 ---LocationService====" + LocationService.AP57);
+                    Log.d(TAG, "指令名称:AP57 ---LocationService====" + LocationService.AP57);
                     break;
                 case LocationService.AP58:
-                    Log.e(TAG, "指令名称:AP58 ---LocationService====" + LocationService.AP58);
+                    Log.d(TAG, "指令名称:AP58 ---LocationService====" + LocationService.AP58);
                     break;
                 case LocationService.AP59:
-                    Log.e(TAG, "指令名称:AP59 ---LocationService====" + LocationService.AP59);
+                    Log.d(TAG, "指令名称:AP59 ---LocationService====" + LocationService.AP59);
                     break;
                 case LocationService.AP60:
-                    Log.e(TAG, "指令名称:AP60 ---LocationService====" + LocationService.AP60);
+                    Log.d(TAG, "指令名称:AP60 ---LocationService====" + LocationService.AP60);
                     break;
                 case LocationService.AP61:
-                    Log.e(TAG, "指令名称:AP61 ---LocationService====" + LocationService.AP61);
+                    Log.d(TAG, "指令名称:AP61 ---LocationService====" + LocationService.AP61);
                     break;
                 case LocationService.AP62:
-                    Log.e(TAG, "指令名称:AP62 ---LocationService====" + LocationService.AP62);
+                    Log.d(TAG, "指令名称:AP62 ---LocationService====" + LocationService.AP62);
                     break;
                 case LocationService.AP64:
-                    Log.e(TAG, "指令名称:AP64 ---LocationService====" + LocationService.AP64);
+                    Log.d(TAG, "指令名称:AP64 ---LocationService====" + LocationService.AP64);
                     break;
                 case LocationService.AP65:
-                    Log.e(TAG, "指令名称:AP65 ---LocationService====" + LocationService.AP65);
+                    Log.d(TAG, "指令名称:AP65 ---LocationService====" + LocationService.AP65);
                     break;
                 case LocationService.AP66:
-                    Log.e(TAG, "指令名称:AP66 ---LocationService====" + LocationService.AP66);
+                    Log.d(TAG, "指令名称:AP66 ---LocationService====" + LocationService.AP66);
                     break;
                 case LocationService.AP67:
-                    Log.e(TAG, "指令名称:AP67 ---LocationService====" + LocationService.AP67);
+                    Log.d(TAG, "指令名称:AP67 ---LocationService====" + LocationService.AP67);
                     break;
                 case LocationService.AP68:
-                    Log.e(TAG, "指令名称:AP68 ---LocationService====" + LocationService.AP68);
+                    Log.d(TAG, "指令名称:AP68 ---LocationService====" + LocationService.AP68);
                     break;
                 case LocationService.AP69:
-                    Log.e(TAG, "指令名称:AP69 ---LocationService====" + LocationService.AP69);
+                    Log.d(TAG, "指令名称:AP69 ---LocationService====" + LocationService.AP69);
                     break;
                 case LocationService.AP71:
-                    Log.e(TAG, "指令名称:AP71 ---LocationService====" + LocationService.AP71);
+                    Log.d(TAG, "指令名称:AP71 ---LocationService====" + LocationService.AP71);
                     break;
                 case LocationService.AP72:
-                    Log.e(TAG, "指令名称:AP72 ---LocationService====" + LocationService.AP72);
+                    Log.d(TAG, "指令名称:AP72 ---LocationService====" + LocationService.AP72);
                     break;
                 case LocationService.AP75:
-                    Log.e(TAG, "指令名称:AP75 ---LocationService====" + LocationService.AP75);
+                    Log.d(TAG, "指令名称:AP75 ---LocationService====" + LocationService.AP75);
                     break;
                 case LocationService.AP77:
-                    Log.e(TAG, "指令名称:AP77 ---LocationService====" + LocationService.AP77);
+                    Log.d(TAG, "指令名称:AP77 ---LocationService====" + LocationService.AP77);
                     break;
                 case LocationService.AP78:
-                    Log.e(TAG, "指令名称:AP78 ---LocationService====" + LocationService.AP78);
+                    Log.d(TAG, "指令名称:AP78 ---LocationService====" + LocationService.AP78);
                     break;
                 case LocationService.AP79:
-                    Log.e(TAG, "指令名称:AP79 ---LocationService====" + LocationService.AP79);
+                    Log.d(TAG, "指令名称:AP79 ---LocationService====" + LocationService.AP79);
                     break;
                 case LocationService.APVL:
-                    Log.e(TAG, "指令名称:APVL ---LocationService====" + LocationService.APVL);
+                    Log.d(TAG, "指令名称:APVL ---LocationService====" + LocationService.APVL);
                     break;
                 case LocationService.AP80:
-                    Log.e(TAG, "指令名称:AP80 ---LocationService====" + LocationService.AP80);
+                    Log.d(TAG, "指令名称:AP80 ---LocationService====" + LocationService.AP80);
                     break;
                 case LocationService.AP81:
-                    Log.e(TAG, "指令名称:AP81 ---LocationService====" + LocationService.AP81);
+                    Log.d(TAG, "指令名称:AP81 ---LocationService====" + LocationService.AP81);
                     break;
                 case LocationService.AP82:
-                    Log.e(TAG, "指令名称:AP82 ---LocationService====" + LocationService.AP82);
+                    Log.d(TAG, "指令名称:AP82 ---LocationService====" + LocationService.AP82);
                     break;
                 case LocationService.APXL:
-                    Log.e(TAG, "指令名称:APXL ---LocationService====" + LocationService.APXL);
+                    Log.d(TAG, "指令名称:APXL ---LocationService====" + LocationService.APXL);
                     break;
                 case LocationService.APXY:
-                    Log.e(TAG, "指令名称:APXY ---LocationService====" + LocationService.APXY);
+                    Log.d(TAG, "指令名称:APXY ---LocationService====" + LocationService.APXY);
                     break;
                 case LocationService.APJZ:
-                    Log.e(TAG, "指令名称:APJZ ---LocationService====" + LocationService.APJZ);
+                    Log.d(TAG, "指令名称:APJZ ---LocationService====" + LocationService.APJZ);
                     break;
                 case LocationService.AP83:
-                    Log.e(TAG, "指令名称:AP83 ---LocationService====" + LocationService.AP83);
+                    Log.d(TAG, "指令名称:AP83 ---LocationService====" + LocationService.AP83);
                     break;
                 case LocationService.AP84:
-                    Log.e(TAG, "指令名称:AP84 ---LocationService====" + LocationService.AP84);
+                    Log.d(TAG, "指令名称:AP84 ---LocationService====" + LocationService.AP84);
                     break;
                 case LocationService.AP85:
-                    Log.e(TAG, "指令名称:AP85 ---LocationService====" + LocationService.AP85);
+                    Log.d(TAG, "指令名称:AP85 ---LocationService====" + LocationService.AP85);
                     break;
                 case LocationService.AP88:
-                    Log.e(TAG, "指令名称:AP88 ---LocationService====" + LocationService.AP88);
+                    Log.d(TAG, "指令名称:AP88 ---LocationService====" + LocationService.AP88);
                     break;
                 case LocationService.AP89:
-                    Log.e(TAG, "指令名称:AP89 ---LocationService====" + LocationService.AP89);
+                    Log.d(TAG, "指令名称:AP89 ---LocationService====" + LocationService.AP89);
                     break;
                 case LocationService.AP90:
-                    Log.e(TAG, "指令名称:AP90 ---LocationService====" + LocationService.AP90);
+                    Log.d(TAG, "指令名称:AP90 ---LocationService====" + LocationService.AP90);
                     break;
                 case LocationService.AP92:
-                    Log.e(TAG, "指令名称:AP92 ---LocationService====" + LocationService.AP92);
+                    Log.d(TAG, "指令名称:AP92 ---LocationService====" + LocationService.AP92);
                     break;
                 case LocationService.AP93:
-                    Log.e(TAG, "指令名称:AP93 ---LocationService====" + LocationService.AP93);
+                    Log.d(TAG, "指令名称:AP93 ---LocationService====" + LocationService.AP93);
                     break;
                 case LocationService.AP94:
-                    Log.e(TAG, "指令名称:AP94 ---LocationService====" + LocationService.AP94);
+                    Log.d(TAG, "指令名称:AP94 ---LocationService====" + LocationService.AP94);
                     break;
                 case LocationService.APDF:
-                    Log.e(TAG, "指令名称:APDF ---LocationService====" + LocationService.APDF);
+                    Log.d(TAG, "指令名称:APDF ---LocationService====" + LocationService.APDF);
                     break;
 
                 //
                 case LocationService.AP96:
-                    Log.e(TAG, "指令名称:AP96 ---LocationService====" + LocationService.AP96);
+                    Log.d(TAG, "指令名称:AP96 ---LocationService====" + LocationService.AP96);
                     break;
                 case LocationService.AP97:
-                    Log.e(TAG, "指令名称:AP97 ---LocationService====" + LocationService.AP97);
+                    Log.d(TAG, "指令名称:AP97 ---LocationService====" + LocationService.AP97);
                     break;
                 case LocationService.APWL:
-                    Log.e(TAG, "指令名称:APWL ---LocationService====" + LocationService.APWL);
+                    Log.d(TAG, "指令名称:APWL ---LocationService====" + LocationService.APWL);
                     break;
 
 
                 default:
 
                     Toast.makeText(context, "我是谁intent.getAction()" + intent.getAction(), Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "我是谁intent.getAction()" + intent.getAction());
+                    Log.d(TAG, "我是谁intent.getAction()" + intent.getAction());
                     break;
 
             }
@@ -1857,7 +1843,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 orderUtil.sendLocationOrder("IWAP01", nowTime, "A", latitude_str + "N", longitude_str + "E", "000.1", GreenwichTime, "323.87" + "", Gsm + "009" + betterlevel + "00102", lbs);
 
 
-                Log.e(TAG, "-----------------每" + gpsuptime + "毫秒发送一次定位信息----------------");
+                Log.d(TAG, "-----------------每" + gpsuptime + "毫秒发送一次定位信息----------------");
             }
 
         }
@@ -1921,7 +1907,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 位置发生改变时调用
         @Override
         public void onLocationChanged(Location location) {
-            Log.e("Location", "onLocationChanged");
+            Log.d("Location", "onLocationChanged");
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
             float speed = location.getSpeed();
@@ -1929,17 +1915,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             //得到方向角
             bearing = location.getBearing();
-            Log.e(TAG, "转换前---经度---latitude " + latitude);
-            Log.e(TAG, "转换前---纬度---longitude " + longitude);
+            Log.d(TAG, "转换前---经度---latitude " + latitude);
+            Log.d(TAG, "转换前---纬度---longitude " + longitude);
             GPSFormatUtils convertdd = new GPSFormatUtils();
             latitude_str = convertdd.DDtoDMS_photo(latitude);
             longitude_str = convertdd.DDtoDMS_long(longitude);
 
-            Log.e(TAG, "onLocationChanged: 转换后的经度是" + latitude_str);
-            Log.e(TAG, "转换后---纬度---longitude " + longitude_str);
+            Log.d(TAG, "onLocationChanged: 转换后的经度是" + latitude_str);
+            Log.d(TAG, "转换后---纬度---longitude " + longitude_str);
             Date date = new Date();
             date.setTime(Long.valueOf(time));
-            Log.e(TAG, "speed是什么: " + speed);
+            Log.d(TAG, "speed是什么: " + speed);
             //速度
             speed_str = speed + "";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HHmmss");
@@ -1958,20 +1944,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // provider失效时调用
         @Override
         public void onProviderDisabled(String provider) {
-            Log.e("Location", "onProviderDisabled-------provider失效时调用");
+            Log.d("Location", "onProviderDisabled-------provider失效时调用");
         }
 
         // provider启用时调用
         @Override
         public void onProviderEnabled(String provider) {
-            Log.e("Location", "onProviderEnabled--------provider启用时调用");
+            Log.d("Location", "onProviderEnabled--------provider启用时调用");
 
         }
 
         // 状态改变时调用
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log.e("Location", "onStatusChanged--------状态改变时调用");
+            Log.d("Location", "onStatusChanged--------状态改变时调用");
         }
     };
 
@@ -2095,7 +2081,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         String wwwifi = wifiString.toString().substring(0, wifiString.toString().length() - 1);
-        Log.e(TAG, "WIFI是什么" + wwwifi);
+        Log.d(TAG, "WIFI是什么" + wwwifi);
         StringBuffer mStringBuffer = new StringBuffer();
         mStringBuffer.append("080835");
         mStringBuffer.append(",");
@@ -2115,7 +2101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // String[] newBPGL = intent.getStringExtra(LocationService.BPGL).substring(29, intent.getStringExtra(LocationService.BPGL).length() - 1).split(",");
         String[] BPGL = test.substring(0, test.length() - 1).split(",");
         String[] newBPGL = test.substring(30, test.length() - 1).split(",");
-        Log.e(TAG, "new的长度" + newBPGL.length + "-----" + newBPGL[0]);
+        Log.d(TAG, "new的长度" + newBPGL.length + "-----" + newBPGL[0]);
 
 //                    SharedPreferences guardian=mContext.getSharedPreferences("Guardian",MODE_PRIVATE);
 //
@@ -2127,7 +2113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < newBPGL.length; i++) {
             GuardianString = newBPGL[i].split("\\|");
 
-            Log.e(TAG, "长度" + GuardianString.length + "兼职" + GuardianString[0]);
+            Log.d(TAG, "长度" + GuardianString.length + "兼职" + GuardianString[0]);
             Guavalues = new ContentValues();
             Guavalues.put("id", GuardianString[0]);
             Guavalues.put("GuardianPhone", GuardianString[1]);
@@ -2151,7 +2137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         for (GuardianModel ss : Gualist) {
-            Log.e(TAG, "监护人" + ss.getId() + ss.getGuardianName() + ss.getGuardianPhone());
+            Log.d(TAG, "监护人" + ss.getId() + ss.getGuardianName() + ss.getGuardianPhone());
         }
 
 
@@ -2161,7 +2147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             Toast.makeText(this, "长按BACK键", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "长按BACK键-----------------------------");
+            Log.d(TAG, "长按BACK键-----------------------------");
             shortPress = false;
             //长按要执行的代码
             builder = new AlertDialog.Builder(MainActivity.this);
@@ -2190,7 +2176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                      *要执行的操作
                      */
                     if (iscall) {
-                        Log.e(TAG, "开始紧急呼叫--" + iscall);
+                        Log.d(TAG, "开始紧急呼叫--" + iscall);
                         dialog.dismiss();
                         ArrayList<com.wite.positionerwear.service.Item> sss = mSosdbHelper.getItemList();
                         if (sss.size() > 0) {

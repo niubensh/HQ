@@ -65,7 +65,7 @@ public class PeopleContentProvider extends ContentProvider {
 
             case MATCH_ALL_CODE:
                 cursor = mDbHelper.query();
-                Log.e(TAG, "cursor的数量 " + cursor.getCount());
+                Log.d(TAG, "cursor的数量 " + cursor.getCount());
                 break;
             case MATCH_ONE_CODE:
 

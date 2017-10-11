@@ -150,7 +150,7 @@ public class Main2Activity extends AppCompatActivity {
         if (telephoneManager.getSimSerialNumber() == null || telephoneManager.getSimSerialNumber().equals("")) {
 
             Toast.makeText(this, "对不起请插入SIM卡", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "对不起请插入SIM卡");
+            Log.d(TAG, "对不起请插入SIM卡");
 
             nosim.setImageResource(R.drawable.nosim);
             phonestate.setVisibility(View.GONE);
@@ -236,12 +236,12 @@ public class Main2Activity extends AppCompatActivity {
 
                 int test = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
                 if (test == BatteryManager.BATTERY_STATUS_CHARGING) {
-                    Log.e(TAG, "----------------正在充电中-----------------------");
+                    Log.d(TAG, "----------------正在充电中-----------------------");
 
                     battery.setImageResource(R.drawable.inbattery);
 
                 } else {
-                    Log.e(TAG, "----------------没有检测 显示当前电量-----------------------");
+                    Log.d(TAG, "----------------没有检测 显示当前电量-----------------------");
                     if (level == 100) {
                         battery.setImageResource(R.drawable.electricity5);
                     } else if (level < 100 && level > 80) {
@@ -367,7 +367,7 @@ public class Main2Activity extends AppCompatActivity {
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             Toast.makeText(this, "长按BACK键", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "长按BACK键-----------------------------");
+            Log.d(TAG, "长按BACK键-----------------------------");
             iscall = true;
             shortPress = false;
             //长按要执行的代码

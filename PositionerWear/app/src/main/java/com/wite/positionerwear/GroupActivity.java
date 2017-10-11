@@ -97,7 +97,7 @@ public class GroupActivity extends AppCompatActivity {
         mDatas = list;
         for (VoiceModel phone : list) {
 
-            Log.e(TAG, "语音信息"+phone.getGuardianModel_id()+"名字"+phone.getName()+"文件地址"+phone.getVoiceFile() );
+            Log.d(TAG, "语音信息"+phone.getGuardianModel_id()+"名字"+phone.getName()+"文件地址"+phone.getVoiceFile() );
 
         }
         return mDatas;

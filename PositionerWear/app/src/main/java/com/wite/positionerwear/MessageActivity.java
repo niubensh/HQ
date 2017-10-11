@@ -163,7 +163,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
           //转换时间
 
-            Log.e(TAG, "你说我时间错了 我看一下 " +datas.get(position).getMessageInTime().toString());
+            Log.d(TAG, "你说我时间错了 我看一下 " +datas.get(position).getMessageInTime().toString());
             String str = null;
             try {
                 Date cc = formatter.parse(datas.get(position).getMessageInTime());

@@ -58,9 +58,9 @@ public class DevicesInfoActivity extends AppCompatActivity {
         TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         //nox 有iemi号
         imei = TelephonyMgr.getDeviceId();
-        Log.e(TAG, "++++++++++++++++++++++++onCreate:  设备IMEI号码" + imei);
+        Log.d(TAG, "++++++++++++++++++++++++onCreate:  设备IMEI号码" + imei);
         sn = TelephonyMgr.getSimSerialNumber();
-        Log.e(TAG, "++++++++++++++++++++++++onCreate:  设备SN号码" + sn);
+        Log.d(TAG, "++++++++++++++++++++++++onCreate:  设备SN号码" + sn);
         //textView.autoSplitText
 
         String info="IMEI:"+imei+"\n"+"SN:"+sn;

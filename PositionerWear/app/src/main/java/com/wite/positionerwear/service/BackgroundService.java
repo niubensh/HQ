@@ -276,9 +276,9 @@ public class BackgroundService extends Service {
 				// Log.d(TAG, "@@@@@@@@@@@SOSReceiver");
 
 				if (!bSosMakeCall) {
-					Log.e(TAG, "onReceive: 进入方法" );
+					Log.d(TAG, "onReceive: 进入方法" );
 					sosItemList = mDBHelper.getItemList();
-					Log.e(TAG, "联系人长度"+sosItemList.size() );
+					Log.d(TAG, "联系人长度"+sosItemList.size() );
 
 					resetCallNumber();
 

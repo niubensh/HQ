@@ -62,7 +62,7 @@ public class FileUtil {
     public static boolean createFile(String path, String fileName) {
         File file = new File(path + File.separator + fileName);
         if (file.exists()) {
-            Log.e(TAG, "新建文件失败：file.exist()=" + file.exists());
+           Log.d(TAG, "新建文件失败：file.exist()=" + file.exists());
 
 
             return false;
@@ -86,10 +86,10 @@ public class FileUtil {
     public static boolean deleteFile(File file) {
         if (file.exists()) {
             boolean isDeleted = file.delete();
-            Log.e(TAG, file.getName() + "删除结果：" + isDeleted);
+           Log.d(TAG, file.getName() + "删除结果：" + isDeleted);
             return isDeleted;
         } else {
-            Log.e(TAG, "文件删除失败：文件不存在！");
+           Log.d(TAG, "文件删除失败：文件不存在！");
             return false;
         }
     }
@@ -123,8 +123,8 @@ public class FileUtil {
         File srcFile = new File(srcPath); // 源文件  
         if (!srcFile.exists()) {
             // 源文件不存在  
-            Log.e(TAG, "源文件不存在");
-            Log.e(TAG, "copyFile: ");
+           Log.d(TAG, "源文件不存在");
+           Log.d(TAG, "copyFile: ");
             return false;
         }
         // 获取待复制文件的文件名  
@@ -132,13 +132,13 @@ public class FileUtil {
         String destPath = destDir + fileName;
         if (destPath.equals(srcPath)) {
             // 源文件路径和目标文件路径重复  
-            Log.e(TAG, "源文件路径和目标文件路径重复!");
+           Log.d(TAG, "源文件路径和目标文件路径重复!");
             return false;
         }
         File destFile = new File(destPath); // 目标文件  
         if (destFile.exists() && destFile.isFile()) {
             // 该路径下已经有一个同名文件  
-            Log.e(TAG, "目标目录下已有同名文件!");
+           Log.d(TAG, "目标目录下已有同名文件!");
             return false;
         }
         File destFileDir = new File(destDir);
@@ -159,7 +159,7 @@ public class FileUtil {
             e.printStackTrace();
         }
         if (flag) {
-            Log.e(TAG, "复制文件成功!");
+           Log.d(TAG, "复制文件成功!");
         }
         return flag;
     }
@@ -185,14 +185,14 @@ public class FileUtil {
      */
     public static boolean renameTo(String oldPath, String newPath) {
         if (oldPath.equals(newPath)) {
-            Log.e(TAG, "文件重命名失败：新旧文件名绝对路径相同！");
+           Log.d(TAG, "文件重命名失败：新旧文件名绝对路径相同！");
             return false;
         }
         File oldFile = new File(oldPath);
         File newFile = new File(newPath);
 
         boolean isSuccess = oldFile.renameTo(newFile);
-        Log.e(TAG, "文件重命名是否成功：" + isSuccess);
+       Log.d(TAG, "文件重命名是否成功：" + isSuccess);
         return isSuccess;
     }
 
@@ -205,11 +205,11 @@ public class FileUtil {
      */
     public static boolean renameTo(File oldFile, File newFile) {
         if (oldFile.equals(newFile)) {
-            Log.e(TAG, "文件重命名失败：旧文件对象和新文件对象相同！");
+           Log.d(TAG, "文件重命名失败：旧文件对象和新文件对象相同！");
             return false;
         }
         boolean isSuccess = oldFile.renameTo(newFile);
-        Log.e(TAG, "文件重命名是否成功：" + isSuccess);
+       Log.d(TAG, "文件重命名是否成功：" + isSuccess);
         return isSuccess;
     }
 
@@ -357,7 +357,7 @@ public class FileUtil {
                 }
             }
         } else {
-            Log.e(TAG, "SD卡未挂载！");
+           Log.d(TAG, "SD卡未挂载！");
         }
         return list;
     }
@@ -430,13 +430,13 @@ public class FileUtil {
      */
     // 目标文件夹所在目录
     public static boolean copyFolder(String srcPath, String destDir) {
-        Log.e(TAG, "复制文件夹开始!");
+       Log.d(TAG, "复制文件夹开始!");
         boolean flag = false;
 
         File srcFile = new File(srcPath);
         if (!srcFile.exists()) {
             // 源文件夹不存在  
-            Log.e(TAG, "源文件夹不存在");
+           Log.d(TAG, "源文件夹不存在");
             return false;
         }
         String dirName = getDirName(srcPath); // 获得待复制的文件夹的名字，比如待复制的文件夹为"E://dir"则获取的名字为"dir"  
@@ -444,13 +444,13 @@ public class FileUtil {
         String destPath = destDir + File.separator + dirName; // 目标文件夹的完整路径  
         // Util.toast("目标文件夹的完整路径为：" + destPath);  
         if (destPath.equals(srcPath)) {
-            Log.e(TAG, "目标文件夹与源文件夹重复");
+           Log.d(TAG, "目标文件夹与源文件夹重复");
             return false;
         }
         File destDirFile = new File(destPath);
         if (destDirFile.exists()) {
             // 目标位置有一个同名文件夹  
-            Log.e(TAG, "目标位置已有同名文件夹!");
+           Log.d(TAG, "目标位置已有同名文件夹!");
             return false;
         }
         destDirFile.mkdirs(); // 生成目录  
@@ -474,7 +474,7 @@ public class FileUtil {
             }
         }
         if (flag) {
-            Log.e(TAG, "复制文件夹成功!");
+           Log.d(TAG, "复制文件夹成功!");
         }
         return flag;
     }

@@ -67,14 +67,14 @@ public class MessageInfoActivity extends AppCompatActivity {
         //接收Intent的值
         Intent intent = getIntent();
         if (intent == null) {
-            Log.e(TAG, "intent是空的！！！！！！！！: ");
+            Log.d(TAG, "intent是空的！！！！！！！！: ");
         }
 
         String id = intent.getStringExtra("id");
 
 
         if (id == null) {
-            Log.e(TAG, "id是空的！！！！！！！！连人都没找到！！ ");
+            Log.d(TAG, "id是空的！！！！！！！！连人都没找到！！ ");
         }
 
         messageDBHelper = new MessageDBHelper(MessageInfoActivity.this);

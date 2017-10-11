@@ -86,7 +86,7 @@ public class AudioRecoderUtils {
             /* 获取开始时间* */
             startTime = System.currentTimeMillis();
             updateMicStatus();
-            Log.e("fan", "startTime" + startTime);
+            Log.d("fan", "startTime" + startTime);
         } catch (IllegalStateException e) {
             Log.i(TAG, "call startAmr(File mRecAudioFile) failed!" + e.getMessage());
         } catch (IOException e) {
@@ -123,7 +123,7 @@ public class AudioRecoderUtils {
 
             filePath = "";
 
-            Log.e(TAG, "stopRecord: 触发异常" );
+            Log.d(TAG, "stopRecord: 触发异常" );
 
         }
         return endTime - startTime;

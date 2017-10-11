@@ -111,9 +111,9 @@ public class PhoneBookActivity extends AppCompatActivity {
         lists = initData();
 
         if (lists.size() > 0) {
-            Log.e(TAG, "初始化数据成功 ");
+            Log.d(TAG, "初始化数据成功 ");
         } else {
-            Log.e(TAG, "初始化数据是空的 ");
+            Log.d(TAG, "初始化数据是空的 ");
         }
 
 
@@ -164,13 +164,13 @@ public class PhoneBookActivity extends AppCompatActivity {
         Cursor cs = dbHelper.query();
 
         if(cs==null){
-            Log.e(TAG, "Cursor是空的" );
+            Log.d(TAG, "Cursor是空的" );
         }else{
-            Log.e(TAG, "Cursor不是空的"+cs.getCount());
+            Log.d(TAG, "Cursor不是空的"+cs.getCount());
         }
 
         while (cs.moveToNext()) {
-            Log.e(TAG, "数据总数2"+cs.getCount() );
+            Log.d(TAG, "数据总数2"+cs.getCount() );
 
             PhoneUser p = new PhoneUser();
             p.set_id(cs.getInt(cs.getColumnIndex("_id")));
@@ -178,14 +178,14 @@ public class PhoneBookActivity extends AppCompatActivity {
             p.setPhonenum(cs.getString(cs.getColumnIndex("phonenum")));
             p.setIntime(cs.getString(cs.getColumnIndex("inttime")));
             p.setLetter(cs.getString(cs.getColumnIndex("letter")));
-            Log.e(TAG, "PhoneBook+++++++++++++++++LocationService.BP52:数据库的数据******************" + cs.getString(cs.getColumnIndex("phonenum")));
+            Log.d(TAG, "PhoneBook+++++++++++++++++LocationService.BP52:数据库的数据******************" + cs.getString(cs.getColumnIndex("phonenum")));
 
             list.add(p);
         }
         mDatas = list;
         for (PhoneUser phone : list) {
 
-            Log.e(TAG, "PhoneBook+++++++++++++++++LocationService.BP52:数据库的数据******************" + phone.getName() + phone.getPhonenum());
+            Log.d(TAG, "PhoneBook+++++++++++++++++LocationService.BP52:数据库的数据******************" + phone.getName() + phone.getPhonenum());
 
 
         }
@@ -233,7 +233,7 @@ public class PhoneBookActivity extends AppCompatActivity {
                     Toast.makeText(PhoneBookActivity.this, "电话号码是" + datas.get(position).getPhonenum(), Toast.LENGTH_SHORT).show();
 
 
-                    Log.e(TAG, "电话号码是" + datas.get(position).getPhonenum());
+                    Log.d(TAG, "电话号码是" + datas.get(position).getPhonenum());
                     //    String number = datas.get(position).getPhonenum();
                     //  Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
                     // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -351,7 +351,7 @@ public class PhoneBookActivity extends AppCompatActivity {
 //        public void onReceive(Context context, Intent intent) {
 //
 //            Toast.makeText(context, "接收到了广播", Toast.LENGTH_SHORT).show();
-//            Log.e(TAG, "接收到了广播------------------" );
+//            Log.d(TAG, "接收到了广播------------------" );
 //                    mAdapter.notifyDataSetChanged();
 //            mRecyclerView.setAdapter(mAdapter);
 //

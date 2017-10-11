@@ -50,7 +50,7 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 Toast.makeText(PlayerActivity.this, "播放完毕", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "播放完毕" );
+                Log.d(TAG, "播放完毕" );
                 anim.stop();
                 finish();
             }
@@ -61,7 +61,7 @@ public class PlayerActivity extends AppCompatActivity {
 
                 Toast.makeText(PlayerActivity.this, "播放错误", Toast.LENGTH_SHORT).show();
                 anim.stop();
-                Log.e(TAG, "播放出现错误 请联系牛牛牛 " );
+                Log.d(TAG, "播放出现错误 请联系牛牛牛 " );
                 return false;
             }
         });

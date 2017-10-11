@@ -106,10 +106,10 @@ public class LocationUtil {
             @Override
             public void onLocationChanged(Location location) {
                 //位置信息变化时触发  
-                Log.e(TAG, "纬度：" + location.getLatitude());
-                Log.e(TAG, "经度：" + location.getLongitude());
-                Log.e(TAG, "海拔：" + location.getAltitude());
-                Log.e(TAG, "时间：" + location.getTime());
+                Log.d(TAG, "纬度：" + location.getLatitude());
+                Log.d(TAG, "经度：" + location.getLongitude());
+                Log.d(TAG, "海拔：" + location.getAltitude());
+                Log.d(TAG, "时间：" + location.getTime());
             }
 
             @Override
@@ -167,10 +167,10 @@ public class LocationUtil {
 
 
     location = locationManager.getLastKnownLocation(getProvider());
-        Log.e(TAG, "纬度：" + location.getLatitude());
-        Log.e(TAG, "经度：" + location.getLongitude());
-        Log.e(TAG, "海拔：" + location.getAltitude());
-        Log.e(TAG, "时间：" + location.getTime());
+        Log.d(TAG, "纬度：" + location.getLatitude());
+        Log.d(TAG, "经度：" + location.getLongitude());
+        Log.d(TAG, "海拔：" + location.getAltitude());
+        Log.d(TAG, "时间：" + location.getTime());
         GPSFormatUtils mGpsFormatUtils=new GPSFormatUtils();
         LocationModel mLocationModel=new LocationModel();
 
@@ -179,7 +179,7 @@ public class LocationUtil {
 
         Date date = new Date();
         date.setTime(Long.valueOf(location.getTime()));
-       // Log.e(TAG, "speed是什么: " + speed);
+       // Log.d(TAG, "speed是什么: " + speed);
         //速度
        // speed_str = speed + "";
          //location.getSpeed()+""
@@ -247,7 +247,7 @@ public class LocationUtil {
                         count++;
                         GpsSatellite s = it.next();
                     }
-                    Log.e(TAG, "搜索到：" + count + "颗卫星");
+                    Log.d(TAG, "搜索到：" + count + "颗卫星");
                 } else if (event == GpsStatus.GPS_EVENT_STARTED) {
                     //定位启动  
                 } else if (event == GpsStatus.GPS_EVENT_STOPPED) {
@@ -293,7 +293,7 @@ public class LocationUtil {
         int maxSatellites = gpsStatus.getMaxSatellites();
         //获取第一次定位时间（启动到第一次定位）  
         int costTime = gpsStatus.getTimeToFirstFix();
-        Log.e(TAG, "第一次定位时间:" + costTime);
+        Log.d(TAG, "第一次定位时间:" + costTime);
         //获取卫星  
         Iterable<GpsSatellite> iterable = gpsStatus.getSatellites();
         //一般再次转换成Iterator  
@@ -316,19 +316,19 @@ public class LocationUtil {
     public static GpsStatellite getGpsStatelliteInfo(GpsSatellite gpssatellite) {
 
         //卫星的方位角，浮点型数据    
-        Log.e(TAG, "卫星的方位角：" + gpssatellite.getAzimuth());
+        Log.d(TAG, "卫星的方位角：" + gpssatellite.getAzimuth());
         //卫星的高度，浮点型数据    
-        Log.e(TAG, "卫星的高度：" + gpssatellite.getElevation());
+        Log.d(TAG, "卫星的高度：" + gpssatellite.getElevation());
         //卫星的伪随机噪声码，整形数据    
-        Log.e(TAG, "卫星的伪随机噪声码：" + gpssatellite.getPrn());
+        Log.d(TAG, "卫星的伪随机噪声码：" + gpssatellite.getPrn());
         //卫星的信噪比，浮点型数据    
-        Log.e(TAG, "卫星的信噪比：" + gpssatellite.getSnr());
+        Log.d(TAG, "卫星的信噪比：" + gpssatellite.getSnr());
         //卫星是否有年历表，布尔型数据    
-        Log.e(TAG, "卫星是否有年历表：" + gpssatellite.hasAlmanac());
+        Log.d(TAG, "卫星是否有年历表：" + gpssatellite.hasAlmanac());
         //卫星是否有星历表，布尔型数据    
-        Log.e(TAG, "卫星是否有星历表：" + gpssatellite.hasEphemeris());
+        Log.d(TAG, "卫星是否有星历表：" + gpssatellite.hasEphemeris());
         //卫星是否被用于近期的GPS修正计算    
-        Log.e(TAG, "卫星是否被用于近期的GPS修正计算：" + gpssatellite.hasAlmanac());
+        Log.d(TAG, "卫星是否被用于近期的GPS修正计算：" + gpssatellite.hasAlmanac());
 
   return new GpsStatellite(gpssatellite.getAzimuth(), gpssatellite.getElevation(),gpssatellite.getPrn(),gpssatellite.getSnr(),gpssatellite.hasAlmanac(),gpssatellite.hasEphemeris(),gpssatellite.hasAlmanac());
     }
@@ -344,7 +344,7 @@ public class LocationUtil {
             return null;
         }
         String operator = telephonyManager.getNetworkOperator();
-        Log.e("operator","operator="+operator);
+        Log.d("operator","operator="+operator);
         int mcc = Integer.parseInt(operator.substring(0, 3));
         int mnc = Integer.parseInt(operator.substring(3));
 

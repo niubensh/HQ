@@ -82,7 +82,7 @@ public class IceInfoActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
 
-            Log.e(TAG, "时间转换失败 IceInfoActivity");
+            Log.d(TAG, "时间转换失败 IceInfoActivity");
 
         }
         Date newDate = new Date();
