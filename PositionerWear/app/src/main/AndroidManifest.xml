@@ -128,8 +128,6 @@
             android:authorities="com.wite.positionerwear.Provider"
             android:exported="true" />
 
-
-
         <activity android:name=".QRcodeActivity" />
         <activity android:name=".PlayerActivity"></activity>
     </application>
