@@ -280,16 +280,11 @@ public class Main2Activity extends AppCompatActivity {
                 }
 
                 if(lastCallState == TelephonyManager.CALL_STATE_RINGING && currentCallState == TelephonyManager.CALL_STATE_IDLE){
-
-                    Toast.makeText(context, "有未接来电！！！！！！！", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Main2Activity.this, MenuActivity.class));
-
+                 //   Toast.makeText(context, "有未接来电！！！！！！！", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Main2Activity.this, MainActivity.class));
                     Intent add=new Intent();
                     add.setAction("com.wite.positionerwear.addmissdcall");
                     context.sendBroadcast(add);
-
-
-
                 }
                 lastCallState = currentCallState;
             }

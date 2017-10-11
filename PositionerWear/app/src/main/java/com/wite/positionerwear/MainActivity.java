@@ -1787,6 +1787,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (a >= 12) {
                 tv_am.setText("PM");
                 cc = a - 12;
+                if(cc==0){
+                    cc=12;
+                }
+
             } else {
                 tv_am.setText("AM");
                 cc = a;
