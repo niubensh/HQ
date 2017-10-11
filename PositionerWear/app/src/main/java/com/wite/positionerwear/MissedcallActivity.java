@@ -1,7 +1,10 @@
 package com.wite.positionerwear;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -65,6 +68,12 @@ public class MissedcallActivity extends AppCompatActivity {
                 handler.sendMessage(Message.obtain());
             }
         }).start();
+
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.wite.positionerwear.addmissdcall");
+        registerReceiver(missdcallReceiver, filter);
+
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
@@ -199,6 +208,7 @@ public class MissedcallActivity extends AppCompatActivity {
             public TextView mTextViewdate;
             public RelativeLayout onclick;
             public TextView Phonenum;
+
             public ViewHolder(View itemView) {
 
 
@@ -348,4 +358,20 @@ public class MissedcallActivity extends AppCompatActivity {
     }
 
 
+    private BroadcastReceiver missdcallReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            list.clear();
+            list.addAll( getMissCallinfo());
+            mAdapter.notifyDataSetChanged();
+        }
+    };
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+   unregisterReceiver(missdcallReceiver);
+    }
 }

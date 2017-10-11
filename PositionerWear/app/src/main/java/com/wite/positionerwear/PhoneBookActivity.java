@@ -161,14 +161,25 @@ public class PhoneBookActivity extends AppCompatActivity {
     protected List<PhoneUser> initData() {
         dbHelper = new DBHelper(PhoneBookActivity.this, "phone", 1);
         List<PhoneUser> list = new ArrayList<>(); /*调用query()获取Cursor*/
-        Cursor c = dbHelper.query();
-        while (c.moveToNext()) {
+        Cursor cs = dbHelper.query();
+
+        if(cs==null){
+            Log.e(TAG, "Cursor是空的" );
+        }else{
+            Log.e(TAG, "Cursor不是空的"+cs.getCount());
+        }
+
+        while (cs.moveToNext()) {
+            Log.e(TAG, "数据总数2"+cs.getCount() );
+
             PhoneUser p = new PhoneUser();
-            p.set_id(c.getInt(c.getColumnIndex("_id")));
-            p.setName(c.getString(c.getColumnIndex("name")));
-            p.setPhonenum(c.getString(c.getColumnIndex("phonenum")));
-            p.setIntime(c.getString(c.getColumnIndex("inttime")));
-            p.setLetter(c.getString(c.getColumnIndex("letter")));
+            p.set_id(cs.getInt(cs.getColumnIndex("_id")));
+            p.setName(cs.getString(cs.getColumnIndex("name")));
+            p.setPhonenum(cs.getString(cs.getColumnIndex("phonenum")));
+            p.setIntime(cs.getString(cs.getColumnIndex("inttime")));
+            p.setLetter(cs.getString(cs.getColumnIndex("letter")));
+            Log.e(TAG, "PhoneBook+++++++++++++++++LocationService.BP52:数据库的数据******************" + cs.getString(cs.getColumnIndex("phonenum")));
+
             list.add(p);
         }
         mDatas = list;
@@ -212,7 +223,7 @@ public class PhoneBookActivity extends AppCompatActivity {
                     if (b) {
                         FocusView = holder.onclick;
                     } else {
-
+                        FocusView=null;
                     }
                 }
             });
@@ -290,21 +301,27 @@ public class PhoneBookActivity extends AppCompatActivity {
 
         if (keyCode == KeyEvent.KEYCODE_POWER) {
 
-            TextView textview = FocusView.findViewById(R.id.phonenum);
+            if(FocusView!=null){
 
-            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + textview.getText()));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return true;
+                TextView textview = FocusView.findViewById(R.id.phonenum);
+
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + textview.getText()));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return true;
+                }
+                startActivity(intent);
+
             }
-            startActivity(intent);
+
+
 
         }
 

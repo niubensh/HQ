@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.wite.positionerwear.DBHelper.DBHelper;
 
@@ -16,7 +17,7 @@ import com.wite.positionerwear.DBHelper.DBHelper;
  */
 
 public class PeopleContentProvider extends ContentProvider {
-
+    private static final String TAG = "TAG";
 
     //这里的AUTHORITY就是我们在AndroidManifest.xml中配置的authorities，这里的authorities可以随便写
     private static final String AUTHORITY = "com.wite.positionerwear.Provider";
@@ -28,7 +29,7 @@ public class PeopleContentProvider extends ContentProvider {
     private DBHelper mDbHelper;
     private Cursor cursor = null;
     //数据改变后指定通知的Uri
-    private static final Uri NOTIFY_URI = Uri.parse("content://" + AUTHORITY + "/phone");
+    //  private static final Uri NOTIFY_URI = Uri.parse("content://" + AUTHORITY + "/phone");
 
 
     //在静态代码块中添加要匹配的 Uri
@@ -48,8 +49,8 @@ public class PeopleContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mDbHelper=new DBHelper(getContext());
-        db=mDbHelper.getWritableDatabase();
+        mDbHelper = new DBHelper(getContext(), "phone", 1);
+        db = mDbHelper.getWritableDatabase();
         return false;
     }
 
@@ -57,22 +58,23 @@ public class PeopleContentProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
 
-     switch (uriMatcher.match(uri)){
-         /**
-          * 如果匹配成功，就根据条件查询数据并将查询出的cursor返回
-          */
+        switch (uriMatcher.match(uri)) {
+            /**
+             * 如果匹配成功，就根据条件查询数据并将查询出的cursor返回
+             */
 
-         case MATCH_ALL_CODE:
-             cursor=mDbHelper.query();
-             break;
-         case MATCH_ONE_CODE:
-             String[] a=new String[]{s};
-             cursor=mDbHelper.queryfornumber(a);
-             break;
-         default:
-             throw new IllegalArgumentException("Unkwon Uri:" + uri.toString());
+            case MATCH_ALL_CODE:
+                cursor = mDbHelper.query();
+                Log.e(TAG, "cursor的数量 " + cursor.getCount());
+                break;
+            case MATCH_ONE_CODE:
 
-     }
+                cursor = mDbHelper.queryfornumber(strings1);
+                break;
+            default:
+                throw new IllegalArgumentException("Unkwon Uri:" + uri.toString());
+
+        }
         return cursor;
     }
 

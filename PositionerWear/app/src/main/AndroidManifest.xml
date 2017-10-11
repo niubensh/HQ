@@ -121,11 +121,14 @@
             android:label="@string/title_activity_test"
             android:theme="@style/AppTheme" />
 
+
         <!-- 注册provider -->
         <provider
             android:name=".Provider.PeopleContentProvider"
             android:authorities="com.wite.positionerwear.Provider"
             android:exported="true" />
+
+
 
         <activity android:name=".QRcodeActivity" />
         <activity android:name=".PlayerActivity"></activity>

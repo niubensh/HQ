@@ -761,7 +761,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
 
-
                     break;
                 case LocationService.BP13:
                     Log.e(TAG, "指令名称:BP13 ---LocationService====" + LocationService.BP13);
@@ -954,8 +953,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case LocationService.BP32:
                     Log.e(TAG, "指令名称:BP32 ---LocationService====" + LocationService.BP32);
                     String[] BP32 = intent.getStringExtra(LocationService.BP32).substring(0, intent.getStringExtra(LocationService.BP32).length() - 1).split(",");
-                    Intent bp32 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + BP32[3]));
+                    Intent bp32 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + BP32[3]));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
                     startActivity(bp32);
 
 

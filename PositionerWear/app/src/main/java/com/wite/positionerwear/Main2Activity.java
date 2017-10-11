@@ -283,6 +283,13 @@ public class Main2Activity extends AppCompatActivity {
 
                     Toast.makeText(context, "有未接来电！！！！！！！", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Main2Activity.this, MenuActivity.class));
+
+                    Intent add=new Intent();
+                    add.setAction("com.wite.positionerwear.addmissdcall");
+                    context.sendBroadcast(add);
+
+
+
                 }
                 lastCallState = currentCallState;
             }

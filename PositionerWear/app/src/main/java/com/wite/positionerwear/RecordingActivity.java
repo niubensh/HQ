@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.wite.positionerwear.utils.AudioRecoderUtils;
 import com.wite.positionerwear.utils.FileUploaderUtil;
@@ -89,7 +88,7 @@ public class RecordingActivity extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             shortPress = false;
             //长按要执行的代码
-            Toast.makeText(this, "我是长按时事件ain", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(this, "我是长按时事件ain", Toast.LENGTH_SHORT).show();
             return true;
         }
 
