@@ -76,11 +76,13 @@ public class MissedcallActivity extends AppCompatActivity {
         if (readMissCall() > 0) {
             list = getMissCallinfo();
 
-
-            //发送广播有新的未接电话
-            Intent addmissdcall = new Intent();
-            addmissdcall.setAction("com.wite.positionerwear.addmissdcall");
-            this.sendBroadcast(addmissdcall);
+//需要检测未接来电而不是数据库！！！！！！！！！！！！！！！！！！！！！！
+//            //发送广播有新的未接电话
+//            Intent addmissdcall = new Intent();
+//            addmissdcall.setAction("com.wite.positionerwear.addmissdcall");
+//            MissedcallActivity.this.sendBroadcast(addmissdcall);
+//
+//            Toast.makeText(this, "发送了广播", Toast.LENGTH_SHORT).show();
 
 
         } else {

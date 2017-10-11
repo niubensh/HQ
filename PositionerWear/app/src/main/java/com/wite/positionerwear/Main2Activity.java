@@ -18,6 +18,7 @@ import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class Main2Activity extends AppCompatActivity {
     private AlertDialog.Builder builder;
     private Boolean iscall = false;
     private AlertDialog dialog;
+    private ImageView nosim;
 
     private void refreshUI() {
         Date date = new Date();
@@ -139,6 +141,7 @@ public class Main2Activity extends AppCompatActivity {
         //信号
 
         phonestate = (ImageView) findViewById(R.id.signal);
+        nosim = (ImageView) findViewById(R.id.nosim);
 
 
         //获取信号质量
@@ -148,6 +151,10 @@ public class Main2Activity extends AppCompatActivity {
 
             Toast.makeText(this, "对不起请插入SIM卡", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "对不起请插入SIM卡");
+
+            nosim.setImageResource(R.drawable.nosim);
+            phonestate.setVisibility(View.GONE);
+
         }
 
         PhoneStateListener phoneStateListener = new PhoneStateListener() {
@@ -162,6 +169,9 @@ public class Main2Activity extends AppCompatActivity {
                 if (strength != null) {
                     phonestate.setBackground(null);
                 }
+
+                nosim.setVisibility(View.GONE);
+                phonestate.setVisibility(View.VISIBLE);
 
 
                 if (strength >= 10) {
@@ -194,7 +204,7 @@ public class Main2Activity extends AppCompatActivity {
 
         filter.addAction("com.wite.positionerwear.addmessage");
 
-        filter.addAction("com.wite.positionerwear.addmissdcall");
+        filter.addAction("android.intent.action.PHONE_STATE");
 
 
         registerReceiver(myReceiver, filter);
@@ -212,6 +222,9 @@ public class Main2Activity extends AppCompatActivity {
 
 
     private BroadcastReceiver myReceiver = new BroadcastReceiver() {
+
+        private  int lastCallState = TelephonyManager.CALL_STATE_IDLE;
+
         @Override
         public void onReceive(Context context, Intent intent) {
 
@@ -224,7 +237,8 @@ public class Main2Activity extends AppCompatActivity {
                 int test = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
                 if (test == BatteryManager.BATTERY_STATUS_CHARGING) {
                     Log.e(TAG, "----------------正在充电中-----------------------");
-                    Toast.makeText(context, "正在充电", Toast.LENGTH_SHORT).show();
+
+                    battery.setImageResource(R.drawable.inbattery);
 
                 } else {
                     Log.e(TAG, "----------------没有检测 显示当前电量-----------------------");
@@ -249,12 +263,41 @@ public class Main2Activity extends AppCompatActivity {
             }
 
 
+
+
+            if (intent.getAction()=="android.intent.action.PHONE_STATE") {
+                startActivity(new Intent(Main2Activity.this, MainActivity.class));
+                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+
+                int currentCallState = telephonyManager.getCallState();
+                Log.d("PhoneStateReceiver", "currentCallState=" + currentCallState );
+                if (currentCallState == TelephonyManager.CALL_STATE_IDLE) {// 空闲
+                    //TODO
+                } else if (currentCallState == TelephonyManager.CALL_STATE_RINGING) {// 响铃
+                    //TODO
+                } else if (currentCallState == TelephonyManager.CALL_STATE_OFFHOOK) {// 接听
+                    //TODO
+                }
+
+                if(lastCallState == TelephonyManager.CALL_STATE_RINGING && currentCallState == TelephonyManager.CALL_STATE_IDLE){
+
+                    Toast.makeText(context, "有未接来电！！！！！！！", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Main2Activity.this, MenuActivity.class));
+                }
+                lastCallState = currentCallState;
+            }
+
+
+
+
             //如果有新消息 返回主页面
-            if (intent.getAction() == "com.wite.positionerwear.addmochat" || intent.getAction() == "com.wite.positionerwear.addmessage" || intent.getAction() == "com.wite.positionerwear.addmissdcall") {
+            if (intent.getAction() == "com.wite.positionerwear.addmochat" || intent.getAction() == "com.wite.positionerwear.addmessage" ) {
 
                 startActivity(new Intent(Main2Activity.this, MainActivity.class));
 
             }
+
+
 
 
         }
@@ -266,7 +309,7 @@ public class Main2Activity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_POWER) {
-
+            //可能有问题！
             startActivity(new Intent(Main2Activity.this, MenuActivity.class));
 
 
@@ -310,7 +353,8 @@ public class Main2Activity extends AppCompatActivity {
         }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             //不允许返回主界面
-            return true;
+            //先注释掉
+           // return true;
 
 
         }

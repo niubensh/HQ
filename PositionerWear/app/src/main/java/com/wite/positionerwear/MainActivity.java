@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 
+        startActivity(new Intent(this, Main2Activity.class));
 
         Intent i = new Intent(MainActivity.this, BackgroundService.class);
         startService(i);
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //    testzz();
         startGps();
         iscall = true;
-       //-----------
+        //-----------
 
         if (level == 100) {
             betterlevel = level + "";
@@ -471,7 +472,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_am = (TextView) findViewById(R.id.tv_am);
     }
 
-  //判断是否有未读消息
+    //判断是否有未读消息
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -509,13 +511,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             Toast.makeText(mContext, "没有未读消息", Toast.LENGTH_SHORT).show();
 
-            startActivity(new Intent(this, Main2Activity.class));
+            //  startActivity(new Intent(this, Main2Activity.class));
 
         }
 
 
-       }
-
+    }
 
 
     @Override
@@ -548,7 +549,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.e(TAG, "网络不正常");
                     } else {
 
-                        Toast.makeText(context, "网络正常", Toast.LENGTH_SHORT).show();
+                        //      Toast.makeText(context, "网络正常", Toast.LENGTH_SHORT).show();
                         Log.e(TAG, "网络正常进入TRY");
                         try {
                             Log.e(TAG, "开始发送登陆指令");
@@ -596,13 +597,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
 
 
-                /***
+                /* ---
                  * 下行协议
                  *
                  * */
                 //登陆回执
                 case LocationService.BP00:
-                    Log.e(TAG, "指令名称++登陆回复包:BP00***LocationService====" + LocationService.BP00);
+                    Log.e(TAG, "指令名称++登陆回复包:BP00 ---LocationService====" + LocationService.BP00);
                     String testBP00 = intent.getStringExtra(LocationService.BP00);
                     if (testBP00 == null || testBP00 == "") {
                         Log.e(TAG, "onReceive: 如果没有拿到登陆数据");
@@ -642,8 +643,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int minute = Integer.valueOf(BP00_login.trim().substring(14, 16));
                         Log.e(TAG, "现在时间 " + minute);
                         //设置时间的位置
-                     setsystem.setDate(year, mon - 1, day);
-                     setsystem.setTime(hour, minute);
+                        setsystem.setDate(year, mon - 1, day);
+                        setsystem.setTime(hour, minute);
                         Log.e(TAG, "设备登录时间 " + year + "!" + mon + "!" + day + "//////" + hour + "" + minute);
                     }
 
@@ -651,58 +652,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
 
                 case LocationService.BPLN:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPLN***LocationService====" + LocationService.BPLN, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPLN***LocationService====" + LocationService.BPLN);
+                    Log.e(TAG, "指令名称:BPLN ---LocationService====" + LocationService.BPLN);
                     break;
                 case LocationService.BPLO:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPLO***LocationService====" + LocationService.BPLO, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPLO***LocationService====" + LocationService.BPLO);
+                    Log.e(TAG, "指令名称:BPLO ---LocationService====" + LocationService.BPLO);
                     break;
                 case LocationService.BPCM:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPCM***LocationService====" + LocationService.BPCM, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPCM***LocationService====" + LocationService.BPCM);
+                    Log.e(TAG, "指令名称:BPCM ---LocationService====" + LocationService.BPCM);
                     break;
                 case LocationService.BP02:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP02***LocationService====" + LocationService.BP02, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP02***LocationService====" + LocationService.BP02);
+                    Log.e(TAG, "指令名称:BP02 ---LocationService====" + LocationService.BP02);
                     break;
                 case LocationService.BPFD:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPFD***LocationService====" + LocationService.BPFD, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPFD***LocationService====" + LocationService.BPFD);
+                    Log.e(TAG, "指令名称:BPFD ---LocationService====" + LocationService.BPFD);
                     break;
                 case LocationService.BP10:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP10***LocationService====" + LocationService.BP10, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP10***LocationService====" + LocationService.BP10);
+                    Log.e(TAG, "指令名称:BP10 ---LocationService====" + LocationService.BP10);
                     break;
                 case LocationService.BP03:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP03***LocationService====" + LocationService.BP03, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP03***LocationService====" + LocationService.BP03);
+                    Log.e(TAG, "指令名称:BP03 ---LocationService====" + LocationService.BP03);
                     break;
                 case LocationService.BP04:
 
-                    Log.e(TAG, "指令名称:BP04***LocationService====" + LocationService.BP04);
+                    Log.e(TAG, "指令名称:BP04 ---LocationService====" + LocationService.BP04);
                     break;
                 case LocationService.BP05:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP05***LocationService====" + LocationService.BP05, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP05***LocationService====" + LocationService.BP05);
+                    Log.e(TAG, "指令名称:BP05 ---LocationService====" + LocationService.BP05);
                     break;
                 case LocationService.BP06:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP06***LocationService====" + LocationService.BP06, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP06***LocationService====" + LocationService.BP06);
+                    Log.e(TAG, "指令名称:BP06 ---LocationService====" + LocationService.BP06);
                     break;
                 case LocationService.BP39:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP39***LocationService====" + LocationService.BP39, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP39***LocationService====" + LocationService.BP39);
+                    Log.e(TAG, "指令名称:BP39 ---LocationService====" + LocationService.BP39);
                     break;
                 case LocationService.BP49:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP49***LocationService====" + LocationService.BP49, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP49***LocationService====" + LocationService.BP49);
+                    Log.e(TAG, "指令名称:BP49 ---LocationService====" + LocationService.BP49);
                     break;
 
                 //基站校时
                 case LocationService.BP53:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP53***LocationService====" + LocationService.BP53, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP53***LocationService====" + LocationService.BP53);
+                    Log.e(TAG, "指令名称:BP53 ---LocationService====" + LocationService.BP53);
                     String[] BP53 = intent.getStringExtra("BP53").split("，");
 
 
@@ -714,50 +703,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
                 case LocationService.BP54:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP54***LocationService====" + LocationService.BP54, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP54***LocationService====" + LocationService.BP54);
+                    Log.e(TAG, "指令名称:BP54 ---LocationService====" + LocationService.BP54);
                     break;
                 case LocationService.BP70:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP70***LocationService====" + LocationService.BP70, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP70***LocationService====" + LocationService.BP70);
+                    Log.e(TAG, "指令名称:BP70 ---LocationService====" + LocationService.BP70);
                     break;
                 case LocationService.BP86:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP86***LocationService====" + LocationService.BP86, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP86***LocationService====" + LocationService.BP86);
+                    Log.e(TAG, "指令名称:BP86 ---LocationService====" + LocationService.BP86);
                     break;
                 case LocationService.BPTM:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPTM***LocationService====" + LocationService.BPTM, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPTM***LocationService====" + LocationService.BPTM);
+                    Log.e(TAG, "指令名称:BPTM ---LocationService====" + LocationService.BPTM);
                     break;
 
                 case LocationService.BPHT:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPHT***LocationService====" + LocationService.BPHT, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPHT***LocationService====" + LocationService.BPHT);
+                    Log.e(TAG, "指令名称:BPHT ---LocationService====" + LocationService.BPHT);
                     break;
                 case LocationService.BPTQ:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPTQ***LocationService====" + LocationService.BPTQ, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPTQ***LocationService====" + LocationService.BPTQ);
+                    Log.e(TAG, "指令名称:BPTQ ---LocationService====" + LocationService.BPTQ);
                     break;
                 case LocationService.BP87:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP87***LocationService====" + LocationService.BP87, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP87***LocationService====" + LocationService.BP87);
+                    Log.e(TAG, "指令名称:BP87 ---LocationService====" + LocationService.BP87);
                     break;
                 case LocationService.BP91:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP91***LocationService====" + LocationService.BP91, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP91***LocationService====" + LocationService.BP91);
+                    Log.e(TAG, "指令名称:BP91 ---LocationService====" + LocationService.BP91);
                     break;
                 case LocationService.BP01:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP01***LocationService====" + LocationService.BP01, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP01***LocationService====" + LocationService.BP01);
+                    Log.e(TAG, "指令名称:BP01 ---LocationService====" + LocationService.BP01);
                     break;
                 case LocationService.BP11:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP11***LocationService====" + LocationService.BP11, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP11***LocationService====" + LocationService.BP11);
+                    Log.e(TAG, "指令名称:BP11 ---LocationService====" + LocationService.BP11);
                     break;
-                /**接受sos号码并存储得到 soo号  getsos()*/
+                /**接受sos号码并存储得到 sos号  getsos()*/
                 case LocationService.BP12:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP12***LocationService====" + LocationService.BP12, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP12***LocationService====" + LocationService.BP12);
+                    Log.e(TAG, "指令名称:BP12 ---LocationService====" + LocationService.BP12);
                     String[] BP12 = intent.getStringExtra(LocationService.BP12).substring(0, intent.getStringExtra(LocationService.BP12).length() - 1).split(",");
                     if (BP12.length > 3) {
                         String[] newBP12 = new String[]{BP12[3], BP12[4], BP12[5]};
@@ -782,24 +760,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
 
-//                    SharedPreferences sos = getSharedPreferences("sos", 0);
-//
-//                    SharedPreferences.Editor editor = sos.edit();
-//
-//                    editor.putString("sos1", BP12[3]);
-//                    editor.putString("sos2", BP12[4]);
-//                    editor.putString("sos3", BP12[5]);
-//                    editor.commit();
-//                    String[] getsoss = getsos();
-//                    for (String ss : getsos()) {
-//
-//                        Log.e(TAG, "sos号 --------------" + ss);
-//                    }
+
 
                     break;
                 case LocationService.BP13:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP13***LocationService====" + LocationService.BP13, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP13***LocationService====" + LocationService.BP13);
+                    Log.e(TAG, "指令名称:BP13 ---LocationService====" + LocationService.BP13);
                     break;
 
                 //接收联系人下发
@@ -816,7 +781,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.e(TAG, "发送了广播 用于更新电话本" + intentphone.getAction());
 
 
-                    Log.e(TAG, "指令名称:BP14***LocationService====" + LocationService.BP14);
+                    Log.e(TAG, "指令名称:BP14 ---LocationService====" + LocationService.BP14);
                     String[] BP14 = intent.getStringExtra(LocationService.BP14).split(",");
                     String[] newBP14 = intent.getStringExtra(LocationService.BP14).substring(30, intent.getStringExtra(LocationService.BP14).length() - 1).split(",");
                     Log.e(TAG, "修改过后的指令==========" + intent.getStringExtra(LocationService.BP14).substring(30, intent.getStringExtra(LocationService.BP14).length()));
@@ -849,14 +814,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 case LocationService.BP15:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP15***LocationService====" + LocationService.BP15, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP15***LocationService====" + LocationService.BP15);
+                    Log.e(TAG, "指令名称:BP15 ---LocationService====" + LocationService.BP15);
                     break;
 
               /*立即定位*/
                 //  333
                 case LocationService.BP16:
-                    Log.e(TAG, "指令名称:BP16***LocationService====" + LocationService.BP16);
+                    Log.e(TAG, "指令名称:BP16 ---LocationService====" + LocationService.BP16);
                     String[] BP16 = intent.getStringExtra(LocationService.BP16).split(",");
                     lbs = "460,0,9520,3671";
                     if (mStationInfo != null) {
@@ -870,13 +834,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
 
                 case LocationService.BP17:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP17***LocationService====" + LocationService.BP17, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP17***LocationService====" + LocationService.BP17);
+                    Log.e(TAG, "指令名称:BP17 ---LocationService====" + LocationService.BP17);
                     break;
                 //重启设备
                 case LocationService.BP18:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP18***LocationService====" + LocationService.BP18, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP18***LocationService====" + LocationService.BP18);
+                    Log.e(TAG, "指令名称:BP18 ---LocationService====" + LocationService.BP18);
                     String[] BP18 = intent.getStringExtra(LocationService.BP18).substring(0, intent.getStringExtra(LocationService.BP18).length() - 1).split(",");
                     PowerManager pManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
                     pManager.reboot("");
@@ -884,34 +846,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
 
                 case LocationService.BP19:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP19***LocationService====" + LocationService.BP19, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP19***LocationService====" + LocationService.BP19);
+                    Log.e(TAG, "指令名称:BP19 ---LocationService====" + LocationService.BP19);
                     break;
                 case LocationService.BP20:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP20***LocationService====" + LocationService.BP20, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP20***LocationService====" + LocationService.BP20);
+                    Log.e(TAG, "指令名称:BP20 ---LocationService====" + LocationService.BP20);
                     break;
                 case LocationService.BP21:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP21***LocationService====" + LocationService.BP21, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP21***LocationService====" + LocationService.BP21);
+                    Log.e(TAG, "指令名称:BP21 ---LocationService====" + LocationService.BP21);
                     break;
                 case LocationService.BP22:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP22***LocationService====" + LocationService.BP22, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP22***LocationService====" + LocationService.BP22);
+                    Log.e(TAG, "指令名称:BP22 ---LocationService====" + LocationService.BP22);
                     break;
                 case LocationService.BP23:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP23***LocationService====" + LocationService.BP23, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP23***LocationService====" + LocationService.BP23);
+                    Log.e(TAG, "指令名称:BP23 ---LocationService====" + LocationService.BP23);
                     break;
                 //353919025680130
                 case LocationService.BP24:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP24***LocationService====" + LocationService.BP24, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP24***LocationService====" + LocationService.BP24);
+                    Log.e(TAG, "指令名称:BP24 ---LocationService====" + LocationService.BP24);
                     break;
                 //设置闹钟
                 case LocationService.BP25:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP25***LocationService====" + LocationService.BP25, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP25***LocationService====" + LocationService.BP25);
+                    Log.e(TAG, "指令名称:BP25 ---LocationService====" + LocationService.BP25);
                     Log.e(TAG, intent.getStringExtra(LocationService.BP25));
                     String[] BP25 = intent.getStringExtra(LocationService.BP25).split(",");
                     if (0 == Integer.valueOf(BP25[4]) || BP25[4].equals("0")) {
@@ -965,33 +920,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
                 case LocationService.BP26:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP26***LocationService====" + LocationService.BP26, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP26***LocationService====" + LocationService.BP26);
+                    Log.e(TAG, "指令名称:BP26 ---LocationService====" + LocationService.BP26);
                     break;
 
                 //新语音提醒
                 case LocationService.BP27:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP27***LocationService====" + LocationService.BP27, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP27***LocationService====" + LocationService.BP27);
+                    Log.e(TAG, "指令名称:BP27 ---LocationService====" + LocationService.BP27);
                     String[] BP27 = intent.getStringExtra(LocationService.BP27).split(",");
                     Log.e(TAG, "onReceive: ");
                     break;
                 case LocationService.BP28:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP28***LocationService====" + LocationService.BP28, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP28***LocationService====" + LocationService.BP28);
+                    Log.e(TAG, "指令名称:BP28 ---LocationService====" + LocationService.BP28);
                     break;
                 case LocationService.BP29:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP29***LocationService====" + LocationService.BP29, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP29***LocationService====" + LocationService.BP29);
+                    Log.e(TAG, "指令名称:BP29 ---LocationService====" + LocationService.BP29);
                     break;
                 case LocationService.BP30:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP30***LocationService====" + LocationService.BP30, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP30***LocationService====" + LocationService.BP30);
+                    Log.e(TAG, "指令名称:BP30 ---LocationService====" + LocationService.BP30);
                     break;
                 //远程关机
                 case LocationService.BP31:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP31***LocationService====" + LocationService.BP31, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP31***LocationService====" + LocationService.BP31);
+                    Log.e(TAG, "指令名称:BP31 ---LocationService====" + LocationService.BP31);
                     Intent BP31intent = new Intent("android.intent.action.REBOOT");
                     BP31intent.putExtra("nowait", 1);
                     BP31intent.putExtra("interval", 1);
@@ -1003,8 +952,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //拨打电话
                 case LocationService.BP32:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP32***LocationService====" + LocationService.BP32, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP32***LocationService====" + LocationService.BP32);
+                    Log.e(TAG, "指令名称:BP32 ---LocationService====" + LocationService.BP32);
                     String[] BP32 = intent.getStringExtra(LocationService.BP32).substring(0, intent.getStringExtra(LocationService.BP32).length() - 1).split(",");
                     Intent bp32 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + BP32[3]));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1013,55 +961,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
                 case LocationService.BP33:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP33***LocationService====" + LocationService.BP33, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP33***LocationService====" + LocationService.BP33);
+                    Log.e(TAG, "指令名称:BP33 ---LocationService====" + LocationService.BP33);
                     break;
                 case LocationService.BP34:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP34***LocationService====" + LocationService.BP34, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP34***LocationService====" + LocationService.BP34);
+                    Log.e(TAG, "指令名称:BP34 ---LocationService====" + LocationService.BP34);
                     break;
                 case LocationService.BP35:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP35***LocationService====" + LocationService.BP35, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP35***LocationService====" + LocationService.BP35);
+                    Log.e(TAG, "指令名称:BP35 ---LocationService====" + LocationService.BP35);
                     break;
                 case LocationService.BP36:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP36***LocationService====" + LocationService.BP36, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP36***LocationService====" + LocationService.BP36);
+                    Log.e(TAG, "指令名称:BP36 ---LocationService====" + LocationService.BP36);
                     break;
                 case LocationService.BP37:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP37***LocationService====" + LocationService.BP37, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP37***LocationService====" + LocationService.BP37);
+                    Log.e(TAG, "指令名称:BP37 ---LocationService====" + LocationService.BP37);
                     break;
                 case LocationService.BP38:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP38***LocationService====" + LocationService.BP38, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP38***LocationService====" + LocationService.BP38);
+                    Log.e(TAG, "指令名称:BP38 ---LocationService====" + LocationService.BP38);
                     break;
 
                 //message 文字下发
                 case LocationService.BP40:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP40***LocationService====" + LocationService.BP40, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP40***LocationService====" + LocationService.BP40);
+                    Log.e(TAG, "指令名称:BP40 ---LocationService====" + LocationService.BP40);
 
                     //String[] BP40=intent.getStringExtra(LocationService.BP40).substring()
 
 
                     break;
                 case LocationService.BP41:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP41***LocationService====" + LocationService.BP41, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP41***LocationService====" + LocationService.BP41);
+                    Log.e(TAG, "指令名称:BP41 ---LocationService====" + LocationService.BP41);
                     break;
                 case LocationService.BP43:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP43***LocationService====" + LocationService.BP43, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP43***LocationService====" + LocationService.BP43);
+                    Log.e(TAG, "指令名称:BP43 ---LocationService====" + LocationService.BP43);
                     break;
                 case LocationService.BP44:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP44***LocationService====" + LocationService.BP44, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP44***LocationService====" + LocationService.BP44);
+                    Log.e(TAG, "指令名称:BP44 ---LocationService====" + LocationService.BP44);
                     break;
                 //静音开关
                 case LocationService.BP45:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP45***LocationService====" + LocationService.BP45, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP45***LocationService====" + LocationService.BP45);
+                    Log.e(TAG, "指令名称:BP45 ---LocationService====" + LocationService.BP45);
 
                     String[] BP45 = intent.getStringExtra(LocationService.BP45).substring(0, intent.getStringExtra(LocationService.BP45).length() - 1).split(",");
 
@@ -1078,28 +1015,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
                 case LocationService.BP46:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP46***LocationService====" + LocationService.BP46, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP46***LocationService====" + LocationService.BP46);
+                    Log.e(TAG, "指令名称:BP46 ---LocationService====" + LocationService.BP46);
 
 
                 case LocationService.BP47:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP47***LocationService====" + LocationService.BP47, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP47***LocationService====" + LocationService.BP47);
+                    Log.e(TAG, "指令名称:BP47 ---LocationService====" + LocationService.BP47);
                     break;
                 case LocationService.BP48:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP48***LocationService====" + LocationService.BP48, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP48***LocationService====" + LocationService.BP48);
+                    Log.e(TAG, "指令名称:BP48 ---LocationService====" + LocationService.BP48);
                     break;
                 case LocationService.BP50:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP50***LocationService====" + LocationService.BP50, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP50***LocationService====" + LocationService.BP50);
+                    Log.e(TAG, "指令名称:BP50 ---LocationService====" + LocationService.BP50);
                     break;
 
 
                 //删除联系人
                 case LocationService.BP52:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP52***LocationService====" + LocationService.BP52, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP52***LocationService====" + LocationService.BP52);
+                    Log.e(TAG, "指令名称:BP52 ---LocationService====" + LocationService.BP52);
                     String[] BP52 = intent.getStringExtra(LocationService.BP52).split(",");
                     dbHelper = new DBHelper(MainActivity.this, "phone", 1);
                     List<PhoneUser> list = new ArrayList<>(); /*调用query()获取Cursor*/
@@ -1116,7 +1048,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     List<PhoneUser> list_phoneuser = list;
                     for (PhoneUser phone : list_phoneuser) {
 
-                        Log.e(TAG, "Main+++++++++++++++++LocationService.BP52:数据库的数据******************" + phone.getName() + phone.getPhonenum());
+                        Log.e(TAG, "Main+++++++++++++++++LocationService.BP52:数据库的数据 --- --- --- --- --- ---" + phone.getName() + phone.getPhonenum());
 
                     }
 
@@ -1141,76 +1073,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 case LocationService.BP55:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP55***LocationService====" + LocationService.BP55, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP55***LocationService====" + LocationService.BP55);
+                    Log.e(TAG, "指令名称:BP55 ---LocationService====" + LocationService.BP55);
                     break;
 
                 case LocationService.BP56:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP56***LocationService====" + LocationService.BP56, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP56***LocationService====" + LocationService.BP56);
+                    Log.e(TAG, "指令名称:BP56 ---LocationService====" + LocationService.BP56);
                     break;
                 case LocationService.BP57:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP57***LocationService====" + LocationService.BP57, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP57***LocationService====" + LocationService.BP57);
+                    Log.e(TAG, "指令名称:BP57 ---LocationService====" + LocationService.BP57);
                     break;
                 case LocationService.BP58:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP58***LocationService====" + LocationService.BP58, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP58***LocationService====" + LocationService.BP58);
+                    Log.e(TAG, "指令名称:BP58 ---LocationService====" + LocationService.BP58);
                     break;
                 case LocationService.BP59:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP59***LocationService====" + LocationService.BP59, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP59***LocationService====" + LocationService.BP59);
+                    Log.e(TAG, "指令名称:BP59 ---LocationService====" + LocationService.BP59);
                     break;
                 case LocationService.BP60:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP60***LocationService====" + LocationService.BP60, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP60***LocationService====" + LocationService.BP60);
+                    Log.e(TAG, "指令名称:BP60 ---LocationService====" + LocationService.BP60);
                     break;
                 case LocationService.BP61:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP61***LocationService====" + LocationService.BP61, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP61***LocationService====" + LocationService.BP61);
+                    Log.e(TAG, "指令名称:BP61 ---LocationService====" + LocationService.BP61);
                     break;
                 case LocationService.BP62:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP62***LocationService====" + LocationService.BP62, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP62***LocationService====" + LocationService.BP62);
+                    Log.e(TAG, "指令名称:BP62 ---LocationService====" + LocationService.BP62);
                     break;
                 case LocationService.BP64:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP64***LocationService====" + LocationService.BP64, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP64***LocationService====" + LocationService.BP64);
+                    Log.e(TAG, "指令名称:BP64 ---LocationService====" + LocationService.BP64);
                     break;
                 case LocationService.BP65:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP65***LocationService====" + LocationService.BP65, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP65***LocationService====" + LocationService.BP65);
+                    Log.e(TAG, "指令名称:BP65 ---LocationService====" + LocationService.BP65);
                     break;
                 case LocationService.BP66:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP66***LocationService====" + LocationService.BP66, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP66***LocationService====" + LocationService.BP66);
+                    Log.e(TAG, "指令名称:BP66 ---LocationService====" + LocationService.BP66);
                     break;
                 case LocationService.BP67:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP67***LocationService====" + LocationService.BP67, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP67***LocationService====" + LocationService.BP67);
+                    Log.e(TAG, "指令名称:BP67 ---LocationService====" + LocationService.BP67);
                     break;
                 case LocationService.BP68:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP68***LocationService====" + LocationService.BP68, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP68***LocationService====" + LocationService.BP68);
+                    Log.e(TAG, "指令名称:BP68 ---LocationService====" + LocationService.BP68);
                     break;
                 case LocationService.BP69:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP69***LocationService====" + LocationService.BP69, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP69***LocationService====" + LocationService.BP69);
+                    Log.e(TAG, "指令名称:BP69 ---LocationService====" + LocationService.BP69);
                     break;
                 case LocationService.BP71:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP71***LocationService====" + LocationService.BP71, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP71***LocationService====" + LocationService.BP71);
+                    Log.e(TAG, "指令名称:BP71 ---LocationService====" + LocationService.BP71);
                     break;
                 case LocationService.BP72:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP72***LocationService====" + LocationService.BP72, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP72***LocationService====" + LocationService.BP72);
+                    Log.e(TAG, "指令名称:BP72 ---LocationService====" + LocationService.BP72);
                     break;
 
                 //设置带名称的闹钟
 
                 case LocationService.BP75:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP25***LocationService====" + LocationService.BP25, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP25***LocationService====" + LocationService.BP75);
+                    Log.e(TAG, "指令名称:BP25 ---LocationService====" + LocationService.BP75);
                     Log.e(TAG, intent.getStringExtra(LocationService.BP75));
                     String[] BP75 = intent.getStringExtra(LocationService.BP75).split(",");
                     if (0 == Integer.valueOf(BP75[4]) || BP75[4].equals("0")) {
@@ -1267,96 +1182,73 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 case LocationService.BP77:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP77***LocationService====" + LocationService.BP77, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP77***LocationService====" + LocationService.BP77);
+                    Log.e(TAG, "指令名称:BP77 ---LocationService====" + LocationService.BP77);
                     break;
                 case LocationService.BP78:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP78***LocationService====" + LocationService.BP78, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP78***LocationService====" + LocationService.BP78);
+                    Log.e(TAG, "指令名称:BP78 ---LocationService====" + LocationService.BP78);
                     break;
                 case LocationService.BP79:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP79***LocationService====" + LocationService.BP79, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP79***LocationService====" + LocationService.BP79);
+                    Log.e(TAG, "指令名称:BP79 ---LocationService====" + LocationService.BP79);
                     break;
                 case LocationService.BPVL:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPVL***LocationService====" + LocationService.BPVL, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPVL***LocationService====" + LocationService.BPVL);
+                    Log.e(TAG, "指令名称:BPVL ---LocationService====" + LocationService.BPVL);
                     break;
                 case LocationService.BP80:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP80***LocationService====" + LocationService.BP80, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP80***LocationService====" + LocationService.BP80);
+                    Log.e(TAG, "指令名称:BP80 ---LocationService====" + LocationService.BP80);
                     break;
                 case LocationService.BP81:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP81***LocationService====" + LocationService.BP81, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP81***LocationService====" + LocationService.BP81);
+                    Log.e(TAG, "指令名称:BP81 ---LocationService====" + LocationService.BP81);
                     break;
                 case LocationService.BP82:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP82***LocationService====" + LocationService.BP82, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP82***LocationService====" + LocationService.BP82);
+                    Log.e(TAG, "指令名称:BP82 ---LocationService====" + LocationService.BP82);
                     break;
                 case LocationService.BPXL:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPXL***LocationService====" + LocationService.BPXL, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPXL***LocationService====" + LocationService.BPXL);
+                    Log.e(TAG, "指令名称:BPXL ---LocationService====" + LocationService.BPXL);
                     break;
                 case LocationService.BPXY:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPXY***LocationService====" + LocationService.BPXY, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPXY***LocationService====" + LocationService.BPXY);
+                    Log.e(TAG, "指令名称:BPXY ---LocationService====" + LocationService.BPXY);
                     break;
                 case LocationService.BPJZ:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPJZ***LocationService====" + LocationService.BPJZ, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPJZ***LocationService====" + LocationService.BPJZ);
+                    Log.e(TAG, "指令名称:BPJZ ---LocationService====" + LocationService.BPJZ);
                     break;
                 case LocationService.BP83:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP83***LocationService====" + LocationService.BP83, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP83***LocationService====" + LocationService.BP83);
+                    Log.e(TAG, "指令名称:BP83 ---LocationService====" + LocationService.BP83);
                     break;
                 case LocationService.BP84:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP84***LocationService====" + LocationService.BP84, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP84***LocationService====" + LocationService.BP84);
+                    Log.e(TAG, "指令名称:BP84 ---LocationService====" + LocationService.BP84);
                     break;
                 case LocationService.BP85:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP85***LocationService====" + LocationService.BP85, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP85***LocationService====" + LocationService.BP85);
+                    Log.e(TAG, "指令名称:BP85 ---LocationService====" + LocationService.BP85);
                     break;
                 case LocationService.BP88:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP88***LocationService====" + LocationService.BP88, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP88***LocationService====" + LocationService.BP88);
+                    Log.e(TAG, "指令名称:BP88 ---LocationService====" + LocationService.BP88);
                     break;
                 case LocationService.BP89:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP89***LocationService====" + LocationService.BP89, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP89***LocationService====" + LocationService.BP89);
+                    Log.e(TAG, "指令名称:BP89 ---LocationService====" + LocationService.BP89);
                     break;
                 case LocationService.BP90:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP90***LocationService====" + LocationService.BP90, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP90***LocationService====" + LocationService.BP90);
+                    Log.e(TAG, "指令名称:BP90 ---LocationService====" + LocationService.BP90);
                     break;
                 case LocationService.BP92:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP92***LocationService====" + LocationService.BP92, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP92***LocationService====" + LocationService.BP92);
+                    Log.e(TAG, "指令名称:BP92 ---LocationService====" + LocationService.BP92);
                     break;
                 case LocationService.BP93:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP93***LocationService====" + LocationService.BP93, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP93***LocationService====" + LocationService.BP93);
+                    Log.e(TAG, "指令名称:BP93 ---LocationService====" + LocationService.BP93);
                     break;
                 case LocationService.BP94:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP94***LocationService====" + LocationService.BP94, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP94***LocationService====" + LocationService.BP94);
+                    Log.e(TAG, "指令名称:BP94 ---LocationService====" + LocationService.BP94);
                     break;
                 case LocationService.BPDF:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPDF***LocationService====" + LocationService.BPDF, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPDF***LocationService====" + LocationService.BPDF);
+                    Log.e(TAG, "指令名称:BPDF ---LocationService====" + LocationService.BPDF);
                     break;
                 case LocationService.BP96:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP96***LocationService====" + LocationService.BP96, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP96***LocationService====" + LocationService.BP96);
+                    Log.e(TAG, "指令名称:BP96 ---LocationService====" + LocationService.BP96);
                     break;
                 case LocationService.BP97:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BP97***LocationService====" + LocationService.BP97, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BP97***LocationService====" + LocationService.BP97);
+                    Log.e(TAG, "指令名称:BP97 ---LocationService====" + LocationService.BP97);
                     break;
                 case LocationService.BPWL:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPWL***LocationService====" + LocationService.BPWL, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPWL***LocationService====" + LocationService.BPWL);
+                    Log.e(TAG, "指令名称:BPWL ---LocationService====" + LocationService.BPWL);
                     break;
 
                 //下行监护人列表
@@ -1381,12 +1273,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         GuardianString = newBPGL[i].split("[|]");
                         Guavalues = new ContentValues();
                         Guavalues.put("id", GuardianString[0]);
-                        Log.e(TAG, "1145284 是不是这个 "+ GuardianString[0]);
-                        if( GuardianString[1]!=null){
-                            Guavalues.put("phone",GuardianString[1]);
-                        }else{
-                            Guavalues.put("phone","");
-                            Log.e(TAG, "服务器没有下发监护人电话号" );
+                        Log.e(TAG, "1145284 是不是这个 " + GuardianString[0]);
+                        if (GuardianString[1] != null) {
+                            Guavalues.put("phone", GuardianString[1]);
+                        } else {
+                            Guavalues.put("phone", "");
+                            Log.e(TAG, "服务器没有下发监护人电话号");
                         }
 
 
@@ -1417,12 +1309,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 case LocationService.BPGF:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPWL***LocationService====" + LocationService.BPWL, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPWL***LocationService====" + LocationService.BPWL);
+                    Log.e(TAG, "指令名称:BPWL ---LocationService====" + LocationService.BPWL);
                     break;
                 case LocationService.BP98:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+BPWL***LocationService====" + LocationService.BPWL, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:BPWL***LocationService====" + LocationService.BPWL);
+                    Log.e(TAG, "指令名称:BPWL ---LocationService====" + LocationService.BPWL);
                     break;
 
                 //手表使用者下发
@@ -1500,7 +1390,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mContext.sendBroadcast(addmochat);
 
 
-
                     break;
 
 
@@ -1573,7 +1462,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         mContext.sendBroadcast(addmessage);
 
 
-
                         orderUtil.send("IWAPCD", BPCD[1] + "," + BPCD[3] + "," + BPCD[4] + ",1");
 
                     }
@@ -1581,329 +1469,250 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
 
 
-                /***
+                /* ---
                  * 上行协议
                  *
                  * */
                 case LocationService.AP11:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP11***LocationService====" + LocationService.AP11, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP11***LocationService====" + LocationService.AP11);
+                    Log.e(TAG, "指令名称:AP11 ---LocationService====" + LocationService.AP11);
                     break;
                 case LocationService.AP12:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP12***LocationService====" + LocationService.AP12, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP12***LocationService====" + LocationService.AP12);
+                    Log.e(TAG, "指令名称:AP12 ---LocationService====" + LocationService.AP12);
                     break;
                 case LocationService.AP13:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP13***LocationService====" + LocationService.AP13, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP13***LocationService====" + LocationService.AP13);
+                    Log.e(TAG, "指令名称:AP13 ---LocationService====" + LocationService.AP13);
                     break;
                 case LocationService.AP14:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP14***LocationService====" + LocationService.AP14, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP14***LocationService====" + LocationService.AP14);
+                    Log.e(TAG, "指令名称:AP14 ---LocationService====" + LocationService.AP14);
                     break;
                 case LocationService.AP15:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP15***LocationService====" + LocationService.AP15, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP15***LocationService====" + LocationService.AP15);
+                    Log.e(TAG, "指令名称:AP15 ---LocationService====" + LocationService.AP15);
                     break;
                 case LocationService.AP16:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP16***LocationService====" + LocationService.AP16, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP16***LocationService====" + LocationService.AP16);
+                    Log.e(TAG, "指令名称:AP16 ---LocationService====" + LocationService.AP16);
                     break;
                 case LocationService.AP17:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP17***LocationService====" + LocationService.AP17, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP17***LocationService====" + LocationService.AP17);
+                    Log.e(TAG, "指令名称:AP17 ---LocationService====" + LocationService.AP17);
                     break;
                 case LocationService.AP18:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP18***LocationService====" + LocationService.AP18, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP18***LocationService====" + LocationService.AP18);
+                    Log.e(TAG, "指令名称:AP18 ---LocationService====" + LocationService.AP18);
                     break;
                 case LocationService.AP19:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP19***LocationService====" + LocationService.AP19, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP19***LocationService====" + LocationService.AP19);
+                    Log.e(TAG, "指令名称:AP19 ---LocationService====" + LocationService.AP19);
                     break;
                 case LocationService.AP20:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP20***LocationService====" + LocationService.AP20, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP20***LocationService====" + LocationService.AP20);
+                    Log.e(TAG, "指令名称:AP20 ---LocationService====" + LocationService.AP20);
                     break;
                 case LocationService.AP21:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP21***LocationService====" + LocationService.AP21, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP21***LocationService====" + LocationService.AP21);
+                    Log.e(TAG, "指令名称:AP21 ---LocationService====" + LocationService.AP21);
                     break;
                 case LocationService.AP22:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP22***LocationService====" + LocationService.AP22, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP22***LocationService====" + LocationService.AP22);
+                    Log.e(TAG, "指令名称:AP22 ---LocationService====" + LocationService.AP22);
                     break;
                 case LocationService.AP23:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP23***LocationService====" + LocationService.AP23, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP23***LocationService====" + LocationService.AP23);
+                    Log.e(TAG, "指令名称:AP23 ---LocationService====" + LocationService.AP23);
                     break;
                 case LocationService.AP24:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP24***LocationService====" + LocationService.AP24, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP24***LocationService====" + LocationService.AP24);
+                    Log.e(TAG, "指令名称:AP24 ---LocationService====" + LocationService.AP24);
                     break;
                 case LocationService.AP25:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP25***LocationService====" + LocationService.AP25, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP25***LocationService====" + LocationService.AP25);
+                    Log.e(TAG, "指令名称:AP25 ---LocationService====" + LocationService.AP25);
                     break;
                 case LocationService.AP26:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP26***LocationService====" + LocationService.AP26, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP26***LocationService====" + LocationService.AP26);
+                    Log.e(TAG, "指令名称:AP26 ---LocationService====" + LocationService.AP26);
                     break;
                 case LocationService.AP27:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP27***LocationService====" + LocationService.AP27, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP27***LocationService====" + LocationService.AP27);
+                    Log.e(TAG, "指令名称:AP27 ---LocationService====" + LocationService.AP27);
                     break;
                 case LocationService.AP28:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP28***LocationService====" + LocationService.AP28, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP28***LocationService====" + LocationService.AP28);
+                    Log.e(TAG, "指令名称:AP28 ---LocationService====" + LocationService.AP28);
                     break;
                 case LocationService.AP29:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP29***LocationService====" + LocationService.AP29, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP29***LocationService====" + LocationService.AP29);
+                    Log.e(TAG, "指令名称:AP29 ---LocationService====" + LocationService.AP29);
                     break;
                 case LocationService.AP30:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP30***LocationService====" + LocationService.AP30, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP30***LocationService====" + LocationService.AP30);
+                    Log.e(TAG, "指令名称:AP30 ---LocationService====" + LocationService.AP30);
                     break;
                 case LocationService.AP31:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP31***LocationService====" + LocationService.AP31, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP31***LocationService====" + LocationService.AP31);
+                    Log.e(TAG, "指令名称:AP31 ---LocationService====" + LocationService.AP31);
                     break;
                 case LocationService.AP32:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP32***LocationService====" + LocationService.AP32, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP32***LocationService====" + LocationService.AP32);
+                    Log.e(TAG, "指令名称:AP32 ---LocationService====" + LocationService.AP32);
                     break;
                 case LocationService.AP33:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP33***LocationService====" + LocationService.AP33, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP33***LocationService====" + LocationService.AP33);
+                    Log.e(TAG, "指令名称:AP33 ---LocationService====" + LocationService.AP33);
                     break;
                 case LocationService.AP34:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP34***LocationService====" + LocationService.AP34, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP34***LocationService====" + LocationService.AP34);
+                    Log.e(TAG, "指令名称:AP34 ---LocationService====" + LocationService.AP34);
                     break;
                 case LocationService.AP35:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP35***LocationService====" + LocationService.AP35, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP35***LocationService====" + LocationService.AP35);
+                    Log.e(TAG, "指令名称:AP35 ---LocationService====" + LocationService.AP35);
                     break;
                 case LocationService.AP36:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP36***LocationService====" + LocationService.AP36, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP36***LocationService====" + LocationService.AP36);
+                    Log.e(TAG, "指令名称:AP36 ---LocationService====" + LocationService.AP36);
                     break;
                 case LocationService.AP37:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP37***LocationService====" + LocationService.AP37, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP37***LocationService====" + LocationService.AP37);
+                    Log.e(TAG, "指令名称:AP37 ---LocationService====" + LocationService.AP37);
                     break;
                 case LocationService.AP38:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP38***LocationService====" + LocationService.AP38, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP38***LocationService====" + LocationService.AP38);
+                    Log.e(TAG, "指令名称:AP38 ---LocationService====" + LocationService.AP38);
                     break;
                 case LocationService.AP40:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP40***LocationService====" + LocationService.AP40, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP40***LocationService====" + LocationService.AP40);
+                    Log.e(TAG, "指令名称:AP40 ---LocationService====" + LocationService.AP40);
                     break;
                 case LocationService.AP41:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP41***LocationService====" + LocationService.AP41, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP41***LocationService====" + LocationService.AP41);
+                    Log.e(TAG, "指令名称:AP41 ---LocationService====" + LocationService.AP41);
                     break;
                 case LocationService.AP43:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP43***LocationService====" + LocationService.AP43, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP43***LocationService====" + LocationService.AP43);
+                    Log.e(TAG, "指令名称:AP43 ---LocationService====" + LocationService.AP43);
                     break;
                 case LocationService.AP44:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP44***LocationService====" + LocationService.AP44, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP44***LocationService====" + LocationService.AP44);
+                    Log.e(TAG, "指令名称:AP44 ---LocationService====" + LocationService.AP44);
                     break;
                 case LocationService.AP45:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP45***LocationService====" + LocationService.AP45, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP45***LocationService====" + LocationService.AP45);
+                    Log.e(TAG, "指令名称:AP45 ---LocationService====" + LocationService.AP45);
                     break;
                 case LocationService.AP46:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP46***LocationService====" + LocationService.AP46, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP46***LocationService====" + LocationService.AP46);
+                    Log.e(TAG, "指令名称:AP46 ---LocationService====" + LocationService.AP46);
                     break;
                 case LocationService.AP47:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP47***LocationService====" + LocationService.AP47, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP47***LocationService====" + LocationService.AP47);
+                    Log.e(TAG, "指令名称:AP47 ---LocationService====" + LocationService.AP47);
                     break;
                 case LocationService.AP48:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP48***LocationService====" + LocationService.AP48, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP48***LocationService====" + LocationService.AP48);
+                    Log.e(TAG, "指令名称:AP48 ---LocationService====" + LocationService.AP48);
                     break;
                 case LocationService.AP50:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP50***LocationService====" + LocationService.AP50, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP50***LocationService====" + LocationService.AP50);
+                    Log.e(TAG, "指令名称:AP50 ---LocationService====" + LocationService.AP50);
                     break;
 
                 case LocationService.AP51:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP51***LocationService====" + LocationService.AP51, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP51***LocationService====" + LocationService.AP51);
+                    Log.e(TAG, "指令名称:AP51 ---LocationService====" + LocationService.AP51);
                     break;
 
                 case LocationService.AP52:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP52***LocationService====" + LocationService.AP52, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP52***LocationService====" + LocationService.AP52);
+                    Log.e(TAG, "指令名称:AP52 ---LocationService====" + LocationService.AP52);
                     break;
                 case LocationService.AP55:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP55***LocationService====" + LocationService.AP55, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP55***LocationService====" + LocationService.AP55);
+                    Log.e(TAG, "指令名称:AP55 ---LocationService====" + LocationService.AP55);
                     break;
                 case LocationService.AP56:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP56***LocationService====" + LocationService.AP56, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP56***LocationService====" + LocationService.AP56);
+                    Log.e(TAG, "指令名称:AP56 ---LocationService====" + LocationService.AP56);
                     break;
                 case LocationService.AP57:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP57***LocationService====" + LocationService.AP57, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP57***LocationService====" + LocationService.AP57);
+                    Log.e(TAG, "指令名称:AP57 ---LocationService====" + LocationService.AP57);
                     break;
                 case LocationService.AP58:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP58***LocationService====" + LocationService.AP58, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP58***LocationService====" + LocationService.AP58);
+                    Log.e(TAG, "指令名称:AP58 ---LocationService====" + LocationService.AP58);
                     break;
                 case LocationService.AP59:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP59***LocationService====" + LocationService.AP59, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP59***LocationService====" + LocationService.AP59);
+                    Log.e(TAG, "指令名称:AP59 ---LocationService====" + LocationService.AP59);
                     break;
                 case LocationService.AP60:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP60***LocationService====" + LocationService.AP60, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP60***LocationService====" + LocationService.AP60);
+                    Log.e(TAG, "指令名称:AP60 ---LocationService====" + LocationService.AP60);
                     break;
                 case LocationService.AP61:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP61***LocationService====" + LocationService.AP61, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP61***LocationService====" + LocationService.AP61);
+                    Log.e(TAG, "指令名称:AP61 ---LocationService====" + LocationService.AP61);
                     break;
                 case LocationService.AP62:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP62***LocationService====" + LocationService.AP62, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP62***LocationService====" + LocationService.AP62);
+                    Log.e(TAG, "指令名称:AP62 ---LocationService====" + LocationService.AP62);
                     break;
                 case LocationService.AP64:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP64***LocationService====" + LocationService.AP64, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP64***LocationService====" + LocationService.AP64);
+                    Log.e(TAG, "指令名称:AP64 ---LocationService====" + LocationService.AP64);
                     break;
                 case LocationService.AP65:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP65***LocationService====" + LocationService.AP65, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP65***LocationService====" + LocationService.AP65);
+                    Log.e(TAG, "指令名称:AP65 ---LocationService====" + LocationService.AP65);
                     break;
                 case LocationService.AP66:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP66***LocationService====" + LocationService.AP66, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP66***LocationService====" + LocationService.AP66);
+                    Log.e(TAG, "指令名称:AP66 ---LocationService====" + LocationService.AP66);
                     break;
                 case LocationService.AP67:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP67***LocationService====" + LocationService.AP67, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP67***LocationService====" + LocationService.AP67);
+                    Log.e(TAG, "指令名称:AP67 ---LocationService====" + LocationService.AP67);
                     break;
                 case LocationService.AP68:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP68***LocationService====" + LocationService.AP68, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP68***LocationService====" + LocationService.AP68);
+                    Log.e(TAG, "指令名称:AP68 ---LocationService====" + LocationService.AP68);
                     break;
                 case LocationService.AP69:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP69***LocationService====" + LocationService.AP69, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP69***LocationService====" + LocationService.AP69);
+                    Log.e(TAG, "指令名称:AP69 ---LocationService====" + LocationService.AP69);
                     break;
                 case LocationService.AP71:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP71***LocationService====" + LocationService.AP71, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP71***LocationService====" + LocationService.AP71);
+                    Log.e(TAG, "指令名称:AP71 ---LocationService====" + LocationService.AP71);
                     break;
                 case LocationService.AP72:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP72***LocationService====" + LocationService.AP72, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP72***LocationService====" + LocationService.AP72);
+                    Log.e(TAG, "指令名称:AP72 ---LocationService====" + LocationService.AP72);
                     break;
                 case LocationService.AP75:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP75***LocationService====" + LocationService.AP75, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP75***LocationService====" + LocationService.AP75);
+                    Log.e(TAG, "指令名称:AP75 ---LocationService====" + LocationService.AP75);
                     break;
                 case LocationService.AP77:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP77***LocationService====" + LocationService.AP77, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP77***LocationService====" + LocationService.AP77);
+                    Log.e(TAG, "指令名称:AP77 ---LocationService====" + LocationService.AP77);
                     break;
                 case LocationService.AP78:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP78***LocationService====" + LocationService.AP78, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP78***LocationService====" + LocationService.AP78);
+                    Log.e(TAG, "指令名称:AP78 ---LocationService====" + LocationService.AP78);
                     break;
                 case LocationService.AP79:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP79***LocationService====" + LocationService.AP79, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP79***LocationService====" + LocationService.AP79);
+                    Log.e(TAG, "指令名称:AP79 ---LocationService====" + LocationService.AP79);
                     break;
                 case LocationService.APVL:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+APVL***LocationService====" + LocationService.APVL, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:APVL***LocationService====" + LocationService.APVL);
+                    Log.e(TAG, "指令名称:APVL ---LocationService====" + LocationService.APVL);
                     break;
                 case LocationService.AP80:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP80***LocationService====" + LocationService.AP80, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP80***LocationService====" + LocationService.AP80);
+                    Log.e(TAG, "指令名称:AP80 ---LocationService====" + LocationService.AP80);
                     break;
                 case LocationService.AP81:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP81***LocationService====" + LocationService.AP81, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP81***LocationService====" + LocationService.AP81);
+                    Log.e(TAG, "指令名称:AP81 ---LocationService====" + LocationService.AP81);
                     break;
                 case LocationService.AP82:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP82***LocationService====" + LocationService.AP82, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP82***LocationService====" + LocationService.AP82);
+                    Log.e(TAG, "指令名称:AP82 ---LocationService====" + LocationService.AP82);
                     break;
                 case LocationService.APXL:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+APXL***LocationService====" + LocationService.APXL, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:APXL***LocationService====" + LocationService.APXL);
+                    Log.e(TAG, "指令名称:APXL ---LocationService====" + LocationService.APXL);
                     break;
                 case LocationService.APXY:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+APXY***LocationService====" + LocationService.APXY, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:APXY***LocationService====" + LocationService.APXY);
+                    Log.e(TAG, "指令名称:APXY ---LocationService====" + LocationService.APXY);
                     break;
                 case LocationService.APJZ:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+APJZ***LocationService====" + LocationService.APJZ, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:APJZ***LocationService====" + LocationService.APJZ);
+                    Log.e(TAG, "指令名称:APJZ ---LocationService====" + LocationService.APJZ);
                     break;
                 case LocationService.AP83:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP83***LocationService====" + LocationService.AP83, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP83***LocationService====" + LocationService.AP83);
+                    Log.e(TAG, "指令名称:AP83 ---LocationService====" + LocationService.AP83);
                     break;
                 case LocationService.AP84:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP84***LocationService====" + LocationService.AP84, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP84***LocationService====" + LocationService.AP84);
+                    Log.e(TAG, "指令名称:AP84 ---LocationService====" + LocationService.AP84);
                     break;
                 case LocationService.AP85:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP85***LocationService====" + LocationService.AP85, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP85***LocationService====" + LocationService.AP85);
+                    Log.e(TAG, "指令名称:AP85 ---LocationService====" + LocationService.AP85);
                     break;
                 case LocationService.AP88:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP88***LocationService====" + LocationService.AP88, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP88***LocationService====" + LocationService.AP88);
+                    Log.e(TAG, "指令名称:AP88 ---LocationService====" + LocationService.AP88);
                     break;
                 case LocationService.AP89:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP89***LocationService====" + LocationService.AP89, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP89***LocationService====" + LocationService.AP89);
+                    Log.e(TAG, "指令名称:AP89 ---LocationService====" + LocationService.AP89);
                     break;
                 case LocationService.AP90:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP90***LocationService====" + LocationService.AP90, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP90***LocationService====" + LocationService.AP90);
+                    Log.e(TAG, "指令名称:AP90 ---LocationService====" + LocationService.AP90);
                     break;
                 case LocationService.AP92:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP92***LocationService====" + LocationService.AP92, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP92***LocationService====" + LocationService.AP92);
+                    Log.e(TAG, "指令名称:AP92 ---LocationService====" + LocationService.AP92);
                     break;
                 case LocationService.AP93:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP93***LocationService====" + LocationService.AP93, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP93***LocationService====" + LocationService.AP93);
+                    Log.e(TAG, "指令名称:AP93 ---LocationService====" + LocationService.AP93);
                     break;
                 case LocationService.AP94:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP94***LocationService====" + LocationService.AP94, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP94***LocationService====" + LocationService.AP94);
+                    Log.e(TAG, "指令名称:AP94 ---LocationService====" + LocationService.AP94);
                     break;
                 case LocationService.APDF:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+APDF***LocationService====" + LocationService.APDF, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:APDF***LocationService====" + LocationService.APDF);
+                    Log.e(TAG, "指令名称:APDF ---LocationService====" + LocationService.APDF);
                     break;
 
                 //
                 case LocationService.AP96:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP96***LocationService====" + LocationService.AP96, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP96***LocationService====" + LocationService.AP96);
+                    Log.e(TAG, "指令名称:AP96 ---LocationService====" + LocationService.AP96);
                     break;
                 case LocationService.AP97:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+AP97***LocationService====" + LocationService.AP97, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:AP97***LocationService====" + LocationService.AP97);
+                    Log.e(TAG, "指令名称:AP97 ---LocationService====" + LocationService.AP97);
                     break;
                 case LocationService.APWL:
-                    Toast.makeText(MainActivity.this, "onReceive服务监听-指令名称+APWL***LocationService====" + LocationService.APWL, Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "指令名称:APWL***LocationService====" + LocationService.APWL);
+                    Log.e(TAG, "指令名称:APWL ---LocationService====" + LocationService.APWL);
                     break;
 
 
