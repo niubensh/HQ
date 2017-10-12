@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 
-        startActivity(new Intent(this, Main2Activity.class));
+      startActivity(new Intent(this, Main2Activity.class));
 
         Intent i = new Intent(MainActivity.this, BackgroundService.class);
         startService(i);
@@ -465,7 +465,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }).start();
-
         tv_time = (TextView) findViewById(R.id.time);
         tv_date = (TextView) findViewById(R.id.date);
         tv_month = (TextView) findViewById(R.id.month);
@@ -629,7 +628,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int minute = Integer.valueOf(BP00_login.trim().substring(14, 16));
                         Log.d(TAG, "现在时间 " + minute);
                         //设置时间的位置
-                        setsystem.setDate(year, mon - 1, day);
+                       setsystem.setDate(year, mon - 1, day);
                         setsystem.setTime(hour, minute);
                         Log.d(TAG, "设备登录时间 " + year + "!" + mon + "!" + day + "//////" + hour + "" + minute);
                     }

@@ -1,6 +1,7 @@
 package com.wite.positionerwear;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.wite.positionerwear.DBHelper.DBHelper;
 import com.wite.positionerwear.model.MissCallInfo;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +44,8 @@ public class MissedcallActivity extends AppCompatActivity {
     private int result;
     private List<MissCallInfo> list;
     private List<MissCallInfo> newlist;
+
+    private DBHelper phoneHelper;
 
     private void refreshUI() {
         Date date = new Date();
@@ -61,6 +66,8 @@ public class MissedcallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_missedcall);
         tv_time = (TextView) findViewById(R.id.tv_time);
+
+        phoneHelper= new DBHelper(this, "phone", 1);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -68,12 +75,6 @@ public class MissedcallActivity extends AppCompatActivity {
                 handler.sendMessage(Message.obtain());
             }
         }).start();
-
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.wite.positionerwear.addmissdcall");
-        registerReceiver(missdcallReceiver, filter);
-
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
@@ -105,6 +106,26 @@ public class MissedcallActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         mRecyclerView.setAdapter(mAdapter);
+
+        final IntentFilter filter = new IntentFilter();
+        filter.addAction("com.android.phone.NotificationMgr.MissedCall_intent");
+        final Application application = getApplication();
+        application.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (action != null && "com.android.phone.NotificationMgr.MissedCall_intent".equals(action)) {
+                    list.clear();
+                    list .addAll(getMissCallinfo());
+                    Toast.makeText(context, "你猜你到哪里了！！！！", Toast.LENGTH_SHORT).show();
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        }, filter);
+
+
+
+
     }
 
 
@@ -128,7 +149,9 @@ public class MissedcallActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mTextView.setText(datas.get(position).getCallName());
+
             holder.mTextViewletter.setText(datas.get(position).getCallName().substring(0, 1));
+
             holder.Phonenum.setText(datas.get(position).getCallNumber());
 
             //  SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
@@ -303,7 +326,8 @@ public class MissedcallActivity extends AppCompatActivity {
         List<MissCallInfo> listcallinfo = new ArrayList<>();
         listcallinfo.clear();
 
-        final String[] projection = null;
+
+           final String[] projection = null;
         final String selection = null;
         final String[] selectionArgs = null;
         final String sortOrder = android.provider.CallLog.Calls.DATE + " DESC";
@@ -311,13 +335,56 @@ public class MissedcallActivity extends AppCompatActivity {
         try {
             cursor = getContentResolver().query(Uri.parse("content://call_log/calls"), projection, selection, selectionArgs, sortOrder);
 
+
+
+
+
+
             while (cursor.moveToNext()) {
 
                 missCallInfo = new MissCallInfo();
                 missCallInfo.setCallNumber(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER)));
 
                 if (cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.CACHED_NAME)) == null) {
-                    missCallInfo.setCallName(missCallInfo.getCallNumber());
+               //     missCallInfo.setCallName(missCallInfo.getCallNumber());
+            //  ---------------确认生身份
+               Cursor mCursor1=  phoneHelper.query();
+
+                    String name="";
+
+                 if(mCursor1!=null){
+                     mCursor1.moveToFirst();
+                   while (mCursor1.moveToNext()){
+                       //   missCallInfo.setCallNumber(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER)));
+                      String  sysphone=  cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER));
+
+                       String dbphone=mCursor1.getString(mCursor1.getColumnIndex("phonenum"));
+                      if(sysphone.equals(dbphone)){
+                          name=mCursor1.getString(mCursor1.getColumnIndex("name"));
+
+                      }
+
+
+
+
+
+                  }
+                  if(name.equals("")){
+                      missCallInfo.setCallName(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER)));
+
+                  }else{
+                      missCallInfo.setCallName(name);
+
+                  }
+
+
+                 }else{
+
+//cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER))
+                        missCallInfo.setCallName("8888888888888888");
+
+                    }
+
                 } else {
                     missCallInfo.setCallName(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.CACHED_NAME)));
                 }
@@ -358,20 +425,9 @@ public class MissedcallActivity extends AppCompatActivity {
     }
 
 
-    private BroadcastReceiver missdcallReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            list.clear();
-            list.addAll( getMissCallinfo());
-            mAdapter.notifyDataSetChanged();
-        }
-    };
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
 
-   unregisterReceiver(missdcallReceiver);
-    }
+
+
 }

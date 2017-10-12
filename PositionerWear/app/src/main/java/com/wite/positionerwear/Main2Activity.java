@@ -223,7 +223,7 @@ public class Main2Activity extends AppCompatActivity {
 
     private BroadcastReceiver myReceiver = new BroadcastReceiver() {
 
-        private  int lastCallState = TelephonyManager.CALL_STATE_IDLE;
+
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -265,29 +265,29 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
-            if (intent.getAction()=="android.intent.action.PHONE_STATE") {
-                startActivity(new Intent(Main2Activity.this, MainActivity.class));
-                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-
-                int currentCallState = telephonyManager.getCallState();
-                Log.d("PhoneStateReceiver", "currentCallState=" + currentCallState );
-                if (currentCallState == TelephonyManager.CALL_STATE_IDLE) {// 空闲
-                    //TODO
-                } else if (currentCallState == TelephonyManager.CALL_STATE_RINGING) {// 响铃
-                    //TODO
-                } else if (currentCallState == TelephonyManager.CALL_STATE_OFFHOOK) {// 接听
-                    //TODO
-                }
-
-                if(lastCallState == TelephonyManager.CALL_STATE_RINGING && currentCallState == TelephonyManager.CALL_STATE_IDLE){
-                 //   Toast.makeText(context, "有未接来电！！！！！！！", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Main2Activity.this, MainActivity.class));
-                    Intent add=new Intent();
-                    add.setAction("com.wite.positionerwear.addmissdcall");
-                    context.sendBroadcast(add);
-                }
-                lastCallState = currentCallState;
-            }
+//            if (intent.getAction()=="android.intent.action.PHONE_STATE") {
+//                startActivity(new Intent(Main2Activity.this, MainActivity.class));
+//                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+//
+//                int currentCallState = telephonyManager.getCallState();
+//                Log.d("PhoneStateReceiver", "currentCallState=" + currentCallState );
+//                if (currentCallState == TelephonyManager.CALL_STATE_IDLE) {// 空闲
+//                    //TODO
+//                } else if (currentCallState == TelephonyManager.CALL_STATE_RINGING) {// 响铃
+//                    //TODO
+//                } else if (currentCallState == TelephonyManager.CALL_STATE_OFFHOOK) {// 接听
+//                    //TODO
+//                }
+//无理要求
+//                if(lastCallState == TelephonyManager.CALL_STATE_RINGING && currentCallState == TelephonyManager.CALL_STATE_IDLE){
+//                 //   Toast.makeText(context, "有未接来电！！！！！！！", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(Main2Activity.this, MainActivity.class));
+//                    Intent add=new Intent();
+//                    add.setAction("com.wite.positionerwear.add");
+//                    context.sendBroadcast(add);
+//                }
+//                lastCallState = currentCallState;
+     //     }
 
 
 

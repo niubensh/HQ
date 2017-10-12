@@ -1,5 +1,4 @@
 package com.wite.positionerwear;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 public class MochatActivity extends AppCompatActivity {
     private int requestCode;
     private Handler handler = new Handler() {
@@ -35,7 +33,6 @@ public class MochatActivity extends AppCompatActivity {
         }
     };
     private static final String TAG = "TAG";
-
     private void refreshUI() {
 
         Date date = new Date();
@@ -48,7 +45,6 @@ public class MochatActivity extends AppCompatActivity {
         tv_time.setText(str4 + ":" + str5);
 
     }
-
     private TextView tv_group;
     private TextView tv_time;
     private View FocusView;
@@ -57,16 +53,11 @@ public class MochatActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private View TestView = null;
     private Boolean isStart = true;
-
     private VoiceDBHelper mVoiceDBHelper;
-
-
     //用于长按事件
-
     private AlertDialog.Builder builder;
     private Boolean iscall = false;
     private AlertDialog dialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +88,6 @@ public class MochatActivity extends AppCompatActivity {
 
 
     }
-
     protected List<VoiceModel> initData() {
         mVoiceDBHelper = new VoiceDBHelper(MochatActivity.this, "voice", 1);
         List<VoiceModel> list = new ArrayList<>(); /*调用query()获取Cursor*/
@@ -119,7 +109,6 @@ public class MochatActivity extends AppCompatActivity {
 
         return mDatas;
     }
-
     public class MyAdapter extends RecyclerView.Adapter<MochatActivity.MyAdapter.ViewHolder> {
 
         public List<VoiceModel> datas = null;
@@ -257,10 +246,7 @@ public class MochatActivity extends AppCompatActivity {
             }
         }
     }
-
     private boolean shortPress = true;
-
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_DEL) {
@@ -318,8 +304,6 @@ public class MochatActivity extends AppCompatActivity {
 
         return super.onKeyDown(keyCode, event);
     }
-
-
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_POWER) {
@@ -335,7 +319,6 @@ public class MochatActivity extends AppCompatActivity {
 
         return false;
     }
-
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_POWER) {
@@ -371,7 +354,6 @@ public class MochatActivity extends AppCompatActivity {
         return super.onKeyUp(keyCode, event);
 
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
