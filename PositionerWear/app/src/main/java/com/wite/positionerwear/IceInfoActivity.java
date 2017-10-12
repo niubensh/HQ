@@ -25,7 +25,7 @@ public class IceInfoActivity extends AppCompatActivity {
         }
     };
     private TextView tv_time;
-    private static final String TAG = "TAG";
+    private static final String TAG = "IceInfoActivity";
 
     private void refreshUI() {
         Date date = new Date();

@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //接收下发的联系人
     List<PhoneUser> phoneuser = new ArrayList<>();
-    private static final String TAG = "TAG";
+    private static final String TAG = "MainActivity";
     //单例模式
     final OrderUtil orderUtil = OrderUtil.getInstance(this);
     private int xiangji = 3;
@@ -186,13 +186,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //     DBHelper   dbphoneHelper = new DBHelper(MainActivity.this, "phone", 1);
 ////清空联系人数据库
 //        dbphoneHelper.celer();
-
         myListener = new MyPhoneStateListener();
         telephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         telephonyMgr.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
         Log.d(TAG, "GSMx信号是多少 " + Gsm);
-
-
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         // startActivity(new Intent(this,Main2Activity.class));
         mSosdbHelper = new SOSDBHelper(this);
@@ -432,7 +429,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (mNetWorkUtils.isMobileConnected(MainActivity.this) || mNetWorkUtils.isWifiConnected(MainActivity.this)) {
                     orderUtil.loginPkg(imei);
                     Log.d(TAG, "sendOrderFail:  再发一遍 好吧  谁怕谁啊 ");
-                    Log.d(TAG, "开始GPS");
+
                 }
 
 
@@ -603,7 +600,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         orderUtil.baseStationTiming(mStationInfo.getMCC() + "", mStationInfo.getMNC() + "", mStationInfo.getLAC() + "", mStationInfo.getCID() + "");
                         Log.d(TAG, "-------MMC= " + mStationInfo.getMCC() + "MNC" + mStationInfo.getMNC() + "LAC=" + mStationInfo.getLAC() + "CID" + mStationInfo.getCID());
                     } else {
-                        Log.d(TAG, "我全都知道了");
                         String[] BP00 = testBP00.split(",");
                         Log.d(TAG, "登陆 回执" + BP00[1]);
                         String bp00str = BP00[1];
@@ -616,20 +612,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d(TAG, "++++++++++++++++++: " + bp00_string);
                         String BP00_login = mTimeConverterUtil.converTime(bp00_string, TimeZone.getDefault());
                         //   String BP00_login = mTimeConverterUtil.utc2Local(bp00_string, "yyyy-MM-ddHH:mm:ss:");
-                        Log.d(TAG, "现在时间 " + BP00_login.trim());
                         int year = Integer.valueOf(BP00_login.trim().substring(0, 4));
-                        Log.d(TAG, "现在时间 " + year);
                         int mon = Integer.valueOf(BP00_login.trim().substring(5, 7));
-                        Log.d(TAG, "现在时间 " + mon);
                         int day = Integer.valueOf(BP00_login.trim().substring(8, 10));
-                        Log.d(TAG, "现在时间 " + day);
                         int hour = Integer.valueOf(BP00_login.trim().substring(11, 13));
-                        Log.d(TAG, "现在时间 " + hour);
                         int minute = Integer.valueOf(BP00_login.trim().substring(14, 16));
-                        Log.d(TAG, "现在时间 " + minute);
                         //设置时间的位置
-//                        setsystem.setDate(year, mon - 1, day);
-//                        setsystem.setTime(hour, minute);
+                      setsystem.setDate(year, mon - 1, day);
+                       setsystem.setTime(hour, minute);
                         Log.d(TAG, "设备登录时间 " + year + "!" + mon + "!" + day + "//////" + hour + "" + minute);
                     }
 

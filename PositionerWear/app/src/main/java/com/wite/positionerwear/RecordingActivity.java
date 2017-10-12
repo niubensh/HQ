@@ -25,7 +25,7 @@ public class RecordingActivity extends AppCompatActivity {
     private ImageView send;
     //录音帮助类
     AudioRecoderUtils mAudioRecoderUtils;
-    private static final   String TAG="TAG";
+    private static final String TAG = "RecordingActivity";
     private  String redingpath;
 
 

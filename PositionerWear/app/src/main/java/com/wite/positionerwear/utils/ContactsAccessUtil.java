@@ -30,6 +30,8 @@ public class ContactsAccessUtil {
     final static String PhoneAccountName = "Phone";
     final static String SIMAccountName = "SIM";
 
+
+
     // 读取联系人信息
     public static List<ContactData> getPhoneContacts(Context context, List<ContactData> list, boolean bSort) {
         if (list == null)

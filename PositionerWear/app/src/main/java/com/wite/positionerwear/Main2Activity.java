@@ -29,7 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Main2Activity extends AppCompatActivity {
-    private static final String TAG = "TAG";
+    private static final String TAG = "Main2Activity";
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

@@ -36,7 +36,7 @@ import java.util.List;
 
 //Ctrl+Shift+J 秘籍
 public class PhoneBookActivity extends AppCompatActivity {
-    private static final String TAG = "TAG";
+    private static final String TAG = "PhoneBookActivity";
   //定义系统数据库
     private ContactsAccessUtil mContactsAccessUtil;
 
@@ -90,7 +90,7 @@ public class PhoneBookActivity extends AppCompatActivity {
     private LinearLayoutManager move;
 
     //定义数据库帮助类
-    private DBHelper dbHelper;
+
     PhoneUser mPhoneUser;
 
     //单例模式

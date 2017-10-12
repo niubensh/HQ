@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-
+    android:sharedUserId="android.uid.system"
     package="com.wite.positionerwear">
     <uses-permission android:name="android.permission.WRITE_CONTACTS"></uses-permission>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -121,10 +121,6 @@
 
 
         <!-- 注册provider -->
-        <provider
-            android:name=".Provider.PeopleContentProvider"
-            android:authorities="com.wite.positionerwear.Provider"
-            android:exported="true" />
 
         <activity android:name=".QRcodeActivity" />
         <activity android:name=".PlayerActivity"></activity>

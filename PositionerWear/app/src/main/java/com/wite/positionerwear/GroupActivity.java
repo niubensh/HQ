@@ -36,7 +36,7 @@ public class GroupActivity extends AppCompatActivity {
     private AnimationDrawable anim;
     private int requestCode;
     private VoiceDBHelper mVoiceDBHelper;
-    private static  final String TAG="TAG";
+    private static final String TAG = "GroupActivity";
 
     private void refreshUI() {
         Date date = new Date();

@@ -34,9 +34,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     };
     private TextView tv_time;
     private MessageDBHelper messageDBHelper;
-    private static final String TAG="TAG";
-
-
+    private static final String TAG = "MessageActivity";
     private void refreshUI() {
         Date date = new Date();
         SimpleDateFormat sdf3 = new SimpleDateFormat("HH");

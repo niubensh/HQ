@@ -14,7 +14,8 @@ import java.io.IOException;
 
 public class PlayerActivity extends AppCompatActivity {
 
-    private static final String TAG="TAG";
+    private static final String TAG = "PlayerActivity";
+    
     private MediaPlayer mMediaPlayer;
     private ImageView image;
     private AnimationDrawable anim;

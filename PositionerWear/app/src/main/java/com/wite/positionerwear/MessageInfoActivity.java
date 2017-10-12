@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class MessageInfoActivity extends AppCompatActivity {
-    private static final String TAG = "TAG";
+    private static final String TAG = "MessageInfoActivity";
     //设置时间
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {

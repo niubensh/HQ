@@ -23,7 +23,7 @@ public class DevicesInfoActivity extends AppCompatActivity {
     private TextView tv_time;
     private String imei;
     private String sn;
-    private static final String TAG = "TAG";
+    private static final String TAG = "DevicesInfoActivity";
     private void refreshUI() {
         Date date = new Date();
         SimpleDateFormat sdf3 = new SimpleDateFormat("HH");

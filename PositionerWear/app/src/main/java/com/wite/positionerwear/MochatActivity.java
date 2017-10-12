@@ -32,7 +32,7 @@ public class MochatActivity extends AppCompatActivity {
             refreshUI();
         }
     };
-    private static final String TAG = "TAG";
+    private static final String TAG = "MochatActivity";
     private void refreshUI() {
 
         Date date = new Date();
