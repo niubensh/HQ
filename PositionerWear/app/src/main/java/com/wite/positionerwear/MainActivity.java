@@ -41,17 +41,18 @@ import android.widget.Toast;
 import com.loonggg.lib.alarmmanager.clock.AlarmManagerUtil;
 import com.thinkrace.orderlibrary.LocationService;
 import com.thinkrace.orderlibrary.OrderUtil;
-import com.wite.positionerwear.DBHelper.DBHelper;
 import com.wite.positionerwear.DBHelper.GuaDBHelper;
 import com.wite.positionerwear.DBHelper.MessageDBHelper;
 import com.wite.positionerwear.DBHelper.SOSDBHelper;
 import com.wite.positionerwear.DBHelper.VoiceDBHelper;
+import com.wite.positionerwear.model.ContactData;
 import com.wite.positionerwear.model.GuardianModel;
 import com.wite.positionerwear.model.MissCallInfo;
 import com.wite.positionerwear.model.PhoneUser;
 import com.wite.positionerwear.model.StationInfo;
 import com.wite.positionerwear.model.UserModel;
 import com.wite.positionerwear.service.BackgroundService;
+import com.wite.positionerwear.utils.ContactsAccessUtil;
 import com.wite.positionerwear.utils.FileUtil;
 import com.wite.positionerwear.utils.GPSFormatUtils;
 import com.wite.positionerwear.utils.HttpClientUtils;
@@ -72,6 +73,10 @@ import java.util.TimeZone;
 //2017年9月15日 09:54:44
 //富强、民主、文明、和谐、自由、平等、公正、法治、爱国、敬业、诚信、友善
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+    //系统数据库帮助类
+    ContactsAccessUtil mContactsAccessUtil;
 
     //接收下发的联系人
     List<PhoneUser> phoneuser = new ArrayList<>();
@@ -121,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Long minTime = 3000L;
     private SOSDBHelper mSosdbHelper;
     //定义数据库帮助类
-    private DBHelper dbHelper;
+
     PhoneUser mPhoneUser;
     private String sn;
     private TelephonyManager telephonyMgr;
@@ -144,14 +149,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ContentValues Guavalues;
     private Context mContext;
     private int worktype;
+    private ContactData mContactData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+          //系统联系人帮助类
+        mContactsAccessUtil=new ContactsAccessUtil();
 
-
-      startActivity(new Intent(this, Main2Activity.class));
+        startActivity(new Intent(this, Main2Activity.class));
 
         Intent i = new Intent(MainActivity.this, BackgroundService.class);
         startService(i);
@@ -421,18 +428,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void sendOrderFail(String s) {
-
                 Log.d(TAG, "order发送指令失败: " + s);
-
-
                 if (mNetWorkUtils.isMobileConnected(MainActivity.this) || mNetWorkUtils.isWifiConnected(MainActivity.this)) {
-
-
                     orderUtil.loginPkg(imei);
                     Log.d(TAG, "sendOrderFail:  再发一遍 好吧  谁怕谁啊 ");
                     Log.d(TAG, "开始GPS");
-
-
                 }
 
 
@@ -628,8 +628,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int minute = Integer.valueOf(BP00_login.trim().substring(14, 16));
                         Log.d(TAG, "现在时间 " + minute);
                         //设置时间的位置
-                       setsystem.setDate(year, mon - 1, day);
-                        setsystem.setTime(hour, minute);
+//                        setsystem.setDate(year, mon - 1, day);
+//                        setsystem.setTime(hour, minute);
                         Log.d(TAG, "设备登录时间 " + year + "!" + mon + "!" + day + "//////" + hour + "" + minute);
                     }
 
@@ -754,38 +754,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //接收联系人下发
                 case LocationService.BP14:
                     //为什么要把简单的事情 搞得很复杂
-                    dbHelper = new DBHelper(MainActivity.this, "phone", 1);
-                    dbHelper.celer();
+                    //先删除系统所有联系人
 
-
-                    //发送广播刷新UI
                     Intent intentphone = new Intent();
                     intentphone.setAction("com.wite.positionerwear.phonebook");
                     mContext.sendBroadcast(intentphone);
-                    Log.d(TAG, "发送了广播 用于更新电话本" + intentphone.getAction());
 
-
-                    Log.d(TAG, "指令名称:BP14 ---LocationService====" + LocationService.BP14);
+                    mContactsAccessUtil.clearContact(context);
                     String[] BP14 = intent.getStringExtra(LocationService.BP14).split(",");
                     String[] newBP14 = intent.getStringExtra(LocationService.BP14).substring(30, intent.getStringExtra(LocationService.BP14).length() - 1).split(",");
                     Log.d(TAG, "修改过后的指令==========" + intent.getStringExtra(LocationService.BP14).substring(30, intent.getStringExtra(LocationService.BP14).length()));
                     Log.d(TAG, "下发的电话号码的长度是" + newBP14.length);
                     StringBuffer sb = new StringBuffer();
                     for (int i = 0; i < newBP14.length; i++) {
-                        if (newBP14[i] == null || newBP14[i] == "" || newBP14[i].equals("#") || newBP14[i].isEmpty() == true || newBP14[i] == "#") {
+                        if (newBP14[i] == null || newBP14[i] == "" || newBP14[i].equals
+                                ("#") || newBP14[i].isEmpty() == true || newBP14[i] == "#") {
                             if (newBP14[i] == null || newBP14[i] == "") {
-                                dbHelper.celer();
+                                mContactsAccessUtil.clearContact(context);
+
                                 orderUtil.send("IWAP14", BP14[2]);
-                            }
+                           }
                         } else {
-                            mPhoneUser = new PhoneUser();
+                            mContactData = new ContactData();
                             String[] test = newBP14[i].split("\\|");
-                            mPhoneUser.setName(UnicodeUtil.UNstringToUnicode(test[0].toString()));
-                            mPhoneUser.setPhonenum(test[1]);
-                            ContentValues values = new ContentValues();
-                            values.put("name", mPhoneUser.getName());
-                            values.put("Phonenum", mPhoneUser.getPhonenum());
-                            dbHelper.insert(values);
+                            mContactData.setContactName(UnicodeUtil.UNstringToUnicode(test[0].toString()));
+                            mContactData.setNumber(test[1]);
+                            mContactsAccessUtil.insertPhoneContact(context,mContactData);
+
+
                         }
                     }
                     if (sb.toString().length() > 0) {
@@ -793,7 +789,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else {
                         orderUtil.send("IWAP14", BP14[2]);
                     }
-                    //   Log.d(TAG, "回去拼接指令 IWAP14"+BP14[2]+","+ sb.toString().substring(0, sb.length() - 1)+"#" );
+                    /*   Log.d(TAG, "回去拼接指令 IWAP14"+BP14[2]+","+ sb.toString().substring(0, sb.length() - 1)+"#" );*/
+
                     break;
 
 
@@ -1027,40 +1024,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case LocationService.BP52:
                     Log.d(TAG, "指令名称:BP52 ---LocationService====" + LocationService.BP52);
                     String[] BP52 = intent.getStringExtra(LocationService.BP52).split(",");
-                    dbHelper = new DBHelper(MainActivity.this, "phone", 1);
-                    List<PhoneUser> list = new ArrayList<>(); /*调用query()获取Cursor*/
-                    Cursor c = dbHelper.query();
-                    while (c.moveToNext()) {
-                        PhoneUser p = new PhoneUser();
-                        p.set_id(c.getInt(c.getColumnIndex("_id")));
-                        p.setName(c.getString(c.getColumnIndex("name")));
-                        p.setPhonenum(c.getString(c.getColumnIndex("phonenum")));
-                        p.setIntime(c.getString(c.getColumnIndex("inttime")));
-                        p.setLetter(c.getString(c.getColumnIndex("letter")));
-                        list.add(p);
-                    }
-                    List<PhoneUser> list_phoneuser = list;
-                    for (PhoneUser phone : list_phoneuser) {
-
-                        Log.d(TAG, "Main+++++++++++++++++LocationService.BP52:数据库的数据 --- --- --- --- --- ---" + phone.getName() + phone.getPhonenum());
-
-                    }
-
+                      List<ContactData> lists=new ArrayList<>();
+                    lists= mContactsAccessUtil.getPhoneContacts(context,lists,true);
 
                     String str = BP52[3];
                     String newstring;
                     if (str.substring((str.length() - 1), str.length()).equals("#"))
                         newstring = str.substring(0, str.length() - 1);
                     else newstring = str;
-                    for (PhoneUser phone : list_phoneuser)
-                        if (phone.getPhonenum() == newstring || phone.getPhonenum().equals(newstring)) {
-                            dbHelper.delete(phone.get_id());
-                            Log.d(TAG, "onReceive: 删除了" + phone.get_id());
-                            Log.d(TAG, "已经被删除的_id" + phone.get_id() + "名字" + phone.getName() + "     手机号码" + phone.getPhonenum() + "          头像" + phone.getLetter() + "       时间" + phone.getIntime());
+                    for (ContactData phone : lists)
+                        if (phone.getNumber() == newstring || phone.getNumber().equals(newstring)) {
+
+                            mContactsAccessUtil.deletePhoneContact(context,phone.getContactName(),phone.getId());
+                            Log.d(TAG, "onReceive: 删除了" +phone.getId());
+                            Log.d(TAG, "已经被删除的_id" + phone.getId() + "名字" + phone.getContactName() + "     手机号码" + phone.getNumber() + "" );
                         } else {
-                            Log.d(TAG, "没有被删除的_id" + phone.get_id() + "名字" + phone.getName() + "     手机号码" + phone.getPhonenum() + "          头像" + phone.getLetter() + "       时间" + phone.getIntime());
+                            Log.d(TAG, "没有被删除的_id" + phone.getId() + "名字" +phone.getContactName() + "     手机号码" + phone.getNumber() + " ");
                             Log.d(TAG, "onReceive: 没有找到");
                         }
+
+
+
+
+
                     orderUtil.send("IWAP52", BP52[2] + "," + "1");
 
                     break;
@@ -1283,7 +1269,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mGuaDBHelper.query();
 
                     List<GuardianModel> Gualist = new ArrayList<>(); /*调用query()获取Cursor*/
-                    Cursor guac = dbHelper.query();
+                    Cursor guac = mGuaDBHelper.query();
                     while (guac.moveToNext()) {
                         PhoneUser p = new PhoneUser();
                         GuardianModel g = new GuardianModel();
@@ -1772,8 +1758,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (a >= 12) {
                 tv_am.setText("PM");
                 cc = a - 12;
-                if(cc==0){
-                    cc=12;
+                if (cc == 0) {
+                    cc = 12;
                 }
 
             } else {

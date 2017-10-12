@@ -51,10 +51,6 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
    private MessageModel mMessageModel;
 
-
-
-
-
     private RecyclerView mRecyclerView;
     private List<MessageModel> mDatas;
     private RecyclerView.Adapter mAdapter;

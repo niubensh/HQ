@@ -30,9 +30,9 @@ import static com.wite.positionerwear.utils.Utils.setupItem;
  * 需要出第一个版本
  * 测试加入了摄像头
  *Lin100 加入小圆点
- *Lin160 加入cardview
- * Lin219 加入点击时间
- *Lin280 加入按键监听事件
+ *Lin168 加入cardview
+ * Lin226加入点击时间
+ *Lin361加入按键监听事件
  *
  *
  *

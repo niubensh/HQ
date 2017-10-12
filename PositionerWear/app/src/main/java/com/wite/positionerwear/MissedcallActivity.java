@@ -25,8 +25,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wite.positionerwear.DBHelper.DBHelper;
+import com.wite.positionerwear.model.ContactData;
 import com.wite.positionerwear.model.MissCallInfo;
+import com.wite.positionerwear.utils.ContactsAccessUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class MissedcallActivity extends AppCompatActivity {
     private List<MissCallInfo> list;
     private List<MissCallInfo> newlist;
 
-    private DBHelper phoneHelper;
+    private ContactsAccessUtil mContactsAccessUtil;
 
     private void refreshUI() {
         Date date = new Date();
@@ -67,7 +68,7 @@ public class MissedcallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_missedcall);
         tv_time = (TextView) findViewById(R.id.tv_time);
 
-        phoneHelper= new DBHelper(this, "phone", 1);
+        mContactsAccessUtil = new ContactsAccessUtil();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -106,7 +107,7 @@ public class MissedcallActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         mRecyclerView.setAdapter(mAdapter);
-
+//实时更新未接来电--
         final IntentFilter filter = new IntentFilter();
         filter.addAction("com.android.phone.NotificationMgr.MissedCall_intent");
         final Application application = getApplication();
@@ -116,14 +117,12 @@ public class MissedcallActivity extends AppCompatActivity {
                 String action = intent.getAction();
                 if (action != null && "com.android.phone.NotificationMgr.MissedCall_intent".equals(action)) {
                     list.clear();
-                    list .addAll(getMissCallinfo());
+                    list.addAll(getMissCallinfo());
                     Toast.makeText(context, "你猜你到哪里了！！！！", Toast.LENGTH_SHORT).show();
                     mAdapter.notifyDataSetChanged();
                 }
             }
         }, filter);
-
-
 
 
     }
@@ -327,7 +326,7 @@ public class MissedcallActivity extends AppCompatActivity {
         listcallinfo.clear();
 
 
-           final String[] projection = null;
+        final String[] projection = null;
         final String selection = null;
         final String[] selectionArgs = null;
         final String sortOrder = android.provider.CallLog.Calls.DATE + " DESC";
@@ -335,99 +334,78 @@ public class MissedcallActivity extends AppCompatActivity {
         try {
             cursor = getContentResolver().query(Uri.parse("content://call_log/calls"), projection, selection, selectionArgs, sortOrder);
 
-
-
-
-
-
             while (cursor.moveToNext()) {
 
                 missCallInfo = new MissCallInfo();
                 missCallInfo.setCallNumber(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER)));
 
                 if (cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.CACHED_NAME)) == null) {
-               //     missCallInfo.setCallName(missCallInfo.getCallNumber());
-            //  ---------------确认生身份
-               Cursor mCursor1=  phoneHelper.query();
+                    //     missCallInfo.setCallName(missCallInfo.getCallNumber());
+                    //  ---------------确认生身份
+                    List<ContactData> list = new ArrayList<>();
+                    list = mContactsAccessUtil.getPhoneContacts(this, list, true);
 
-                    String name="";
+                    String name = "";
 
-                 if(mCursor1!=null){
-                     mCursor1.moveToFirst();
-                   while (mCursor1.moveToNext()){
-                       //   missCallInfo.setCallNumber(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER)));
-                      String  sysphone=  cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER));
+                    if (list != null) {
 
-                       String dbphone=mCursor1.getString(mCursor1.getColumnIndex("phonenum"));
-                      if(sysphone.equals(dbphone)){
-                          name=mCursor1.getString(mCursor1.getColumnIndex("name"));
+                        for (ContactData phone : list) {
+                            String sysphone = cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER));
+                            String dbphone = phone.getNumber();
+                            if (sysphone.equals(dbphone)) {
+                                name = phone.getContactName();
+                            }
+                            if (name.equals("")) {
+                                missCallInfo.setCallName(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER)));
 
-                      }
+                            } else {
+                                missCallInfo.setCallName(name);
 
+                            }
+                        }
 
+                        }else{
+                            missCallInfo.setCallName("8888888888888888");
+                        }
 
-
-
-                  }
-                  if(name.equals("")){
-                      missCallInfo.setCallName(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER)));
-
-                  }else{
-                      missCallInfo.setCallName(name);
-
-                  }
-
-
-                 }else{
-
-//cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER))
-                        missCallInfo.setCallName("8888888888888888");
-
+                    } else {
+                        missCallInfo.setCallName(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.CACHED_NAME)));
                     }
 
-                } else {
-                    missCallInfo.setCallName(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.CACHED_NAME)));
-                }
+
+                    missCallInfo.setCallLogID(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls._ID)));
 
 
-                missCallInfo.setCallLogID(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls._ID)));
+                    //需要对时间进行一定的处理
+                    String callDate = cursor.getString(cursor
+                            .getColumnIndex(android.provider.CallLog.Calls.DATE));
+                    long callTime = Long.parseLong(callDate);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    callDate = sdf.format(new Date(callTime));
+                    missCallInfo.setCallDate(callDate);
 
+                    missCallInfo.setCallType(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.TYPE)));
 
-                //需要对时间进行一定的处理
-                String callDate = cursor.getString(cursor
-                        .getColumnIndex(android.provider.CallLog.Calls.DATE));
-                long callTime = Long.parseLong(callDate);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                callDate = sdf.format(new Date(callTime));
-                missCallInfo.setCallDate(callDate);
-
-                missCallInfo.setCallType(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.TYPE)));
-
-                missCallInfo.setIsCallNew(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NEW)));
+                    missCallInfo.setIsCallNew(cursor.getString(cursor.getColumnIndex(android.provider.CallLog.Calls.NEW)));
 //                    if (Integer.parseInt(callType) == (CallLog.Calls.MISSED_TYPE)
 //                            && Integer.parseInt(isCallNew) > 0)  //通过call.new进行了限定，会对读取有一些问题，要删掉该限定
-                if (Integer.parseInt(missCallInfo.getCallType()) == (CallLog.Calls.MISSED_TYPE)) {
-                    //textView.setText(callType+"|"+callDate+"|"+callNumber+"|");
-                    //只是以最简单ListView显示联系人的一些数据----适配器的如何配
-                    listcallinfo.add(missCallInfo);
+                    if (Integer.parseInt(missCallInfo.getCallType()) == (CallLog.Calls.MISSED_TYPE)) {
+                        //textView.setText(callType+"|"+callDate+"|"+callNumber+"|");
+                        //只是以最简单ListView显示联系人的一些数据----适配器的如何配
+                        listcallinfo.add(missCallInfo);
 
+                    }
                 }
+            } catch(Exception e){
+
+
+                e.printStackTrace();
+            } finally{
+                cursor.close();
             }
-        } catch (Exception e) {
 
-
-            e.printStackTrace();
-        } finally {
-            cursor.close();
+            return listcallinfo;
         }
 
-        return listcallinfo;
+
     }
-
-
-
-
-
-
-
-}

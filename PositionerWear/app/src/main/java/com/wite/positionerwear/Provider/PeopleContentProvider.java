@@ -10,8 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.wite.positionerwear.DBHelper.DBHelper;
-
 /**
  * Created by Administrator on 2017/9/27.
  */
